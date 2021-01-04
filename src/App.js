@@ -3,11 +3,10 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 
 import Layout from "./components/Layout/Layout.jsx";
-import variables from "./index.scss";
+import variables from "./variables.module.scss";
 
-function App() {
-	console.log("variables");
-	console.log(variables.local);
+const App = () => {
+	console.log(variables);
 	return (
 		<MuiThemeProvider theme={theme}>
 			<BrowserRouter basename={process.env.PUBLIC_URL}>
@@ -17,7 +16,7 @@ function App() {
 			</BrowserRouter>
 		</MuiThemeProvider>
 	);
-}
+};
 
 // Theme config
 const theme = createMuiTheme({
