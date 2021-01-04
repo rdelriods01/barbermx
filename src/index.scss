@@ -1,0 +1,17 @@
+body {
+	margin: 0;
+	padding: 0;
+	background: white;
+	font-family: Product Sans;
+}
+/* Colors for theme */
+$primary: red;
+// $primary: #46d0f7;
+$secondary: #7d2ae8;
+// $primary: "#46d0f7";
+// $secondary: "#7d2ae8";
+
+:export {
+	primary: $primary;
+	secondary: $secondary;
+}
