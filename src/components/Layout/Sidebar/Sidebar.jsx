@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 // import firebase from "firebase/app";
 
 import "./Sidebar.scss";
-import variables from "../../../index.scss";
+import variables from "../../../variables.module.scss";
 
 const Sidebar = () => {
 	const logout = () => {
@@ -20,15 +20,24 @@ const Sidebar = () => {
 				<i className="material-icons">point_of_sale</i>
 				<span>Venta</span>
 			</NavLink>
-			<NavLink className="li" to="/" activeStyle={{ color: variables.primary }}>
+			<NavLink
+				className="li"
+				to="/agenda"
+				activeStyle={{ color: variables.primary }}>
 				<i className="material-icons">event</i>
 				<span>Agenda</span>
 			</NavLink>
-			<NavLink className="li" to="/" activeStyle={{ color: variables.primary }}>
+			<NavLink
+				className="li"
+				to="/clientes"
+				activeStyle={{ color: variables.primary }}>
 				<i className="material-icons">people</i>
-				<span>Patients</span>
+				<span>Clientes</span>
 			</NavLink>
-			<NavLink className="li" to="/" activeStyle={{ color: variables.primary }}>
+			<NavLink
+				className="li"
+				to="/3"
+				activeStyle={{ color: variables.primary }}>
 				<i className="material-icons">receipt</i>
 				<span>Contabilidad</span>
 			</NavLink>

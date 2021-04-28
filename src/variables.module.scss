@@ -1,10 +1,12 @@
 /* Colors for theme */
 $primary: #46d033;
+$primaryHover: #2f8823;
 $secondary: #7d2ae8;
 // $primary: #46d0f7;
 // $secondary: #7d2ae8;
 
 :export {
 	primary: $primary;
+	primaryHover: $primaryHover;
 	secondary: $secondary;
 }
