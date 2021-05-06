@@ -1,6 +1,5 @@
 import { useState } from "react";
 
-import Navbar from "./Navbar/Navbar";
 import Sidebar from "./Sidebar/Sidebar";
 import LayoutRouter from "./LayoutRouter";
 
@@ -14,7 +13,7 @@ function Layout() {
 		if (sidebarPos < 2) {
 			setSidebarPos(sidebarPos + 1);
 		} else {
-			setSidebarPos(0);
+			setSidebarPos(1);
 		}
 	};
 
@@ -31,9 +30,9 @@ function Layout() {
 
 	return (
 		<div className="layout">
-			<Navbar onChange={handleSidebar} />
+			{/* <Navbar  /> */}
 			<div className={sidebarClass.join(" ")}>
-				<Sidebar />
+				<Sidebar onChange={handleSidebar} />
 			</div>
 			<div className={mainClass.join(" ")}>
 				<LayoutRouter />
