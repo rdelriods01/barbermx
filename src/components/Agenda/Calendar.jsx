@@ -3,23 +3,47 @@ import { Link } from "react-router-dom";
 
 // import { db } from "../../index";
 
-import { Calendar, momentLocalizer } from "react-big-calendar";
-import moment from "moment";
+import { Calendar, dateFnsLocalizer } from "react-big-calendar";
 import withDragAndDrop from "react-big-calendar/lib/addons/dragAndDrop";
 import Event from "./Event";
+import { es } from "date-fns/locale";
 
 import "react-big-calendar/lib/css/react-big-calendar.css";
-
-const localizer = momentLocalizer(moment);
+import {
+	add,
+	endOfDay,
+	endOfWeek,
+	startOfDay,
+	startOfWeek,
+	sub,
+	endOfMonth,
+	startOfMonth,
+	format,
+	parse,
+	getDay,
+	getTime,
+} from "date-fns";
+const locales = {
+	es: es,
+};
+//
+const localizer = dateFnsLocalizer({
+	format,
+	parse,
+	startOfWeek,
+	getDay,
+	locales,
+});
 const DragAndDropCalendar = withDragAndDrop(Calendar);
 
 const Calendario = () => {
+	const salas = ["TAC", "RX", "Ultra", "Masto"];
 	const [events, setEvents] = useState([]);
 	const [openCreate, setOpenCreate] = useState(false);
 	const [openEdit, setOpenEdit] = useState(false);
 	const [actualEvent, setActualEvent] = useState(null);
 	const [view, setView] = useState("day");
-	const [currentDate, setCurrentDate] = useState(moment());
+	const [currentDate, setCurrentDate] = useState(new Date());
 
 	useEffect(() => {
 		getRangeOfTimeAndEvents(currentDate);
@@ -35,16 +59,18 @@ const Calendario = () => {
 		setOpenCreate(true);
 	};
 	const createEvent = (event) => {
+		console.log(event);
 		setOpenCreate(false);
 		if (event.ready) {
 			let newEvent = {
-				title: event.patient.name,
+				title: event.cliente.name,
 				start: event.start,
-				startTS: moment(event.start).local().valueOf(),
+				startTS: getTime(event.start),
 				end: event.end,
-				patientid: event.patient.uid,
-				dia: moment(event.start).format("YYYY-MM-DD"),
+				clienteid: event.cliente.uid,
+				dia: format(event.start, "yyyy-MM-dd"),
 				resourceId: event.resourceId,
+				sala: salas[event.resourceId - 1],
 			};
 			console.log(newEvent);
 			//   db.collection("events")
@@ -69,6 +95,7 @@ const Calendario = () => {
 					start: event.start,
 					end: event.end,
 					resourceId: event.resourceId,
+					sala: salas[event.resourceId - 1],
 				});
 			}
 		}
@@ -82,8 +109,10 @@ const Calendario = () => {
 				...event,
 				start,
 				end,
-				dia: moment(start).format("YYYY-MM-DD"),
-				startTS: moment(start).local().valueOf(),
+				// dia: moment(start).format("yyyy-MM-dd"),
+				dia: format(start, "yyyy-MM-dd"),
+				// startTS: moment(start).local().valueOf(),
+				startTS: getTime(start),
 			};
 		} else {
 			if (event.resourceId === resourceId) {
@@ -91,8 +120,8 @@ const Calendario = () => {
 					...event,
 					start,
 					end,
-					dia: moment(start).format("YYYY-MM-DD"),
-					startTS: moment(start).local().valueOf(),
+					dia: format(start, "yyyy-MM-dd"),
+					startTS: getTime(start),
 					resourceId: event.resourceId,
 				};
 			} else {
@@ -100,8 +129,8 @@ const Calendario = () => {
 					...event,
 					start,
 					end,
-					dia: moment(start).format("YYYY-MM-DD"),
-					startTS: moment(start).local().valueOf(),
+					dia: format(start, "yyyy-MM-dd"),
+					startTS: getTime(start),
 					resourceId: resourceId,
 				};
 			}
@@ -132,20 +161,20 @@ const Calendario = () => {
 		setCurrentDate(date);
 		let start, end;
 		if (view === "day") {
-			start = moment(date).startOf("day");
-			end = moment(date).endOf("day");
+			start = startOfDay(date);
+			end = endOfDay(date);
 		} else if (view === "week") {
-			start = moment(date).startOf("week");
-			end = moment(date).endOf("week");
+			start = startOfWeek(date);
+			end = endOfWeek(date);
 		} else if (view === "month") {
-			start = moment(date).startOf("month").subtract(6, "days");
-			end = moment(date).endOf("month").add(6, "days");
+			start = sub(startOfMonth(date), { days: 6 });
+			end = add(endOfMonth(date), { days: 6 });
 		} else if (view === "agenda") {
-			start = moment(date).startOf("day");
-			end = moment(date).endOf("day").add(3, "days");
+			start = startOfDay(date);
+			end = add(endOfDay(date), { days: 3 });
 		}
-		let inicio = moment(start).local().valueOf();
-		let final = moment(end).local().valueOf();
+		let inicio = getTime(start);
+		let final = getTime(end);
 		console.log("look for events");
 		// db.collection("events")
 		//   .where("startTS", ">=", inicio)
@@ -159,8 +188,8 @@ const Calendario = () => {
 		//     data.forEach((ev) => {
 		//       let calStart = new Date(ev.data().start.toMillis());
 		//       let calEnd = new Date(ev.data().end.toMillis());
-		//       let patid = ev.data().patientid;
-		//       db.collection("patients")
+		//       let patid = ev.data().clienteid;
+		//       db.collection("clientes")
 		//         .doc(patid)
 		//         .get()
 		//         .then((pat) => {
@@ -193,6 +222,7 @@ const Calendario = () => {
 			<div>
 				<DragAndDropCalendar
 					selectable
+					culture={"es"}
 					localizer={localizer}
 					events={events}
 					length={3}
@@ -208,21 +238,25 @@ const Calendario = () => {
 					step={30}
 					messages={{
 						previous: "<",
+						today: "Hoy",
+						month: "Mes",
+						week: "Semana",
+						day: "Día",
 						next: ">",
 						noEventsInRange:
 							"Sin pacientes agendados para este rango de fechas",
 					}}
 					timeslots={2}
 					min={new Date("2019, 1, 1, 08:00")}
-					max={new Date("2019, 1, 1, 20:00")}
-					style={{ height: "72vh" }}
+					max={new Date("2019, 1, 1, 22:00")}
+					style={{ height: "79vh" }}
 					components={{
 						agenda: {
 							event: (ev) => (
 								<>
 									{ev.event.resourceId ? (
 										<Link
-											to={{ pathname: `/patient/${ev.event.patientid}` }}
+											to={{ pathname: `/cliente/${ev.event.clienteid}` }}
 											style={{
 												color: resourceMap[ev.event.resourceId - 1].color,
 												backgroundColor: "none",
@@ -238,6 +272,9 @@ const Calendario = () => {
 								</>
 							),
 						},
+						// toolbar: {
+						// 	header: <h2>Hello</h2>,
+						// },
 					}}
 					eventPropGetter={(event) => {
 						if (event.resourceId === 1 && view !== "agenda") {

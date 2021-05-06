@@ -1,6 +1,5 @@
 import { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
-import moment from "moment";
 
 import {
 	Button,
@@ -17,14 +16,23 @@ import {
 
 import { TimePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 
-import MomentUtils from "@date-io/moment";
+import DateFnsUtils from "@date-io/date-fns";
 
 import Draggable from "react-draggable";
-// import { PatientsContext } from "../../Store";
+import { getHours, getMinutes } from "date-fns";
+// import { ClientesContext } from "../../Store";
 
 const Event = (props) => {
-	const [patient, setPatient] = useState({});
-	const [patients, setPatients] = useState([]);
+	const clientes = [
+		{ uid: "1", name: "Ricardo Del Rio", tel: "8711126205" },
+		{ uid: "2", name: "Alberto Saavedra", tel: "8712222222" },
+		{ uid: "3", name: "Osvaldo Aleman", tel: "8713333333" },
+		{ uid: "4", name: "Gerardo Alba", tel: "8714444444" },
+		{ uid: "5", name: "Hector Ramirez", tel: "8715555555" },
+	];
+
+	const [cliente, setCliente] = useState({});
+	// const [clientes, setClientes] = useState([]);
 	const [delbtn, setDelBtn] = useState(props.delbtn);
 	const [ready, setReady] = useState(props.ready);
 	const [open, setOpen] = useState(props.open);
@@ -32,35 +40,35 @@ const Event = (props) => {
 	const [start, setStart] = useState(props.event.start);
 	const [end, setEnd] = useState(props.event.end);
 	const [resourceId, setResourceId] = useState(1);
-	// const [patients] = useContext([]);
+	// const [clientes] = useContext([]);
 	const [results, setResults] = useState([]);
 	const [activeStep, setActiveStep] = useState(0);
 
 	useEffect(() => {
 		if (ready === true) {
-			props.onClose({ start, end, ready, remove, patient, resourceId });
+			props.onClose({ start, end, ready, remove, cliente, resourceId });
 		}
 	}, [ready]);
 
 	useEffect(() => {
 		if (remove === true) {
-			props.onClose({ start, end, ready, remove, patient, resourceId });
+			props.onClose({ start, end, ready, remove, cliente, resourceId });
 		}
 	}, [remove]);
 
 	useEffect(() => {
 		if (open === false) {
-			props.onClose({ start, end, ready, remove, patient, resourceId });
+			props.onClose({ start, end, ready, remove, cliente, resourceId });
 		}
 	}, [open]);
 
 	const mapPropsToState = () => {
 		if (props.delbtn) {
-			patients.forEach((pat) => {
-				let res = pat.uid.localeCompare(props.event.patientid);
+			clientes.forEach((el) => {
+				let res = el.uid.localeCompare(props.event.clienteid);
 				if (res === 0) {
-					setPatient(pat);
-					console.log(pat);
+					setCliente(el);
+					console.log(el);
 				}
 			});
 		}
@@ -76,8 +84,8 @@ const Event = (props) => {
 	};
 
 	const handleTimeChange = (date, time) => {
-		let mins = moment(date).minutes();
-		let hours = moment(date).hours();
+		let mins = getMinutes(date);
+		let hours = getHours(date);
 		if (time === "start") {
 			let newDate = new Date(start);
 			newDate.setHours(hours);
@@ -109,12 +117,12 @@ const Event = (props) => {
 	};
 
 	// FIlter
-	const filterPatients = (val) => {
+	const filterClientes = (val) => {
 		val = val.trim().toLowerCase();
 		if (val === "") {
 			setResults([]);
 		} else {
-			setResults(filterAllProperties([...patients], val));
+			setResults(filterAllProperties([...clientes], val));
 		}
 	};
 
@@ -129,8 +137,8 @@ const Event = (props) => {
 		return filtrado;
 	};
 
-	const selectPatient = (pat) => {
-		setPatient(pat);
+	const selectCliente = (pat) => {
+		setCliente(pat);
 		setActiveStep((prevActiveStep) => prevActiveStep + 1);
 	};
 
@@ -145,26 +153,26 @@ const Event = (props) => {
 							margin="normal"
 							required
 							fullWidth>
-							<InputLabel htmlFor="title">Buscar paciente</InputLabel>
+							<InputLabel htmlFor="title">Buscar cliente</InputLabel>
 							<Input
 								id="title"
 								name="title"
 								autoComplete="title"
 								autoFocus
-								onChange={(e) => filterPatients(e.target.value)}
+								onChange={(e) => filterClientes(e.target.value)}
 							/>
 						</FormControl>
-						<ul className="patientList">
+						<ul className="clienteList">
 							{results.length > 0 ? (
 								<div>
-									{results.map((patient, index) => {
+									{results.map((cliente, index) => {
 										return (
 											<li
 												key={index}
 												className={index % 2 ? "even" : "odd"}
-												onClick={() => selectPatient(patient)}>
-												<span> {patient.name} </span>
-												<span> {patient.tel} </span>
+												onClick={() => selectCliente(cliente)}>
+												<span> {cliente.name} </span>
+												<span> {cliente.tel} </span>
 											</li>
 										);
 									})}
@@ -177,7 +185,7 @@ const Event = (props) => {
 				return (
 					<div className="case1">
 						{delbtn ? (
-							<Link to={{ pathname: `/patient/${patient.uid}` }}>
+							<Link to={{ pathname: `/cliente/${cliente.uid}` }}>
 								<h3>{props.event.title}</h3>
 							</Link>
 						) : (
@@ -187,11 +195,11 @@ const Event = (props) => {
 									onClick={handleBack}>
 									<i className="material-icons">arrow_back</i>
 								</IconButton>
-								<h3>{patient.name}</h3>
+								<h3>{cliente.name}</h3>
 							</div>
 						)}
 						<div className="pickers">
-							<MuiPickersUtilsProvider utils={MomentUtils}>
+							<MuiPickersUtilsProvider utils={DateFnsUtils}>
 								<TimePicker
 									className="timepicker"
 									inputVariant="outlined"

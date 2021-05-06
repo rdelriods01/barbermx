@@ -1,16 +1,24 @@
 @import "../../variables.module.scss";
 
 .agenda {
-	text-align: center;
 	h1 {
-		margin-top: 0;
+		text-align: left;
+		margin: 0 0 0 1em;
+		color: dimgray;
 	}
 	.calendar {
-		width: 70vw;
-		margin: auto;
-		background-color: white;
-		padding: 2em;
-		border-radius: 10px;
+		// width: 70vw;
+		// margin: auto;
+		// background-color: white;
+		// padding: 2em;
+		// border-radius: 10px;
+		.rbc-toolbar-label {
+			font-size: 2em;
+			font-weight: bold;
+		}
+		.rbc-allday-cell {
+			display: none;
+		}
 		.rbc-day-slot .rbc-event-label {
 			display: none;
 		}
@@ -46,7 +54,7 @@
 			margin: auto;
 		}
 	}
-	.patientList {
+	.clienteList {
 		margin: auto;
 		padding: 1em;
 		text-align: center;
@@ -80,13 +88,13 @@
 			background-color: ghostwhite;
 		}
 	}
-	.patientList::-webkit-scrollbar {
+	.clienteList::-webkit-scrollbar {
 		width: 10px;
 	}
-	.patientList::-webkit-scrollbar-track {
+	.clienteList::-webkit-scrollbar-track {
 		box-shadow: inset 0 0 6px rgba(0, 116, 248, 0);
 	}
-	.patientList::-webkit-scrollbar-thumb {
+	.clienteList::-webkit-scrollbar-thumb {
 		background-color: $primary;
 		outline: none;
 		border-radius: 20px;
