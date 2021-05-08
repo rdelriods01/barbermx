@@ -246,10 +246,10 @@ const Calendario = () => {
 						noEventsInRange:
 							"Sin pacientes agendados para este rango de fechas",
 					}}
-					timeslots={2}
+					timeslots={4}
 					min={new Date("2019, 1, 1, 08:00")}
 					max={new Date("2019, 1, 1, 22:00")}
-					style={{ height: "79vh" }}
+					style={{ height: "85vh" }}
 					components={{
 						agenda: {
 							event: (ev) => (
