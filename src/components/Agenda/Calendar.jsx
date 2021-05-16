@@ -23,6 +23,8 @@ import {
 	getDay,
 	getTime,
 } from "date-fns";
+import { Drawer, Slide } from "@material-ui/core";
+import Cita from "./Cita";
 const locales = {
 	es: es,
 };
@@ -318,30 +320,27 @@ const Calendario = () => {
 						})}
 					</div>
 				) : null}
-				{openCreate ? (
-					<div>
-						<Event
-							title="Nueva cita"
-							ready={false}
-							remove={false}
-							delbtn={false}
-							open={openCreate}
-							event={actualEvent}
-							onClose={createEvent}
-						/>
-					</div>
-				) : openEdit ? (
-					<div>
-						<Event
-							title="Editar cita"
-							ready={false}
-							remove={false}
-							delbtn={true}
-							open={openEdit}
-							event={actualEvent}
-							onClose={closeEditModal}
-						/>
-					</div>
+				<Drawer
+					open={openCreate}
+					anchor="right"
+					onClose={() => setOpenCreate(false)}>
+					<Cita
+						title="Agregar nueva cita"
+						ready={false}
+						remove={false}
+						delbtn={false}
+						event={actualEvent}
+						onClose={createEvent}></Cita>
+				</Drawer>
+				{openCreate ? null : openEdit ? (
+					<Event
+						title="Editar cita"
+						ready={false}
+						remove={false}
+						delbtn={true}
+						open={openEdit}
+						event={actualEvent}
+						onClose={closeEditModal}></Event>
 				) : null}
 			</div>
 		</>
