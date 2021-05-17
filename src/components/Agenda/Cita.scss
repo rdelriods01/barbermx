@@ -85,6 +85,19 @@
 							margin: 1em 2em;
 							text-align: center;
 						}
+						.barberSelect {
+							display: flex;
+							cursor: pointer;
+							position: relative;
+							i {
+								position: absolute;
+								right: 8%;
+								top: 26%;
+							}
+							&:hover {
+								background-color: #45ac86;
+							}
+						}
 					}
 					.cardContentHoras {
 						text-align: left;
@@ -166,6 +179,7 @@
 						border-radius: 8px;
 						outline: none;
 					}
+
 					.dropdownList {
 						overflow-y: scroll;
 						margin: 1em 0;
@@ -229,10 +243,29 @@
 						}
 					}
 				}
+				.selectDropDown {
+					margin: 8vh 0 0 9vw;
+					min-width: 10vw;
+					width: 10vw;
+					.option {
+						display: block;
+						margin: 0;
+						background-color: white;
+						color: dimgray;
+						padding: 1em;
+						text-align: center;
+						border-bottom: 1px solid #f4f4fa;
+						&:hover {
+							border-left: 2px solid #4ac497;
+							background-color: #f5fafa;
+							color: #4ac497;
+						}
+					}
+				}
 				.hide {
 					max-height: 0px;
 					padding: 0;
-					width: 20w;
+					// width: 20vw;
 					* {
 						visibility: hidden;
 						opacity: 0;

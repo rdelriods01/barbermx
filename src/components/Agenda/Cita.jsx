@@ -7,6 +7,7 @@ import DateFnsUtils from "@date-io/date-fns";
 import "./Cita.scss";
 
 const Cita = (props) => {
+	console.log(props);
 	const servicios = [
 		{ uid: "1", desc: "Corte de cabello", costo: 100 },
 		{ uid: "2", desc: "Corte de barba", costo: 80 },
@@ -28,10 +29,13 @@ const Cita = (props) => {
 		{ uid: "4", name: "Gerardo Alba", tel: "8714444444" },
 		{ uid: "5", name: "Hector Ramirez", tel: "8715555555" },
 	];
-	const barbers = ["", "barber1", "barber2", "barber3", "barber4"];
+	const barbers = ["", "Barber 1", "Barber 2", "Barber 3", "Barber 4"];
 
 	const [servicio, setServicio] = useState(
 		props.event.servicio ? props.event.servicio : ""
+	);
+	const [barber, setBarber] = useState(
+		props.event.resourceId ? props.event.resourceId : 1
 	);
 	const [cliente, setCliente] = useState(
 		props.event.cliente ? props.event.cliente : ""
@@ -53,6 +57,8 @@ const Cita = (props) => {
 	const [showCardHoras, setShowCardHoras] = useState(false);
 	const [horasSelected, setHorasSelected] = useState(false);
 
+	const [showBarberSelect, setShowBarberSelect] = useState(false);
+
 	//COMPONENT USEEFFECTS
 
 	useEffect(() => {
@@ -63,6 +69,10 @@ const Cita = (props) => {
 			setServicioSelected(false);
 		}
 	}, [servicio]);
+
+	useEffect(() => {
+		console.log(barber);
+	}, [barber]);
 
 	useEffect(() => {
 		setEditClientesFlag(false);
@@ -133,7 +143,51 @@ const Cita = (props) => {
 								</div>
 								<div className="cardContent">
 									<b>{servicio.desc}</b>
-									<span>{barbers[props.event.resourceId]}</span>
+									<span
+										className="barberSelect"
+										onClick={() => setShowBarberSelect((prev) => !prev)}>
+										{barbers[barber]}
+										<i className="material-icons">arrow_drop_down</i>
+									</span>
+									<div
+										className={
+											showBarberSelect
+												? "dropdown selectDropDown"
+												: "dropdown selectDropDown hide"
+										}>
+										<label
+											className="option"
+											onClick={() => {
+												setBarber(1);
+												setShowBarberSelect(false);
+											}}>
+											Barber 1
+										</label>
+										<label
+											className="option"
+											onClick={() => {
+												setBarber(2);
+												setShowBarberSelect(false);
+											}}>
+											Barber 2
+										</label>
+										<label
+											className="option"
+											onClick={() => {
+												setBarber(3);
+												setShowBarberSelect(false);
+											}}>
+											Barber 3
+										</label>
+										<label
+											className="option"
+											onClick={() => {
+												setBarber(4);
+												setShowBarberSelect(false);
+											}}>
+											Barber 4
+										</label>
+									</div>
 								</div>
 							</div>
 						) : (
