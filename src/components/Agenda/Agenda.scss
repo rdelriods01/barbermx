@@ -124,6 +124,10 @@
 		.rbc-event:hover {
 			background-color: #f4f4fa;
 		}
+		.rbc-current-time-indicator {
+			height: 2px;
+			background-color: $primary;
+		}
 	}
 	.leyenda {
 		display: grid;
