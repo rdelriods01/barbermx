@@ -274,4 +274,34 @@
 			}
 		}
 	}
+	.actions {
+		display: flex;
+		button {
+			font-weight: bold;
+			border: none;
+			border-radius: 8px;
+			margin: auto;
+		}
+		.cancelBtn {
+			padding: 1em 2em;
+			background: none;
+			color: gray;
+			&:hover {
+				background-color: #f4f4fa;
+			}
+		}
+		.saveBtn {
+			padding: 1em 8em;
+			background-color: $primary;
+			color: white;
+		}
+		.saveBtnHover {
+			&:hover {
+				background-color: $primaryHover;
+			}
+		}
+		.saveBtnDisabled {
+			background-color: gray;
+		}
+	}
 }

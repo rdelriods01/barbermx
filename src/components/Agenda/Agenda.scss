@@ -94,17 +94,35 @@
 		.rbc-time-gutter.rbc-time-column {
 			background-color: #f7f7f7;
 		}
+		.rbc-events-container {
+			margin-right: 4em;
+		}
 		.rbc-day-slot .rbc-event-label {
-			display: none;
+			position: absolute;
+			bottom: 10px;
+			left: 20px;
+			color: gray;
 		}
 		.rbc-event {
-			background-color: $primary;
+			background-color: white;
 			border: none;
-			align-items: center;
-			justify-content: center;
+			border-top-style: solid;
+			border-top-width: 4px;
+			min-height: 10vh;
+			p {
+				color: dimgray;
+				font-weight: bold;
+				margin-bottom: 0;
+				margin-left: 1em;
+			}
+			span {
+				color: gray;
+				margin-left: 1em;
+				font-size: 0.9em;
+			}
 		}
 		.rbc-event:hover {
-			background-color: $primaryHover;
+			background-color: #f4f4fa;
 		}
 	}
 	.leyenda {

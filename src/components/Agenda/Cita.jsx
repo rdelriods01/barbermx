@@ -7,7 +7,6 @@ import DateFnsUtils from "@date-io/date-fns";
 import "./Cita.scss";
 
 const Cita = (props) => {
-	console.log(props);
 	const servicios = [
 		{ uid: "1", desc: "Corte de cabello", costo: 100 },
 		{ uid: "2", desc: "Corte de barba", costo: 80 },
@@ -58,6 +57,7 @@ const Cita = (props) => {
 	const [horasSelected, setHorasSelected] = useState(false);
 
 	const [showBarberSelect, setShowBarberSelect] = useState(false);
+	const [saveBtnDisabled, setSaveBtnDisabled] = useState(true);
 
 	//COMPONENT USEEFFECTS
 
@@ -98,6 +98,19 @@ const Cita = (props) => {
 			setHorasSelected(false);
 		}
 	}, [start, end]);
+
+	useEffect(() => {
+		if (
+			servicioSelected &&
+			barber !== null &&
+			clienteSelected &&
+			horasSelected
+		) {
+			setSaveBtnDisabled(false);
+		} else {
+			setSaveBtnDisabled(true);
+		}
+	}, [servicioSelected, barber, clienteSelected, horasSelected]);
 
 	// COMPONENT FUNCTIONS
 
@@ -408,8 +421,31 @@ const Cita = (props) => {
 				</div>
 			</div>
 			<div className="actions">
-				<button onClick={() => setHorasSelected((prev) => !prev)}>
-					Click me!
+				<button
+					className="cancelBtn"
+					onClick={() => {
+						props.onClose({
+							ready: false,
+						});
+					}}>
+					Cancelar
+				</button>
+				<button
+					disabled={saveBtnDisabled}
+					className={
+						saveBtnDisabled ? "saveBtn saveBtnDisabled" : "saveBtn saveBtnHover"
+					}
+					onClick={() => {
+						props.onClose({
+							start,
+							end,
+							cliente,
+							barber,
+							servicio,
+							ready: true,
+						});
+					}}>
+					Agendar
 				</button>
 			</div>
 		</div>

@@ -71,10 +71,12 @@ const Calendario = () => {
 				end: event.end,
 				clienteid: event.cliente.uid,
 				dia: format(event.start, "yyyy-MM-dd"),
-				resourceId: event.resourceId,
-				sala: salas[event.resourceId - 1],
+				resourceId: event.barber,
+				sala: salas[event.barber - 1],
+				servicio: event.servicio.desc,
 			};
 			console.log(newEvent);
+			setEvents([...events, newEvent]);
 			//   db.collection("events")
 			//     .add(newEvent)
 			//     .catch((err) => console.log("Error addign event: ", err));
@@ -277,33 +279,39 @@ const Calendario = () => {
 						// toolbar: {
 						// 	header: <h2>Hello</h2>,
 						// },
+						event: (ev) => (
+							<div className="event">
+								<p>{ev.title}</p>
+								<span>{ev.event.servicio}</span>
+							</div>
+						),
 					}}
 					eventPropGetter={(event) => {
 						if (event.resourceId === 1 && view !== "agenda") {
 							return {
 								style: {
-									backgroundColor: resourceMap[event.resourceId - 1].color,
+									borderTopColor: resourceMap[event.resourceId - 1].color,
 								},
 							};
 						}
 						if (event.resourceId === 2 && view !== "agenda") {
 							return {
 								style: {
-									backgroundColor: resourceMap[event.resourceId - 1].color,
+									borderTopColor: resourceMap[event.resourceId - 1].color,
 								},
 							};
 						}
 						if (event.resourceId === 3 && view !== "agenda") {
 							return {
 								style: {
-									backgroundColor: resourceMap[event.resourceId - 1].color,
+									borderTopColor: resourceMap[event.resourceId - 1].color,
 								},
 							};
 						}
 						if (event.resourceId === 4 && view !== "agenda") {
 							return {
 								style: {
-									backgroundColor: resourceMap[event.resourceId - 1].color,
+									borderTopColor: resourceMap[event.resourceId - 1].color,
 								},
 							};
 						}
