@@ -1,26 +1,31 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { format, getMinutes, getHours, isAfter, isEqual } from "date-fns";
 import { es } from "date-fns/locale";
 import { TimePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 
+import { ServicesContext } from "../../Store";
+
 import "./Cita.scss";
 
 const Cita = (props) => {
-	const servicios = [
-		{ uid: "1", desc: "Corte de cabello", costo: 100 },
-		{ uid: "2", desc: "Corte de barba", costo: 80 },
-		{ uid: "3", desc: "Rasurada completa", costo: 80 },
-		{ uid: "3", desc: "Rasurada completa", costo: 80 },
-		{ uid: "3", desc: "Rasurada completa", costo: 80 },
-		{ uid: "3", desc: "Rasurada completa", costo: 80 },
-		{ uid: "3", desc: "Rasurada completa", costo: 80 },
-		{ uid: "3", desc: "Rasurada completa", costo: 80 },
-		{ uid: "3", desc: "Rasurada completa", costo: 80 },
-		{ uid: "3", desc: "Rasurada completa", costo: 80 },
-		{ uid: "3", desc: "Rasurada completa", costo: 80 },
-		{ uid: "3", desc: "Rasurada completa", costo: 80 },
-	];
+	console.log(props);
+	// const servicios = [
+	// 	{ uid: "1", desc: "Corte de cabello", costo: 100 },
+	// 	{ uid: "2", desc: "Corte de barba", costo: 80 },
+	// 	{ uid: "3", desc: "Rasurada completa", costo: 80 },
+	// 	{ uid: "3", desc: "Rasurada completa", costo: 80 },
+	// 	{ uid: "3", desc: "Rasurada completa", costo: 80 },
+	// 	{ uid: "3", desc: "Rasurada completa", costo: 80 },
+	// 	{ uid: "3", desc: "Rasurada completa", costo: 80 },
+	// 	{ uid: "3", desc: "Rasurada completa", costo: 80 },
+	// 	{ uid: "3", desc: "Rasurada completa", costo: 80 },
+	// 	{ uid: "3", desc: "Rasurada completa", costo: 80 },
+	// 	{ uid: "3", desc: "Rasurada completa", costo: 80 },
+	// 	{ uid: "3", desc: "Rasurada completa", costo: 80 },
+	// ];
+	const services = useContext(ServicesContext);
+	console.log(services);
 	const clientes = [
 		{ uid: "1", name: "Ricardo Del Rio", tel: "8711126205" },
 		{ uid: "2", name: "Alberto Saavedra", tel: "8712222222" },
@@ -155,7 +160,7 @@ const Cita = (props) => {
 									</button>
 								</div>
 								<div className="cardContent">
-									<b>{servicio.desc}</b>
+									<b>{servicio.description}</b>
 									<span
 										className="barberSelect"
 										onClick={() => setShowBarberSelect((prev) => !prev)}>
@@ -251,7 +256,7 @@ const Cita = (props) => {
 								placeholder="Buscar..."
 							/>
 							<div className="dropdownList">
-								{servicios.map((servicio, index) => (
+								{services.map((servicio, index) => (
 									<li
 										key={index}
 										value={servicio.desc}
@@ -259,8 +264,8 @@ const Cita = (props) => {
 											setShowServiciosCard(false);
 											setServicio(servicio);
 										}}>
-										<span>{servicio.desc}</span>
-										<span className="costo">${servicio.costo}</span>
+										<span>{servicio.description}</span>
+										<span className="costo">${servicio.price}</span>
 									</li>
 								))}
 							</div>
