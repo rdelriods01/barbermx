@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 
 import { Calendar, dateFnsLocalizer } from "react-big-calendar";
 import withDragAndDrop from "react-big-calendar/lib/addons/dragAndDrop";
-import Event from "./Event";
 import { es } from "date-fns/locale";
 
 import "react-big-calendar/lib/css/react-big-calendar.css";
@@ -23,7 +22,7 @@ import {
 	getDay,
 	getTime,
 } from "date-fns";
-import { Drawer, Slide } from "@material-ui/core";
+import { Drawer } from "@material-ui/core";
 import Cita from "./Cita";
 const locales = {
 	es: es,
@@ -39,10 +38,11 @@ const localizer = dateFnsLocalizer({
 const DragAndDropCalendar = withDragAndDrop(Calendar);
 
 const Calendario = () => {
-	const salas = ["TAC", "RX", "Ultra", "Masto"];
+	const barbers = ["Barber 1", "Barber 2", "Barber 3", "Barber 4"];
 	const [events, setEvents] = useState([]);
 	const [openCreate, setOpenCreate] = useState(false);
 	const [openEdit, setOpenEdit] = useState(false);
+	const [showMore, setShowMore] = useState(false);
 	const [actualEvent, setActualEvent] = useState(null);
 	const [view, setView] = useState("day");
 	const [currentDate, setCurrentDate] = useState(new Date());
@@ -69,11 +69,11 @@ const Calendario = () => {
 				start: event.start,
 				startTS: getTime(event.start),
 				end: event.end,
-				clienteid: event.cliente.uid,
+				cliente: event.cliente,
 				dia: format(event.start, "yyyy-MM-dd"),
 				resourceId: event.barber,
-				sala: salas[event.barber - 1],
-				servicio: event.servicio.desc,
+				barber: barbers[event.barber - 1],
+				servicio: event.servicio,
 			};
 			console.log(newEvent);
 			setEvents([...events, newEvent]);
@@ -99,7 +99,6 @@ const Calendario = () => {
 					start: event.start,
 					end: event.end,
 					resourceId: event.resourceId,
-					sala: salas[event.resourceId - 1],
 				});
 			}
 		}
@@ -126,7 +125,6 @@ const Calendario = () => {
 					end,
 					dia: format(start, "yyyy-MM-dd"),
 					startTS: getTime(start),
-					resourceId: event.resourceId,
 				};
 			} else {
 				newEvent = {
@@ -136,10 +134,12 @@ const Calendario = () => {
 					dia: format(start, "yyyy-MM-dd"),
 					startTS: getTime(start),
 					resourceId: resourceId,
+					barber: barbers[resourceId - 1],
 				};
 			}
 		}
-		console.log("update event " + newEvent);
+		console.log({ ...newEvent });
+		// setEvents([...events, newEvent]);
 		// db.collection("events")
 		//   .doc(event.uid)
 		//   .update(newEvent)
@@ -179,7 +179,7 @@ const Calendario = () => {
 		}
 		let inicio = getTime(start);
 		let final = getTime(end);
-		console.log("look for events");
+		console.log("look for events from " + inicio + " to " + final);
 		// db.collection("events")
 		//   .where("startTS", ">=", inicio)
 		//   .where("startTS", "<=", final)
@@ -215,10 +215,10 @@ const Calendario = () => {
 	};
 
 	const resourceMap = [
-		{ resourceId: 1, sala: "Tomografia", abr: "TAC", color: "#00bcd4" },
-		{ resourceId: 2, sala: "Rayos X", abr: "RX", color: "#FFC107" },
-		{ resourceId: 3, sala: "Ultrasonido", abr: "UL", color: "#4caf50" },
-		{ resourceId: 4, sala: "Mastografia", abr: "XM", color: "#e91e63" },
+		{ resourceId: 1, barber: "Barber 1", color: "#00bcd4" },
+		{ resourceId: 2, barber: "Barber 2", color: "#FFC107" },
+		{ resourceId: 3, barber: "Barber 3", color: "#4caf50" },
+		{ resourceId: 4, barber: "Barber 4", color: "#e91e63" },
 	];
 
 	return (
@@ -238,7 +238,7 @@ const Calendario = () => {
 					defaultView={view}
 					resources={view === "week" ? null : resourceMap}
 					resourceIdAccessor="resourceId"
-					resourceTitleAccessor="sala"
+					resourceTitleAccessor="barber"
 					step={30}
 					messages={{
 						previous: "<",
@@ -267,7 +267,7 @@ const Calendario = () => {
 												textDecoration: "none",
 											}}>
 											{`${ev.title} - ${
-												resourceMap[ev.event.resourceId - 1].sala
+												resourceMap[ev.event.resourceId - 1].barber
 											}`}
 										</Link>
 									) : (
@@ -282,7 +282,7 @@ const Calendario = () => {
 						event: (ev) => (
 							<div className="event">
 								<p>{ev.title}</p>
-								<span>{ev.event.servicio}</span>
+								<span>{ev.event.servicio.description}</span>
 							</div>
 						),
 					}}
@@ -319,10 +319,10 @@ const Calendario = () => {
 				/>
 				{view !== "day" && view !== "agenda" ? (
 					<div className="leyenda">
-						{resourceMap.map((sala) => {
+						{resourceMap.map((barber) => {
 							return (
-								<b key={sala.resourceId} style={{ color: sala.color }}>
-									{sala.sala}
+								<b key={barber.resourceId} style={{ color: barber.color }}>
+									{barber.barber}
 								</b>
 							);
 						})}
@@ -334,13 +334,21 @@ const Calendario = () => {
 					onClose={() => setOpenCreate(false)}>
 					<Cita
 						title="Agregar nueva cita"
-						ready={false}
-						remove={false}
-						delbtn={false}
 						event={actualEvent}
 						onClose={createEvent}></Cita>
 				</Drawer>
-				{openCreate ? null : openEdit ? (
+				<Drawer
+					open={openEdit}
+					anchor="right"
+					onClose={() => setOpenCreate(false)}>
+					<Cita
+						title="Editar cita"
+						event={actualEvent}
+						editFlag={true}
+						onClose={closeEditModal}></Cita>
+				</Drawer>
+
+				{/* {openCreate ? null : openEdit ? (
 					<Event
 						title="Editar cita"
 						ready={false}
@@ -349,7 +357,7 @@ const Calendario = () => {
 						open={openEdit}
 						event={actualEvent}
 						onClose={closeEditModal}></Event>
-				) : null}
+				) : null} */}
 			</div>
 		</>
 	);
