@@ -13,7 +13,7 @@
     "date-fns": "^2.21.1",
     "node-sass": "^4.14.1",
     "react": "^17.0.1",
-    "react-big-calendar": "^0.33.2",
+    "react-big-calendar": "^0.33.4",
     "react-dom": "^17.0.1",
     "react-draggable": "^4.4.3",
     "react-router-dom": "^5.2.0",

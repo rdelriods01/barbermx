@@ -40,6 +40,7 @@ const localizer = dateFnsLocalizer({
 const DragAndDropCalendar = withDragAndDrop(Calendar);
 
 const Calendario = () => {
+	const barbers = ["", "Barber 1", "Barber 2", "Barber 3", "Barber 4"];
 	const [events, setEvents] = useState([]);
 	const [openCreate, setOpenCreate] = useState(false);
 	const [openEdit, setOpenEdit] = useState(false);
@@ -225,6 +226,11 @@ const Calendario = () => {
 					min={new Date("2019, 1, 1, 08:00")}
 					max={new Date("2019, 1, 1, 22:00")}
 					style={{ height: "85vh" }}
+					tooltipAccessor={(ev) =>
+						`${ev.title} - ${ev.service.description} con ${
+							barbers[ev.resourceId]
+						} `
+					}
 					components={{
 						agenda: {
 							event: (ev) => (
