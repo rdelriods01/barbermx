@@ -88,34 +88,48 @@ const Calendario = () => {
 		setOpenEdit(true);
 	};
 
-	const closeEditModal = (event) => {
-		console.log(event);
+	const closeEditModal = ({
+		start,
+		end,
+		client,
+		barber,
+		service,
+		ready,
+		remove,
+	}) => {
+		console.log({ start, end, client, barber, service, ready });
 		setOpenEdit(false);
-		if (event.ready || event.remove) {
-			if (event.remove) {
+		if (ready || remove) {
+			if (remove) {
 				deleteEvent(actualEvent);
 			} else {
 				editEvent({
 					event: actualEvent,
-					client: event.client,
-					start: event.start,
-					end: event.end,
-					resourceId: event.barber,
+					client,
+					start,
+					end,
+					resourceId: barber,
+					service,
 				});
 			}
 		}
 	};
 
-	const editEvent = async ({ event, client, start, end, resourceId }) => {
-		console.log(event);
+	const editEvent = async ({
+		event,
+		client,
+		start,
+		end,
+		resourceId,
+		service,
+	}) => {
+		console.log({ event, client, start, end, resourceId, service });
 		let newEvent = null;
 		if (resourceId === undefined || resourceId === null) {
 			console.log("undefined");
 			newEvent = {
 				...event,
 				start,
-				client,
-				title: client.name,
 				end,
 				startTS: getTime(start),
 			};
@@ -124,8 +138,6 @@ const Calendario = () => {
 				newEvent = {
 					...event,
 					start,
-					client,
-					title: client.name,
 					end,
 					startTS: getTime(start),
 				};
@@ -133,12 +145,20 @@ const Calendario = () => {
 				newEvent = {
 					...event,
 					start,
-					client,
-					title: client.name,
 					end,
 					startTS: getTime(start),
 					resourceId: resourceId,
 				};
+			}
+		}
+		if (client !== undefined) {
+			if (event.client._id !== client._id) {
+				newEvent = { ...newEvent, client, title: client.name };
+			}
+		}
+		if (service !== undefined) {
+			if (event.service._id !== service._id) {
+				newEvent = { ...newEvent, service };
 			}
 		}
 		await axios.put(`http://localhost:4000/api/events/${event._id}`, {

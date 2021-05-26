@@ -118,6 +118,37 @@
 							}
 						}
 					}
+					.cardContentClient {
+						display: grid;
+						grid-template-columns: 1fr 3fr;
+						margin: 1em 0;
+						img {
+							width: 4em;
+							height: 4em;
+							color: #808080;
+							border-radius: 50%;
+							filter: invert(59%) sepia(72%) saturate(6%) hue-rotate(75deg)
+								brightness(95%) contrast(92%);
+						}
+						.clientRight {
+							display: grid;
+							grid-auto-flow: row;
+							font-size: 0.9em;
+							h3 {
+								color: dimgray;
+								border-bottom: 1px solid #f4f4fa;
+								padding-bottom: 1em;
+							}
+							.clientInf {
+								display: grid;
+								grid-template-columns: 1fr 2fr;
+								* {
+									padding: 0.5em 0;
+									color: dimgray;
+								}
+							}
+						}
+					}
 					.cardContentHoras {
 						text-align: left;
 						color: dimgray;
@@ -166,6 +197,7 @@
 					box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25),
 						0 10px 10px rgba(0, 0, 0, 0.22);
 					overflow-y: hidden;
+					z-index: 300;
 					.dropdownBtn {
 						padding: 1em;
 						line-height: 1em;

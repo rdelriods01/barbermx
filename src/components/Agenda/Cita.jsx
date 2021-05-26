@@ -9,6 +9,7 @@ import DateFnsUtils from "@date-io/date-fns";
 import { ServicesContext } from "../../Store";
 
 import "./Cita.scss";
+import defaultPP from "../../assets/pp_default.svg";
 
 const Cita = (props) => {
 	const services = useContext(ServicesContext);
@@ -296,9 +297,20 @@ const Cita = (props) => {
 										Editar
 									</button>
 								</div>
-								<div className="cardContent">
-									<b>{client.name}</b>
-									<span>{client.tel} </span>
+								<div className="cardContentClient">
+									<img
+										src={client.avatar === "" ? defaultPP : client.avatar}
+										alt="avatar"
+									/>
+									<div className="clientRight">
+										<h3>{client.name}</h3>
+										<div className="clientInf">
+											<b>Tel:</b>
+											<span>{client.tel} </span>
+											<b>Email:</b>
+											<span>{client.email} </span>
+										</div>
+									</div>
 								</div>
 							</div>
 						) : (
