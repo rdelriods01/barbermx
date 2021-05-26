@@ -89,6 +89,7 @@ const Calendario = () => {
 	};
 
 	const closeEditModal = (event) => {
+		console.log(event);
 		setOpenEdit(false);
 		if (event.ready || event.remove) {
 			if (event.remove) {
@@ -96,6 +97,7 @@ const Calendario = () => {
 			} else {
 				editEvent({
 					event: actualEvent,
+					client: event.client,
 					start: event.start,
 					end: event.end,
 					resourceId: event.barber,
@@ -104,13 +106,16 @@ const Calendario = () => {
 		}
 	};
 
-	const editEvent = async ({ event, start, end, resourceId }) => {
+	const editEvent = async ({ event, client, start, end, resourceId }) => {
+		console.log(event);
 		let newEvent = null;
 		if (resourceId === undefined || resourceId === null) {
 			console.log("undefined");
 			newEvent = {
 				...event,
 				start,
+				client,
+				title: client.name,
 				end,
 				startTS: getTime(start),
 			};
@@ -119,6 +124,8 @@ const Calendario = () => {
 				newEvent = {
 					...event,
 					start,
+					client,
+					title: client.name,
 					end,
 					startTS: getTime(start),
 				};
@@ -126,6 +133,8 @@ const Calendario = () => {
 				newEvent = {
 					...event,
 					start,
+					client,
+					title: client.name,
 					end,
 					startTS: getTime(start),
 					resourceId: resourceId,

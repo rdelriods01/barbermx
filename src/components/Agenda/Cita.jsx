@@ -1,4 +1,6 @@
 import { useState, useEffect, useContext } from "react";
+import axios from "axios";
+
 import { format, getMinutes, getHours, isAfter, isEqual } from "date-fns";
 import { es } from "date-fns/locale";
 import { TimePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
@@ -10,15 +12,16 @@ import "./Cita.scss";
 
 const Cita = (props) => {
 	const services = useContext(ServicesContext);
-	const clients = [
-		{ uid: "1", name: "Ricardo Del Rio", tel: "8711126205" },
-		{ uid: "2", name: "Alberto Saavedra", tel: "8712222222" },
-		{ uid: "3", name: "Osvaldo Aleman", tel: "8713333333" },
-		{ uid: "4", name: "Gerardo Alba", tel: "8714444444" },
-		{ uid: "5", name: "Hector Ramirez", tel: "8715555555" },
-	];
+	// const clients = [
+	// 	{ uid: "1", name: "Ricardo Del Rio", tel: "8711126205" },
+	// 	{ uid: "2", name: "Alberto Saavedra", tel: "8712222222" },
+	// 	{ uid: "3", name: "Osvaldo Aleman", tel: "8713333333" },
+	// 	{ uid: "4", name: "Gerardo Alba", tel: "8714444444" },
+	// 	{ uid: "5", name: "Hector Ramirez", tel: "8715555555" },
+	// ];
 	const barbers = ["", "Barber 1", "Barber 2", "Barber 3", "Barber 4"];
 
+	const [clients, setClients] = useState([]);
 	const [service, setService] = useState(
 		props.event.service ? props.event.service : ""
 	);
@@ -60,6 +63,7 @@ const Cita = (props) => {
 	}, [service]);
 
 	useEffect(() => {
+		console.log(client);
 		setEditClientsFlag(false);
 		if (client !== "") {
 			setClientSelected(true);
@@ -91,6 +95,26 @@ const Cita = (props) => {
 	}, [serviceSelected, barber, clientSelected, horasSelected]);
 
 	// COMPONENT FUNCTIONS
+
+	const searchClients = (value) => {
+		console.log(value);
+		if (value.length > 2) {
+			axios
+				.get("http://localhost:4000/api/clients/filtered", {
+					params: { pre: value },
+				})
+				.then((data) => {
+					let myClients = [];
+					data.data.forEach((client) => {
+						myClients.push(client);
+					});
+					console.log(myClients);
+					setClients(myClients);
+				});
+		} else {
+			setClients([]);
+		}
+	};
 
 	const handleTimeChange = (date, time) => {
 		let mins = getMinutes(date);
@@ -323,20 +347,22 @@ const Cita = (props) => {
 								id="searchClients"
 								className="searchbarInDropdown"
 								placeholder="Buscar..."
+								onKeyUp={(ev) => searchClients(ev.target.value)}
 							/>
 							<div className="dropdownList">
-								{clients.map((client, index) => (
-									<li
-										key={index}
-										value={client.name}
-										onClick={() => {
-											setShowClientsCard(false);
-											setClient(client);
-										}}>
-										<span>{client.name}</span>
-										<span className="costo">{client.tel}</span>
-									</li>
-								))}
+								{clients &&
+									clients.map((client, index) => (
+										<li
+											key={index}
+											value={client.name}
+											onClick={() => {
+												setShowClientsCard(false);
+												setClient(client);
+											}}>
+											<span>{client.name}</span>
+											<span className="costo">{client.tel}</span>
+										</li>
+									))}
 							</div>
 						</div>
 					</div>
