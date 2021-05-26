@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 // import { db } from "../../index";
 
@@ -21,6 +22,7 @@ import {
 	parse,
 	getDay,
 	getTime,
+	parseISO,
 } from "date-fns";
 import { Drawer } from "@material-ui/core";
 import Cita from "./Cita";
@@ -38,11 +40,9 @@ const localizer = dateFnsLocalizer({
 const DragAndDropCalendar = withDragAndDrop(Calendar);
 
 const Calendario = () => {
-	const barbers = ["Barber 1", "Barber 2", "Barber 3", "Barber 4"];
 	const [events, setEvents] = useState([]);
 	const [openCreate, setOpenCreate] = useState(false);
 	const [openEdit, setOpenEdit] = useState(false);
-	const [showMore, setShowMore] = useState(false);
 	const [actualEvent, setActualEvent] = useState(null);
 	const [view, setView] = useState("day");
 	const [currentDate, setCurrentDate] = useState(new Date());
@@ -60,26 +60,25 @@ const Calendario = () => {
 		});
 		setOpenCreate(true);
 	};
-	const createEvent = (event) => {
+	const createEvent = async (event) => {
 		console.log(event);
 		setOpenCreate(false);
 		if (event.ready) {
 			let newEvent = {
-				title: event.cliente.name,
+				title: event.client.name,
 				start: event.start,
 				startTS: getTime(event.start),
 				end: event.end,
-				cliente: event.cliente,
-				dia: format(event.start, "yyyy-MM-dd"),
+				client: event.client,
+				// dia: format(event.start, "yyyy-MM-dd"),
 				resourceId: event.barber,
-				barber: barbers[event.barber - 1],
-				servicio: event.servicio,
+				// barber: barbers[event.barber - 1],
+				service: event.service,
 			};
 			console.log(newEvent);
+			await axios.post("http://localhost:4000/api/events", newEvent);
 			setEvents([...events, newEvent]);
-			//   db.collection("events")
-			//     .add(newEvent)
-			//     .catch((err) => console.log("Error addign event: ", err));
+			getRangeOfTimeAndEvents(currentDate);
 		}
 	};
 
@@ -98,13 +97,13 @@ const Calendario = () => {
 					event: actualEvent,
 					start: event.start,
 					end: event.end,
-					resourceId: event.resourceId,
+					resourceId: event.barber,
 				});
 			}
 		}
 	};
 
-	const editEvent = ({ event, start, end, resourceId }) => {
+	const editEvent = async ({ event, start, end, resourceId }) => {
 		let newEvent = null;
 		if (resourceId === undefined || resourceId === null) {
 			console.log("undefined");
@@ -112,9 +111,6 @@ const Calendario = () => {
 				...event,
 				start,
 				end,
-				// dia: moment(start).format("yyyy-MM-dd"),
-				dia: format(start, "yyyy-MM-dd"),
-				// startTS: moment(start).local().valueOf(),
 				startTS: getTime(start),
 			};
 		} else {
@@ -123,7 +119,6 @@ const Calendario = () => {
 					...event,
 					start,
 					end,
-					dia: format(start, "yyyy-MM-dd"),
 					startTS: getTime(start),
 				};
 			} else {
@@ -131,30 +126,21 @@ const Calendario = () => {
 					...event,
 					start,
 					end,
-					dia: format(start, "yyyy-MM-dd"),
 					startTS: getTime(start),
 					resourceId: resourceId,
-					barber: barbers[resourceId - 1],
 				};
 			}
 		}
-		console.log({ ...newEvent });
-		// setEvents([...events, newEvent]);
-		// db.collection("events")
-		//   .doc(event.uid)
-		//   .update(newEvent)
-		//   .then(() => {
-		//     getRangeOfTimeAndEvents(currentDate);
-		//   })
-		//   .catch((err) => console.error("Error updating event: ", err));
+		await axios.put(`http://localhost:4000/api/events/${event._id}`, {
+			...newEvent,
+		});
+		getRangeOfTimeAndEvents(currentDate);
 	};
 
-	const deleteEvent = (event) => {
-		console.log("delete event" + event);
-		// db.collection("events")
-		//   .doc(event.uid)
-		//   .delete()
-		//   .catch((err) => console.error("Error removing event: ", err));
+	const deleteEvent = async (event) => {
+		console.log("delete event" + JSON.stringify(event));
+		await axios.delete(`http://localhost:4000/api/events/${event._id}`);
+		getRangeOfTimeAndEvents(currentDate);
 	};
 
 	const showView = (actualView) => {
@@ -180,38 +166,24 @@ const Calendario = () => {
 		let inicio = getTime(start);
 		let final = getTime(end);
 		console.log("look for events from " + inicio + " to " + final);
-		// db.collection("events")
-		//   .where("startTS", ">=", inicio)
-		//   .where("startTS", "<=", final)
-		//   // .onSnapshot((data) => {
-		//   .get()
-		//   .then((data) => {
-		//     let myEvents = [];
-		//     let counter = 0;
-		//     let datalength = data.size;
-		//     data.forEach((ev) => {
-		//       let calStart = new Date(ev.data().start.toMillis());
-		//       let calEnd = new Date(ev.data().end.toMillis());
-		//       let patid = ev.data().clienteid;
-		//       db.collection("clientes")
-		//         .doc(patid)
-		//         .get()
-		//         .then((pat) => {
-		//           let evn = {
-		//             ...ev.data(),
-		//             start: calStart,
-		//             end: calEnd,
-		//             uid: ev.id,
-		//             title: pat.data().name,
-		//           };
-		//           myEvents.push(evn);
-		//           counter++;
-		//           if (counter === datalength) {
-		//             setEvents(myEvents);
-		//           }
-		//         });
-		//     });
-		//   });
+		// Search for events
+		axios
+			.get("http://localhost:4000/api/events/range", {
+				params: { startDate: start, endDate: end },
+			})
+			.then((data) => {
+				let myEvents = [];
+				data.data.data.forEach((event) => {
+					let ev = {
+						...event,
+						start: parseISO(event.start),
+						end: parseISO(event.end),
+					};
+					myEvents.push(ev);
+				});
+				console.log(myEvents);
+				setEvents(myEvents);
+			});
 	};
 
 	const resourceMap = [
@@ -247,8 +219,7 @@ const Calendario = () => {
 						week: "Semana",
 						day: "Día",
 						next: ">",
-						noEventsInRange:
-							"Sin pacientes agendados para este rango de fechas",
+						noEventsInRange: "Sin clientes agendados para este rango de fechas",
 					}}
 					timeslots={4}
 					min={new Date("2019, 1, 1, 08:00")}
@@ -260,7 +231,7 @@ const Calendario = () => {
 								<>
 									{ev.event.resourceId ? (
 										<Link
-											to={{ pathname: `/cliente/${ev.event.clienteid}` }}
+											to={{ pathname: `/client/${ev.event.clientid}` }}
 											style={{
 												color: resourceMap[ev.event.resourceId - 1].color,
 												backgroundColor: "none",
@@ -276,13 +247,10 @@ const Calendario = () => {
 								</>
 							),
 						},
-						// toolbar: {
-						// 	header: <h2>Hello</h2>,
-						// },
 						event: (ev) => (
 							<div className="event">
 								<p>{ev.title}</p>
-								<span>{ev.event.servicio.description}</span>
+								<span>{ev.event.service.description}</span>
 							</div>
 						),
 					}}
@@ -347,17 +315,6 @@ const Calendario = () => {
 						editFlag={true}
 						onClose={closeEditModal}></Cita>
 				</Drawer>
-
-				{/* {openCreate ? null : openEdit ? (
-					<Event
-						title="Editar cita"
-						ready={false}
-						remove={false}
-						delbtn={true}
-						open={openEdit}
-						event={actualEvent}
-						onClose={closeEditModal}></Event>
-				) : null} */}
 			</div>
 		</>
 	);

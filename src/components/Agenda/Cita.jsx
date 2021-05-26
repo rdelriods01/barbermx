@@ -9,24 +9,8 @@ import { ServicesContext } from "../../Store";
 import "./Cita.scss";
 
 const Cita = (props) => {
-	console.log(props);
-	// const servicios = [
-	// 	{ uid: "1", desc: "Corte de cabello", costo: 100 },
-	// 	{ uid: "2", desc: "Corte de barba", costo: 80 },
-	// 	{ uid: "3", desc: "Rasurada completa", costo: 80 },
-	// 	{ uid: "3", desc: "Rasurada completa", costo: 80 },
-	// 	{ uid: "3", desc: "Rasurada completa", costo: 80 },
-	// 	{ uid: "3", desc: "Rasurada completa", costo: 80 },
-	// 	{ uid: "3", desc: "Rasurada completa", costo: 80 },
-	// 	{ uid: "3", desc: "Rasurada completa", costo: 80 },
-	// 	{ uid: "3", desc: "Rasurada completa", costo: 80 },
-	// 	{ uid: "3", desc: "Rasurada completa", costo: 80 },
-	// 	{ uid: "3", desc: "Rasurada completa", costo: 80 },
-	// 	{ uid: "3", desc: "Rasurada completa", costo: 80 },
-	// ];
 	const services = useContext(ServicesContext);
-	console.log(services);
-	const clientes = [
+	const clients = [
 		{ uid: "1", name: "Ricardo Del Rio", tel: "8711126205" },
 		{ uid: "2", name: "Alberto Saavedra", tel: "8712222222" },
 		{ uid: "3", name: "Osvaldo Aleman", tel: "8713333333" },
@@ -35,14 +19,14 @@ const Cita = (props) => {
 	];
 	const barbers = ["", "Barber 1", "Barber 2", "Barber 3", "Barber 4"];
 
-	const [servicio, setServicio] = useState(
-		props.event.servicio ? props.event.servicio : ""
+	const [service, setService] = useState(
+		props.event.service ? props.event.service : ""
 	);
 	const [barber, setBarber] = useState(
 		props.event.resourceId ? props.event.resourceId : 1
 	);
-	const [cliente, setCliente] = useState(
-		props.event.cliente ? props.event.cliente : ""
+	const [client, setClient] = useState(
+		props.event.client ? props.event.client : ""
 	);
 	const [start, setStart] = useState(
 		props.event.start ? props.event.start : ""
@@ -50,13 +34,13 @@ const Cita = (props) => {
 	const [end, setEnd] = useState(props.event.end ? props.event.end : "");
 	const [errorTime, setErrorTime] = useState("");
 	// flags
-	const [editServiciosFlag, setEditServiciosFlag] = useState(false);
-	const [showServiciosCard, setShowServiciosCard] = useState(false);
-	const [servicioSelected, setServicioSelected] = useState(false);
+	const [editServicesFlag, setEditServicesFlag] = useState(false);
+	const [showServicesCard, setShowServicesCard] = useState(false);
+	const [serviceSelected, setServiceSelected] = useState(false);
 
-	const [editClientesFlag, setEditClientesFlag] = useState(false);
-	const [showClientesCard, setShowClientesCard] = useState(false);
-	const [clienteSelected, setClienteSelected] = useState(false);
+	const [editClientsFlag, setEditClientsFlag] = useState(false);
+	const [showClientsCard, setShowClientsCard] = useState(false);
+	const [clientSelected, setClientSelected] = useState(false);
 
 	const [showCardHoras, setShowCardHoras] = useState(false);
 	const [horasSelected, setHorasSelected] = useState(false);
@@ -67,31 +51,25 @@ const Cita = (props) => {
 	//COMPONENT USEEFFECTS
 
 	useEffect(() => {
-		setEditServiciosFlag(false);
-		if (servicio !== "") {
-			setServicioSelected(true);
+		setEditServicesFlag(false);
+		if (service !== "") {
+			setServiceSelected(true);
 		} else {
-			setServicioSelected(false);
+			setServiceSelected(false);
 		}
-	}, [servicio]);
+	}, [service]);
 
 	useEffect(() => {
-		console.log(barber);
-	}, [barber]);
-
-	useEffect(() => {
-		setEditClientesFlag(false);
-		if (cliente !== "") {
-			setClienteSelected(true);
+		setEditClientsFlag(false);
+		if (client !== "") {
+			setClientSelected(true);
 		} else {
-			setClienteSelected(false);
+			setClientSelected(false);
 		}
-	}, [cliente]);
+	}, [client]);
 
 	useEffect(() => {
 		if (start !== "" || end !== "") {
-			console.log(start);
-			console.log(end);
 			if (isAfter(start, end) || isEqual(start, end)) {
 				setErrorTime("Revisa que las horas sean correctas");
 				setHorasSelected(false);
@@ -105,17 +83,12 @@ const Cita = (props) => {
 	}, [start, end]);
 
 	useEffect(() => {
-		if (
-			servicioSelected &&
-			barber !== null &&
-			clienteSelected &&
-			horasSelected
-		) {
+		if (serviceSelected && barber !== null && clientSelected && horasSelected) {
 			setSaveBtnDisabled(false);
 		} else {
 			setSaveBtnDisabled(true);
 		}
-	}, [servicioSelected, barber, clienteSelected, horasSelected]);
+	}, [serviceSelected, barber, clientSelected, horasSelected]);
 
 	// COMPONENT FUNCTIONS
 
@@ -140,27 +113,37 @@ const Cita = (props) => {
 		<div className="citaC">
 			<div className="citaHeader">
 				<b>{props.title}</b>
+				{props.editFlag ? (
+					<span
+						onClick={() => {
+							props.onClose({
+								remove: true,
+							});
+						}}>
+						<i className="material-icons">delete</i>
+					</span>
+				) : null}
 			</div>
 			<div className="steps">
 				<div className="step ">
-					<b className={servicioSelected ? "num done" : "num"}>1</b>
+					<b className={serviceSelected ? "num done" : "num"}>1</b>
 					<span className="line"></span>
 					<div className="card">
-						{servicioSelected ? (
+						{serviceSelected ? (
 							<div className="conDatos">
 								<div className="tituloCard">
 									<b>SERVICIO AGENDADO:</b>
 									<button
 										className="editBtn"
 										onClick={() => {
-											setShowServiciosCard(true);
-											setEditServiciosFlag(true);
+											setShowServicesCard(true);
+											setEditServicesFlag(true);
 										}}>
 										Editar
 									</button>
 								</div>
 								<div className="cardContent">
-									<b>{servicio.description}</b>
+									<b>{service.description}</b>
 									<span
 										className="barberSelect"
 										onClick={() => setShowBarberSelect((prev) => !prev)}>
@@ -213,26 +196,26 @@ const Cita = (props) => {
 								<div className="tituloCard">
 									<b>AGREGAR SERVICIO</b>
 								</div>
-								<button onClick={() => setShowServiciosCard((prev) => !prev)}>
-									Seleccionar servicio
+								<button onClick={() => setShowServicesCard((prev) => !prev)}>
+									Seleccionar service
 								</button>
 							</div>
 						)}
-						<div className={showServiciosCard ? "dropdown" : "dropdown hide"}>
-							{editServiciosFlag ? (
+						<div className={showServicesCard ? "dropdown" : "dropdown hide"}>
+							{editServicesFlag ? (
 								<>
 									<span
 										className=" dropdownBtn backBtn"
 										onClick={() => {
-											setShowServiciosCard(false);
+											setShowServicesCard(false);
 										}}>
 										<i className="material-icons">arrow_back</i>
 									</span>
 									<span
 										className="dropdownBtn deleteBtn"
 										onClick={() => {
-											setServicio("");
-											setShowServiciosCard(false);
+											setService("");
+											setShowServicesCard(false);
 										}}>
 										<i className="material-icons">delete</i>
 									</span>
@@ -241,57 +224,57 @@ const Cita = (props) => {
 								<span
 									className="dropdownBtn  cancelBtn"
 									onClick={() => {
-										setServicio("");
-										setShowServiciosCard(false);
-										setEditServiciosFlag(false);
+										setService("");
+										setShowServicesCard(false);
+										setEditServicesFlag(false);
 									}}>
 									<i className="material-icons">clear</i>
 								</span>
 							)}
 							<input
 								type="search"
-								name="searchServicio"
-								id="searchServicio"
+								name="searchService"
+								id="searchService"
 								className="searchbarInDropdown"
 								placeholder="Buscar..."
 							/>
 							<div className="dropdownList">
-								{services.map((servicio, index) => (
+								{services.map((service, index) => (
 									<li
 										key={index}
-										value={servicio.desc}
+										value={service.desc}
 										onClick={() => {
-											setShowServiciosCard(false);
-											setServicio(servicio);
+											setShowServicesCard(false);
+											setService(service);
 										}}>
-										<span>{servicio.description}</span>
-										<span className="costo">${servicio.price}</span>
+										<span>{service.description}</span>
+										<span className="costo">${service.price}</span>
 									</li>
 								))}
 							</div>
 						</div>
 					</div>
 				</div>
-				<div className="step cliente ">
-					<b className={clienteSelected ? "num done" : "num"}>2</b>
+				<div className="step client ">
+					<b className={clientSelected ? "num done" : "num"}>2</b>
 					<span className="line"></span>
 					<div className="card">
-						{clienteSelected ? (
+						{clientSelected ? (
 							<div className="conDatos">
 								<div className="tituloCard">
 									<b>INFORMACIÓN DEL CLIENTE:</b>
 									<button
 										className="editBtn"
 										onClick={() => {
-											setShowClientesCard(true);
-											setEditClientesFlag(true);
+											setShowClientsCard(true);
+											setEditClientsFlag(true);
 										}}>
 										Editar
 									</button>
 								</div>
 								<div className="cardContent">
-									<b>{cliente.name}</b>
-									<span>{cliente.tel} </span>
+									<b>{client.name}</b>
+									<span>{client.tel} </span>
 								</div>
 							</div>
 						) : (
@@ -299,26 +282,26 @@ const Cita = (props) => {
 								<div className="tituloCard">
 									<b>AGREGAR CLIENTE</b>
 								</div>
-								<button onClick={() => setShowClientesCard((prev) => !prev)}>
-									Seleccionar cliente
+								<button onClick={() => setShowClientsCard((prev) => !prev)}>
+									Seleccionar client
 								</button>
 							</div>
 						)}
-						<div className={showClientesCard ? "dropdown" : "dropdown hide"}>
-							{editClientesFlag ? (
+						<div className={showClientsCard ? "dropdown" : "dropdown hide"}>
+							{editClientsFlag ? (
 								<>
 									<span
 										className=" dropdownBtn backBtn"
 										onClick={() => {
-											setShowClientesCard(false);
+											setShowClientsCard(false);
 										}}>
 										<i className="material-icons">arrow_back</i>
 									</span>
 									<span
 										className="dropdownBtn deleteBtn"
 										onClick={() => {
-											setCliente("");
-											setShowClientesCard(false);
+											setClient("");
+											setShowClientsCard(false);
 										}}>
 										<i className="material-icons">delete</i>
 									</span>
@@ -327,31 +310,31 @@ const Cita = (props) => {
 								<span
 									className="dropdownBtn  cancelBtn"
 									onClick={() => {
-										setCliente("");
-										setShowClientesCard(false);
-										setEditClientesFlag(false);
+										setClient("");
+										setShowClientsCard(false);
+										setEditClientsFlag(false);
 									}}>
 									<i className="material-icons">clear</i>
 								</span>
 							)}
 							<input
 								type="search"
-								name="searchClientes"
-								id="searchClientes"
+								name="searchClients"
+								id="searchClients"
 								className="searchbarInDropdown"
 								placeholder="Buscar..."
 							/>
 							<div className="dropdownList">
-								{clientes.map((cliente, index) => (
+								{clients.map((client, index) => (
 									<li
 										key={index}
-										value={cliente.name}
+										value={client.name}
 										onClick={() => {
-											setShowClientesCard(false);
-											setCliente(cliente);
+											setShowClientsCard(false);
+											setClient(client);
 										}}>
-										<span>{cliente.name}</span>
-										<span className="costo">{cliente.tel}</span>
+										<span>{client.name}</span>
+										<span className="costo">{client.tel}</span>
 									</li>
 								))}
 							</div>
@@ -444,9 +427,9 @@ const Cita = (props) => {
 						props.onClose({
 							start,
 							end,
-							cliente,
+							client,
 							barber,
-							servicio,
+							service,
 							ready: true,
 						});
 					}}>

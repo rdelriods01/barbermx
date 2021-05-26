@@ -8,11 +8,6 @@ const Store = ({ children }) => {
 	const [services, setServices] = useState([]);
 
 	useEffect(() => {
-		console.log("services from Store");
-		console.log(services);
-	}, [services]);
-
-	useEffect(() => {
 		getServices();
 	}, []);
 
@@ -20,13 +15,9 @@ const Store = ({ children }) => {
 	function getServices() {
 		axios.get("http://localhost:4000/api/services").then((data) => {
 			let myServices = [];
-			console.log(data);
 			data.data.forEach((service) => {
-				console.log(service);
 				myServices.push(service);
 			});
-			console.log("Read services from DB");
-			console.log(myServices);
 			setServices(myServices);
 		});
 	}

@@ -53,6 +53,13 @@ const Sidebar = (props) => {
 					<i className="material-icons">receipt</i>
 					<span>Contabilidad</span>
 				</NavLink>
+				<NavLink
+					className="li"
+					to="/services"
+					activeStyle={{ color: variables.primary }}>
+					<i className="material-icons">receipt</i>
+					<span>Servicios</span>
+				</NavLink>
 				<span className="spacer" />
 				<div className="li" onClick={logout}>
 					<i className="material-icons">exit_to_app</i>

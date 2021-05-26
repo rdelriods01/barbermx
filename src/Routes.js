@@ -1,4 +1,5 @@
 import Agenda from "./components/Agenda/Agenda";
+import Services from "./components/Services/Services";
 import Venta from "./components/Venta/Venta";
 
 const routes = [
@@ -9,6 +10,10 @@ const routes = [
 	{
 		path: "/agenda",
 		component: Agenda,
+	},
+	{
+		path: "/services",
+		component: Services,
 	},
 	//   {
 	//     path: "/clients",
