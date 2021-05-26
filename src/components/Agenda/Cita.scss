@@ -10,6 +10,25 @@
 	.citaHeader {
 		background-color: #f4f4fa;
 		padding: 1em 2em;
+		display: flex;
+		b {
+			margin: auto 0;
+		}
+		span {
+			margin: auto 0 auto auto;
+			font-size: 1.3em;
+			width: 2.2em;
+			height: 2.2em;
+			color: dimgray;
+			text-align: center;
+			border-radius: 50%;
+			line-height: 2.5em;
+			position: relative;
+			cursor: pointer;
+			&:hover {
+				background-color: lightgray;
+			}
+		}
 	}
 	.steps {
 		display: grid;
