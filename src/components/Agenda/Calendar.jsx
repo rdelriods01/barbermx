@@ -323,7 +323,7 @@ const Calendario = () => {
 				<Drawer
 					open={openEdit}
 					anchor="right"
-					onClose={() => setOpenCreate(false)}>
+					onClose={() => setOpenEdit(false)}>
 					<Cita
 						title="Editar cita"
 						event={actualEvent}
