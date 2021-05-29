@@ -1,0 +1,151 @@
+@import "../../variables.module.scss";
+
+.HomeC {
+	.superior {
+		display: grid;
+		grid-template-columns: 8fr 1fr;
+		h2 {
+			text-align: left;
+			margin: 0 1em;
+			color: rgb(77, 77, 77);
+			display: flex;
+			i {
+				margin-right: 6px;
+				color: $primary;
+				font-size: 1.3em;
+			}
+		}
+	}
+	.grid {
+		display: grid;
+		grid-template-columns: 3fr 2fr;
+		column-gap: 1em;
+		margin-top: 4em;
+		.left {
+			.withEvents {
+				.acordion {
+					border-radius: 20px;
+					transition: all 0.5s;
+					margin: 0 4em 1em 4em;
+					.borderRadiusHeader {
+						border-bottom-left-radius: 1em;
+					}
+					.acordionHeader {
+						border-left: 8px solid red;
+						border-top-left-radius: 1em;
+						.acordionHeaderContent {
+							display: grid;
+							grid-template-columns: 2fr 5fr 2fr 1fr;
+							column-gap: 0.5em;
+							width: 100%;
+							align-items: center;
+							text-align: center;
+							.tiempoCita {
+								border-right: 2px solid lightgray;
+								padding: 0;
+								display: grid;
+								grid-auto-flow: row;
+								b {
+									font-size: 1.4em;
+									color: dimgray;
+								}
+								span {
+									font-size: 1em;
+									color: dimgray;
+								}
+							}
+							.nombreCita {
+								color: dimgray;
+								font-size: 1.2em;
+								align-items: center;
+								display: grid;
+								grid-template-columns: 1fr 3fr;
+								justify-content: center;
+								text-align: left;
+								img {
+									width: 3em;
+									height: 3em;
+									margin: 0 1em 0 0;
+									transition: transform 0.5s;
+									border-radius: 80px;
+									border: 4px solid transparent;
+									background-image: linear-gradient(white, white),
+										radial-gradient(circle at top left, #46d0f7, #7d2ae8);
+									background-origin: border-box;
+									background-clip: content-box, border-box;
+								}
+								span {
+									font-size: 0.9em;
+									display: block;
+								}
+							}
+							.estudiosLength {
+								color: dimgray;
+								font-size: 1.2em;
+								font-weight: bold;
+							}
+							.check {
+								color: #4caf50;
+								font-size: 3em;
+							}
+							.pending {
+								color: #ff9800;
+								font-size: 3em;
+							}
+						}
+					}
+				}
+				.acordion:hover {
+					transform: scale(1.02);
+				}
+				.acordion:last-child {
+					border-bottom-left-radius: 20px;
+					border-bottom-right-radius: 20px;
+				}
+				.acordionDetails {
+					display: grid;
+					grid-template-columns: 3fr 1fr;
+					border-left: 8px solid red;
+					border-bottom-left-radius: 1em;
+					.acordionDetailsGrid {
+						display: grid;
+						grid-auto-flow: row;
+						text-align: center;
+						margin: 0;
+						.estudio {
+							border-left: 8px solid;
+							height: 2em;
+							margin-bottom: 0.2em;
+							list-style: none;
+							align-items: center;
+							display: grid;
+							grid-auto-flow: column;
+							column-gap: 1em;
+							span {
+								min-width: 10em;
+								text-align: center;
+							}
+						}
+					}
+					.cobrarBtn {
+						margin: auto;
+						min-width: 10em;
+						height: 3em;
+						color: #ffffff;
+						background-color: #4caf50;
+						font-weight: bold;
+					}
+					.cobrarBtn:hover {
+						background-color: #429745;
+					}
+				}
+			}
+			.withoutEvents {
+				text-align: center;
+				h1 {
+					margin-left: 2em;
+				}
+			}
+		}
+	}
+}

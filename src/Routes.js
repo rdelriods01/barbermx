@@ -1,11 +1,12 @@
 import Agenda from "./components/Agenda/Agenda";
+import Home from "./components/Home/Home";
 import Services from "./components/Services/Services";
-import Venta from "./components/Venta/Venta";
+// import Venta from "./components/Venta/Venta";
 
 const routes = [
 	{
 		path: "/",
-		component: Venta,
+		component: Home,
 	},
 	{
 		path: "/agenda",
