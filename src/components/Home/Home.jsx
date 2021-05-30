@@ -7,8 +7,6 @@ import {
 	AccordionDetails,
 	AccordionSummary,
 	Button,
-	Card,
-	CardContent,
 } from "@material-ui/core";
 
 import nothingYet from "../../assets/nothingyet.png";
@@ -16,6 +14,8 @@ import defaultPP from "../../assets/pp_default.svg";
 
 import "./Home.scss";
 import Weather from "./Weather";
+import MiniCalendar from "./MiniCalendar";
+import Clock from "./Clock";
 
 function Home() {
 	const barbers = ["", "Barber 1", "Barber 2", "Barber 3", "Barber 4"];
@@ -133,7 +133,10 @@ function Home() {
 						</div>
 					)}
 				</div>
-				<div className="right"></div>
+				<div className="right">
+					<MiniCalendar onChange={(d) => getEvents(d)} />
+					<Clock />
+				</div>
 			</div>
 		</div>
 	);
