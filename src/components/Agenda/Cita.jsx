@@ -12,6 +12,7 @@ import "./Cita.scss";
 import defaultPP from "../../assets/pp_default.svg";
 
 const Cita = (props) => {
+	console.log(props);
 	const services = useContext(ServicesContext);
 	// const clients = [
 	// 	{ uid: "1", name: "Ricardo Del Rio", tel: "8711126205" },
@@ -21,10 +22,13 @@ const Cita = (props) => {
 	// 	{ uid: "5", name: "Hector Ramirez", tel: "8715555555" },
 	// ];
 	const barbers = ["", "Barber 1", "Barber 2", "Barber 3", "Barber 4"];
+	const [checkedState, setCheckedState] = useState(
+		new Array(services.length).fill(false)
+	);
 
 	const [clients, setClients] = useState([]);
-	const [service, setService] = useState(
-		props.event.service ? props.event.service : ""
+	const [servicesSelected, setServicesSelected] = useState(
+		props.event.service ? props.event.service : []
 	);
 	const [barber, setBarber] = useState(
 		props.event.resourceId ? props.event.resourceId : 1
@@ -55,16 +59,23 @@ const Cita = (props) => {
 	//COMPONENT USEEFFECTS
 
 	useEffect(() => {
+		// revisar checked en edit
+		if (props.editFlag) {
+			findCheckedOnEdit();
+		}
+	}, []);
+
+	useEffect(() => {
 		setEditServicesFlag(false);
-		if (service !== "") {
+		if (servicesSelected.length > 0) {
 			setServiceSelected(true);
 		} else {
 			setServiceSelected(false);
+			setCheckedState(new Array(services.length).fill(false));
 		}
-	}, [service]);
+	}, [servicesSelected]);
 
 	useEffect(() => {
-		console.log(client);
 		setEditClientsFlag(false);
 		if (client !== "") {
 			setClientSelected(true);
@@ -134,6 +145,53 @@ const Cita = (props) => {
 		}
 	};
 
+	const findCheckedOnEdit = () => {
+		let myEstado = [...checkedState];
+		for (let i = 0; i < props.event.service.length; i++) {
+			for (let j = 0; j < services.length; j++) {
+				if (props.event.service[i].description === services[j].description) {
+					myEstado[j] = true;
+				}
+			}
+		}
+		setCheckedState(myEstado);
+	};
+
+	const handleService = (serv, position) => {
+		console.log(serv);
+
+		const updatedCheckedState = checkedState.map((item, index) =>
+			index === position ? !item : item
+		);
+
+		setCheckedState(updatedCheckedState);
+	};
+	const saveServices = () => {
+		const myServices = checkedState.reduce((sum, currentState, index) => {
+			console.log(sum);
+			console.log(services[index]);
+			if (currentState === true) {
+				return (sum = [
+					...sum,
+					{
+						description: services[index].description,
+						price: services[index].price,
+					},
+				]);
+			}
+			return sum;
+		}, []);
+		console.log(myServices);
+		setServicesSelected(myServices);
+
+		if (servicesSelected.length > 0) {
+			setServiceSelected(true);
+		} else {
+			setServiceSelected(false);
+		}
+		setShowServicesCard(false);
+	};
+
 	return (
 		<div className="citaC">
 			<div className="citaHeader">
@@ -157,7 +215,7 @@ const Cita = (props) => {
 						{serviceSelected ? (
 							<div className="conDatos">
 								<div className="tituloCard">
-									<b>SERVICIO AGENDADO:</b>
+									<b>SERVICIOS AGENDADOS:</b>
 									<button
 										className="editBtn"
 										onClick={() => {
@@ -167,8 +225,12 @@ const Cita = (props) => {
 										Editar
 									</button>
 								</div>
-								<div className="cardContent">
-									<b>{service.description}</b>
+								<div className="cardContentServicios">
+									<div>
+										{servicesSelected.map((service) => (
+											<li>{service.description}</li>
+										))}
+									</div>
 									<span
 										className="barberSelect"
 										onClick={() => setShowBarberSelect((prev) => !prev)}>
@@ -239,7 +301,7 @@ const Cita = (props) => {
 									<span
 										className="dropdownBtn deleteBtn"
 										onClick={() => {
-											setService("");
+											setServicesSelected([]);
 											setShowServicesCard(false);
 										}}>
 										<i className="material-icons">delete</i>
@@ -249,7 +311,7 @@ const Cita = (props) => {
 								<span
 									className="dropdownBtn  cancelBtn"
 									onClick={() => {
-										setService("");
+										setServicesSelected([]);
 										setShowServicesCard(false);
 										setEditServicesFlag(false);
 									}}>
@@ -269,13 +331,21 @@ const Cita = (props) => {
 										key={index}
 										value={service.desc}
 										onClick={() => {
-											setShowServicesCard(false);
-											setService(service);
+											handleService(service, index);
 										}}>
+										<input
+											type="checkbox"
+											name={service.description}
+											id={index}
+											checked={checkedState[index]}
+										/>
 										<span>{service.description}</span>
 										<span className="costo">${service.price}</span>
 									</li>
 								))}
+							</div>
+							<div className="saveBtn">
+								<button onClick={() => saveServices()}>Guardar</button>
 							</div>
 						</div>
 					</div>
@@ -467,7 +537,7 @@ const Cita = (props) => {
 							end,
 							client,
 							barber,
-							service,
+							service: servicesSelected,
 							ready: true,
 						});
 					}}>

@@ -157,9 +157,7 @@ const Calendario = () => {
 			}
 		}
 		if (service !== undefined) {
-			if (event.service._id !== service._id) {
-				newEvent = { ...newEvent, service };
-			}
+			newEvent = { ...newEvent, service };
 		}
 		await axios.put(`http://localhost:4000/api/events/${event._id}`, {
 			...newEvent,
@@ -256,7 +254,7 @@ const Calendario = () => {
 					max={new Date("2019, 1, 1, 22:00")}
 					style={{ height: "85vh" }}
 					tooltipAccessor={(ev) =>
-						`${ev.title} - ${ev.service.description} con ${
+						`${ev.title} - ${ev.service[0].description} con ${
 							barbers[ev.resourceId]
 						} `
 					}
@@ -285,7 +283,7 @@ const Calendario = () => {
 						event: (ev) => (
 							<div className="event">
 								<p>{ev.title}</p>
-								<span>{ev.event.service.description}</span>
+								<span>{ev.event.service[0].description}</span>
 							</div>
 						),
 					}}
