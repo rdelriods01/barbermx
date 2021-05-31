@@ -318,13 +318,6 @@ const Cita = (props) => {
 									<i className="material-icons">clear</i>
 								</span>
 							)}
-							<input
-								type="search"
-								name="searchService"
-								id="searchService"
-								className="searchbarInDropdown"
-								placeholder="Buscar..."
-							/>
 							<div className="dropdownList">
 								{services.map((service, index) => (
 									<li
@@ -344,7 +337,7 @@ const Cita = (props) => {
 									</li>
 								))}
 							</div>
-							<div className="saveBtn">
+							<div className="saveServiceBtn">
 								<button onClick={() => saveServices()}>Guardar</button>
 							</div>
 						</div>

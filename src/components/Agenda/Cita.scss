@@ -220,6 +220,21 @@
 						float: left;
 						margin: 0.5vh auto 0 0.5vh;
 					}
+					.saveServiceBtn {
+						display: flex;
+						button {
+							background-color: white;
+							padding: 0.5em 1em;
+							margin: auto 1em 2em auto;
+							color: $primary;
+							border-radius: 8px;
+							border: 2px solid $primary;
+							&:hover {
+								background-color: $primary;
+								color: white;
+							}
+						}
+					}
 					.searchbarInDropdown {
 						width: 18.6vw;
 						padding: 1em;
@@ -229,11 +244,10 @@
 						border-radius: 8px;
 						outline: none;
 					}
-
 					.dropdownList {
 						overflow-y: scroll;
 						margin: 1em 0;
-						height: 8em;
+						height: fit-content;
 						width: 20vw;
 						li {
 							list-style: none;
@@ -241,12 +255,6 @@
 							display: grid;
 							grid-auto-flow: column;
 							border-bottom: 1px solid #f4f3f4;
-
-							input {
-								&:checked {
-									background-color: #4ac497;
-								}
-							}
 							.costo {
 								text-align: end;
 								font-weight: bold;
