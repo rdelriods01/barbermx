@@ -7,6 +7,10 @@ function Weather() {
 
 	useEffect(() => {
 		getWeather();
+		let runWeather = setInterval(() => getWeather(), 3600000);
+		return function cleanup() {
+			clearInterval(runWeather);
+		};
 	}, []);
 
 	const getWeather = async () => {
@@ -14,16 +18,12 @@ function Weather() {
 			navigator.geolocation.getCurrentPosition(
 				async (pos) => {
 					let crd = pos.coords;
-					let getzipcode = await axios.get(
-						`http://api.geonames.org/findNearbyPostalCodesJSON?lat=${crd.latitude}&lng=${crd.longitude}&username=rdelrio`
-					);
-					let myZipCode = getzipcode.data.postalCodes[0].postalCode;
-					let myCountryCode = getzipcode.data.postalCodes[0].countryCode;
-					let myWeather = await axios.get(
-						`https://api.openweathermap.org/data/2.5/weather?zip=${myZipCode},${myCountryCode}&units=metric&lang=es&appid=4d86a2006f4a10d56dbdde6d7ec8f48e`
-					);
-					console.log(myWeather.data);
-					setWeather(myWeather.data);
+
+					let myWeather = await axios.get("http://localhost:4000/api/weather", {
+						params: { lat: crd.latitude, lon: crd.longitude },
+					});
+					console.log(myWeather.data.data);
+					setWeather(myWeather.data.data);
 				},
 				(err) => console.warn("ERROR(" + err.code + "): " + err.message),
 				{ enableHighAccuracy: true }
