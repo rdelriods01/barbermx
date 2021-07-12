@@ -62,10 +62,11 @@
 				.tempIcon {
 					img {
 						width: 8em;
-						margin-top: -3em;
+						// max-height: 3em;
+						margin: 0;
 					}
 					p {
-						margin-top: -2em;
+						// margin-top: -2em;
 					}
 				}
 				.moreWeatherData {

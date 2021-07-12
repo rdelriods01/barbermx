@@ -7,6 +7,7 @@ import {
 	AccordionDetails,
 	AccordionSummary,
 	Button,
+	Drawer,
 } from "@material-ui/core";
 
 import nothingYet from "../../assets/nothingyet.png";
@@ -16,6 +17,8 @@ import "./Home.scss";
 import Weather from "./Weather";
 import MiniCalendar from "./MiniCalendar";
 import Clock from "./Clock";
+import POS from "./POS/POS";
+import Cart from "./Cart/Cart";
 
 function Home() {
 	const barbers = ["", "Barber 1", "Barber 2", "Barber 3", "Barber 4"];
@@ -24,6 +27,10 @@ function Home() {
 	const [events, setEvents] = useState([]);
 	const [currentDate, setCurrentDate] = useState(new Date());
 	const [expanded, setExpanded] = useState(false);
+
+	const [openPOS, setOpenPOS] = useState(false);
+	const [openCart, setOpenCart] = useState(false);
+	const [actualTransaction, setActualTransaction] = useState(null);
 
 	useEffect(() => {
 		getEvents(currentDate);
@@ -57,6 +64,11 @@ function Home() {
 
 	const handleExpandedPanel = (panel) => (evnt, isExpanded) => {
 		setExpanded(isExpanded ? panel : false);
+	};
+
+	const transactionDone = async (transaction) => {
+		console.log(transaction);
+		setOpenPOS(false);
 	};
 
 	return (
@@ -99,7 +111,15 @@ function Home() {
 												<img src={defaultPP} alt="PP" />
 												<div>
 													<b>{evnt.title}</b>
-													<span>{evnt.service.description}</span>
+													{expanded === i ? null : (
+														<span>
+															{evnt.service.length > 1
+																? `${evnt.service[0].description} + ${
+																		evnt.service.length - 1
+																  }`
+																: evnt.service[0].description}{" "}
+														</span>
+													)}
 												</div>
 											</div>
 
@@ -112,14 +132,33 @@ function Home() {
 										}}
 										className="acordionDetails">
 										<div className="acordionDetailsGrid">
-											<span>Nothing here yet</span>
+											{evnt.service.map((serv) => (
+												<div className="serviceItem">
+													<p>{serv.description}</p>
+													<b>{serv.price}</b>
+												</div>
+											))}
 										</div>
 										<Button
 											variant="contained"
 											color="primary"
-											className="cobrarBtn"
+											className="actionBtn addToCartBtn"
 											// onClick={() => openCobrarM(evnt)}
-											onClick={() => console.log(evnt)}>
+											onClick={() => {
+												setActualTransaction(evnt);
+												setOpenCart(true);
+											}}>
+											<i className="material-icons">shopping_cart</i>
+										</Button>
+										<Button
+											variant="contained"
+											color="primary"
+											className="actionBtn cobrarBtn"
+											// onClick={() => openCobrarM(evnt)}
+											onClick={() => {
+												setActualTransaction(evnt);
+												setOpenPOS(true);
+											}}>
 											Cobrar
 										</Button>
 									</AccordionDetails>
@@ -138,6 +177,20 @@ function Home() {
 					<Clock />
 				</div>
 			</div>
+			<Drawer
+				className="POSDrawer"
+				open={openPOS}
+				anchor="right"
+				onClose={() => setOpenPOS(false)}>
+				<POS transaction={actualTransaction} onClose={transactionDone}></POS>
+			</Drawer>
+			<Drawer
+				className="CartDrawer"
+				open={openCart}
+				anchor="right"
+				onClose={() => setOpenCart(false)}>
+				<Cart transaction={actualTransaction} onClose={transactionDone}></Cart>
+			</Drawer>
 		</div>
 	);
 }

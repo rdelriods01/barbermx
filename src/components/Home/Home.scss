@@ -104,7 +104,7 @@
 				}
 				.acordionDetails {
 					display: grid;
-					grid-template-columns: 3fr 1fr;
+					grid-template-columns: 6fr 1fr 2fr;
 					border-left: 8px solid red;
 					border-bottom-left-radius: 1em;
 					.acordionDetailsGrid {
@@ -112,14 +112,10 @@
 						grid-auto-flow: row;
 						text-align: center;
 						margin: 0;
-						.estudio {
-							border-left: 8px solid;
-							height: 2em;
-							margin-bottom: 0.2em;
-							list-style: none;
+						.serviceItem {
 							align-items: center;
 							display: grid;
-							grid-auto-flow: column;
+							grid-template-columns: 4fr 1fr;
 							column-gap: 1em;
 							span {
 								min-width: 10em;
@@ -127,13 +123,17 @@
 							}
 						}
 					}
-					.cobrarBtn {
-						margin: auto;
-						min-width: 10em;
+					.actionBtn {
+						// min-width: 10em;
+						// width: auto;
 						height: 3em;
 						color: #ffffff;
-						background-color: #4caf50;
 						font-weight: bold;
+						margin: auto 4px;
+					}
+					.cobrarBtn {
+						margin: auto 4px;
+						background-color: #4caf50;
 					}
 					.cobrarBtn:hover {
 						background-color: #429745;

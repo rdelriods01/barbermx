@@ -4,3 +4,11 @@ body {
 	background: white;
 	font-family: Product Sans;
 }
+.POSDrawer {
+	div.MuiPaper-root {
+		margin-top: 1em;
+		border-top-left-radius: 1em;
+		border-bottom-left-radius: 1em;
+		height: 96%;
+	}
+}
