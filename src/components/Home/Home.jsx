@@ -143,7 +143,6 @@ function Home() {
 											variant="contained"
 											color="primary"
 											className="actionBtn addToCartBtn"
-											// onClick={() => openCobrarM(evnt)}
 											onClick={() => {
 												setActualTransaction(evnt);
 												setOpenCart(true);
@@ -154,7 +153,6 @@ function Home() {
 											variant="contained"
 											color="primary"
 											className="actionBtn cobrarBtn"
-											// onClick={() => openCobrarM(evnt)}
 											onClick={() => {
 												setActualTransaction(evnt);
 												setOpenPOS(true);

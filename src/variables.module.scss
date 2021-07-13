@@ -2,6 +2,7 @@
 $primary: #337cd0;
 // $primary: #46d033;
 $primaryHover: #326bad;
+$primaryLightHover: #d0ecff;
 $secondary: #7d2ae8;
 // $primary: #46d0f7;
 // $secondary: #7d2ae8;
@@ -9,5 +10,6 @@ $secondary: #7d2ae8;
 :export {
 	primary: $primary;
 	primaryHover: $primaryHover;
+	primaryLightHover: $primaryLightHover;
 	secondary: $secondary;
 }
