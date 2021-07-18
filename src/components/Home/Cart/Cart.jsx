@@ -21,6 +21,8 @@ function Cart(props) {
 		...props.transaction.service,
 	]);
 
+	const total = 800;
+
 	const handleTabChange = (event, newValue) => {
 		setTabsValue(newValue);
 	};
@@ -76,6 +78,22 @@ function Cart(props) {
 			setServicesInCart(arr);
 		}
 	};
+	const addProductToCart = (prod) => {
+		let arr = [...productsInCart];
+		let find = arr.find((o, i) => {
+			if (o.name === prod.name) {
+				let newCant = o.cant + 1;
+				let newTotal = o.price * newCant;
+				arr[i] = { ...prod, cant: newCant, total: newTotal };
+				setProductsInCart(arr);
+				return true; // stop searching
+			}
+		});
+		if (!find) {
+			arr.push({ ...prod, cant: 1, total: prod.price });
+			setProductsInCart(arr);
+		}
+	};
 
 	const deleteServiceFromCart = (serv) => {
 		let arr = [...servicesInCart];
@@ -88,7 +106,23 @@ function Cart(props) {
 		setServicesInCart(arr);
 	};
 
-	console.log(props);
+	const deleteProductFromCart = (prod) => {
+		let arr = [...productsInCart];
+		arr.find((o, i) => {
+			if (o.name === prod.name) {
+				if (o.cant === 1) {
+					arr.splice(i, 1);
+				} else {
+					let newCant = o.cant - 1;
+					let newTotal = o.price * newCant;
+					arr[i] = { ...prod, cant: newCant, total: newTotal };
+				}
+				setProductsInCart(arr);
+				return true; // stop searching
+			}
+		});
+	};
+
 	return (
 		<div className="CartC">
 			<div className="gridCart">
@@ -111,7 +145,12 @@ function Cart(props) {
 							</div>
 							<div className="productsList">
 								{products.map((product, index) => (
-									<div key={index} className="demoProduct">
+									<div
+										key={index}
+										className="demoProduct"
+										onClick={() => {
+											addProductToCart(product);
+										}}>
 										<img src={noimage} alt="noImg" />
 										<span> {product.name}</span>
 										<b>${product.price}</b>
@@ -174,16 +213,10 @@ function Cart(props) {
 						</span>
 					</div>
 					<div className="cartList">
+						<h3>Servicios</h3>
 						<div className="cartServices">
-							<h3>Servicios</h3>
 							{servicesInCart.map((service, index) => (
-								<li
-									key={index}
-									// value={service.desc}
-									// onClick={() => {
-									// 	handleService(service, index);
-									// }}
-								>
+								<li key={index}>
 									<div>
 										<i
 											className="material-icons"
@@ -196,9 +229,31 @@ function Cart(props) {
 								</li>
 							))}
 						</div>
+						<h3>Productos</h3>
 						<div className="cartProducts">
-							<h3>Productos</h3>
+							{productsInCart.map((product, index) => (
+								<li key={index}>
+									<div>
+										<i
+											className="material-icons"
+											onClick={() => deleteProductFromCart(product)}>
+											{product.cant === 1 ? "delete" : "remove"}
+										</i>
+										<p>{product.cant}</p>
+										<i
+											className="material-icons add"
+											onClick={() => addProductToCart(product)}>
+											add
+										</i>
+									</div>
+									<span>{product.name}</span>
+									<b className="costo">${product.price}</b>
+									<b className="costo">${product.total}</b>
+								</li>
+							))}
 						</div>
+						<h3 className="total"> {`Total:      $${total}`} </h3>
+						<h3 className="total"> Botones </h3>
 					</div>
 				</div>
 			</div>
