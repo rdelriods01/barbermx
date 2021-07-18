@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import SwipeableViews from "react-swipeable-views";
 
 import { Tabs, Paper, Tab } from "@material-ui/core";
@@ -10,14 +10,54 @@ import "./Cart.scss";
 
 function Cart(props) {
 	const [tabsValue, setTabsValue] = useState(0);
-	const services = useContext(ServicesContext);
-	const products = useContext(ProductsContext);
+	const productsDB = useContext(ProductsContext);
+	const servicesDB = useContext(ServicesContext);
+
+	const [products, setProducts] = useState([...productsDB]);
+	const [services, setServices] = useState([...servicesDB]);
+
+	const [productsInCart, setProductsInCart] = useState([]);
+	const [servicesInCart, setServicesInCart] = useState([
+		...props.transaction.service,
+	]);
 
 	const handleTabChange = (event, newValue) => {
 		setTabsValue(newValue);
 	};
 	const handleTabChangeIndex = (index) => {
 		setTabsValue(index);
+	};
+
+	const searchProducts = async (v) => {
+		if (v) {
+			if (v.length > 2) {
+				let myProducts = await filterByProperty(productsDB, "name", v);
+				setProducts(myProducts);
+			} else {
+				setProducts(productsDB);
+			}
+		}
+	};
+	const searchServices = async (v) => {
+		if (v) {
+			if (v.length > 2) {
+				let myProducts = await filterByProperty(servicesDB, "description", v);
+				setServices(myProducts);
+			} else {
+				setServices(servicesDB);
+			}
+		}
+	};
+
+	const filterByProperty = (array, prop, value) => {
+		var filtered = [];
+		for (var i = 0; i < array.length; i++) {
+			var obj = array[i];
+			if (obj[prop].indexOf(value) >= 0) {
+				filtered.push(obj);
+			}
+		}
+		return filtered;
 	};
 
 	console.log(props);
@@ -36,6 +76,9 @@ function Cart(props) {
 									autoFocus
 									type="search"
 									placeholder="Buscar productos..."
+									onChange={(ev) =>
+										searchProducts(ev.target.value.toLowerCase())
+									}
 								/>
 							</div>
 							<div className="productsList">
@@ -50,7 +93,13 @@ function Cart(props) {
 						</div>
 						<div value={tabsValue} index={1} className="servicesView">
 							<div className="searchBarServices searchBar">
-								<input type="search" placeholder="Buscar servicios..." />
+								<input
+									type="search"
+									placeholder="Buscar servicios..."
+									onChange={(ev) =>
+										searchServices(ev.target.value.toLowerCase())
+									}
+								/>
 							</div>
 							<div className="servicesList">
 								{services.map((service, index) => (
@@ -101,7 +150,7 @@ function Cart(props) {
 					<div className="cartList">
 						<div className="cartServices">
 							<h3>Servicios</h3>
-							{props?.transaction?.service.map((service, index) => (
+							{servicesInCart.map((service, index) => (
 								<li
 									key={index}
 									// value={service.desc}

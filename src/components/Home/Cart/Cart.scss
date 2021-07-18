@@ -46,6 +46,9 @@
 						}
 						span {
 							color: dimgray;
+							&::first-letter {
+								text-transform: capitalize;
+							}
 						}
 						&:hover {
 							background-color: $primaryLightHover;
