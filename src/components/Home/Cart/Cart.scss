@@ -161,11 +161,24 @@
 						display: grid;
 						align-items: center;
 						margin: 0;
-						grid-auto-flow: column;
+						grid-template-columns: 1fr 3fr 1fr;
 						color: #989898;
+						i {
+							border-radius: 8px;
+							border: 1px solid transparent;
+							background-color: #f4f4fa;
+							padding: 2px;
+							&:hover {
+								background-color: #f4f4fa;
+								color: #ff8a8a;
+								border: 1px solid #ff8a8a;
+							}
+						}
+						span {
+							text-align: left;
+						}
 						.costo {
 							text-align: end;
-							font-weight: bold;
 						}
 					}
 				}

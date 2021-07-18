@@ -60,6 +60,17 @@ function Cart(props) {
 		return filtered;
 	};
 
+	const deleteServiceFromCart = (serv) => {
+		let arr = [...servicesInCart];
+		arr.find((o, i) => {
+			if (o.description === serv) {
+				arr.splice(i, 1);
+				return true; // stop searching
+			}
+		});
+		setServicesInCart(arr);
+	};
+
 	console.log(props);
 	return (
 		<div className="CartC">
@@ -158,8 +169,17 @@ function Cart(props) {
 									// 	handleService(service, index);
 									// }}
 								>
+									<div>
+										<i
+											className="material-icons"
+											onClick={() =>
+												deleteServiceFromCart(service.description)
+											}>
+											delete
+										</i>
+									</div>
 									<span>{service.description}</span>
-									<span className="costo">${service.price}</span>
+									<b className="costo">${service.price}</b>
 								</li>
 							))}
 						</div>
