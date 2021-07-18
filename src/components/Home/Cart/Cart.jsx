@@ -60,10 +60,27 @@ function Cart(props) {
 		return filtered;
 	};
 
+	const addServiceToCart = (serv) => {
+		let arr = [...servicesInCart];
+		let alreadyAdded = false;
+		arr.find((o, i) => {
+			if (o.description === serv.description) {
+				alreadyAdded = true;
+				return true; // stop searching
+			}
+		});
+		if (alreadyAdded) {
+			setServicesInCart(arr);
+		} else {
+			arr.push(serv);
+			setServicesInCart(arr);
+		}
+	};
+
 	const deleteServiceFromCart = (serv) => {
 		let arr = [...servicesInCart];
 		arr.find((o, i) => {
-			if (o.description === serv) {
+			if (o.description === serv.description) {
 				arr.splice(i, 1);
 				return true; // stop searching
 			}
@@ -116,11 +133,9 @@ function Cart(props) {
 								{services.map((service, index) => (
 									<li
 										key={index}
-										// value={service.desc}
-										// onClick={() => {
-										// 	handleService(service, index);
-										// }}
-									>
+										onClick={() => {
+											addServiceToCart(service);
+										}}>
 										<div>
 											<i className="material-icons">content_cut</i>
 										</div>
@@ -172,9 +187,7 @@ function Cart(props) {
 									<div>
 										<i
 											className="material-icons"
-											onClick={() =>
-												deleteServiceFromCart(service.description)
-											}>
+											onClick={() => deleteServiceFromCart(service)}>
 											delete
 										</i>
 									</div>
