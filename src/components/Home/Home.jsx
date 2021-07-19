@@ -66,9 +66,21 @@ function Home() {
 		setExpanded(isExpanded ? panel : false);
 	};
 
+	const cartDone = async (cart) => {
+		if (cart) {
+			console.log(cart);
+			setOpenCart(false);
+			setActualTransaction({ ...actualTransaction, cart });
+			setOpenPOS(true);
+		} else {
+			console.log(cart);
+			setOpenCart(false);
+		}
+	};
 	const transactionDone = async (transaction) => {
 		console.log(transaction);
 		setOpenPOS(false);
+		// getEvents(currentDate)
 	};
 
 	return (
@@ -187,7 +199,7 @@ function Home() {
 				open={openCart}
 				anchor="right"
 				onClose={() => setOpenCart(false)}>
-				<Cart transaction={actualTransaction} onClose={transactionDone}></Cart>
+				<Cart transaction={actualTransaction} onClose={cartDone}></Cart>
 			</Drawer>
 		</div>
 	);

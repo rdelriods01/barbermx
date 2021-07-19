@@ -1,7 +1,7 @@
 import { useState, useContext, useEffect } from "react";
 import SwipeableViews from "react-swipeable-views";
 
-import { Tabs, Paper, Tab } from "@material-ui/core";
+import { Tabs, Paper, Tab, Button } from "@material-ui/core";
 
 import { ServicesContext, ProductsContext } from "../../../Store";
 import noimage from "../../../assets/noimage.png";
@@ -20,8 +20,11 @@ function Cart(props) {
 	const [servicesInCart, setServicesInCart] = useState([
 		...props.transaction.service,
 	]);
+	const [total, setTotal] = useState(0);
 
-	const total = 800;
+	useEffect(() => {
+		getTotal();
+	}, [servicesInCart, productsInCart]);
 
 	const handleTabChange = (event, newValue) => {
 		setTabsValue(newValue);
@@ -90,7 +93,7 @@ function Cart(props) {
 			}
 		});
 		if (!find) {
-			arr.push({ ...prod, cant: 1, total: prod.price });
+			arr.push({ ...prod, cant: 1, total: Number(prod.price) });
 			setProductsInCart(arr);
 		}
 	};
@@ -121,6 +124,17 @@ function Cart(props) {
 				return true; // stop searching
 			}
 		});
+	};
+
+	const getTotal = () => {
+		let sum = 0;
+		for (let i = 0; i < servicesInCart.length; i++) {
+			sum = sum + Number(servicesInCart[i].price);
+		}
+		for (let i = 0; i < productsInCart.length; i++) {
+			sum = sum + Number(productsInCart[i].total);
+		}
+		setTotal(sum);
 	};
 
 	return (
@@ -252,8 +266,27 @@ function Cart(props) {
 								</li>
 							))}
 						</div>
-						<h3 className="total"> {`Total:      $${total}`} </h3>
-						<h3 className="total"> Botones </h3>
+						<h3 className="total"> {`Total: $${total}`} </h3>
+						<div className="actionBtns">
+							<Button
+								className="cancelBtn"
+								onClick={() => {
+									console.log({ servicesInCart, productsInCart, total });
+									props.onClose(false);
+								}}>
+								Cancel
+							</Button>
+							<Button
+								variant="contained"
+								className="cobrarBtn"
+								disabled={total === 0}
+								onClick={() => {
+									console.log({ servicesInCart, productsInCart, total });
+									props.onClose({ servicesInCart, productsInCart, total });
+								}}>
+								Cobrar
+							</Button>
+						</div>
 					</div>
 				</div>
 			</div>

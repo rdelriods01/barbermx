@@ -209,8 +209,43 @@
 						grid-template-columns: 1fr 2fr 1fr 1fr !important;
 						margin: 1em 0;
 					}
+					&::-webkit-scrollbar {
+						width: 6px;
+						background-color: #f5f5f5;
+					}
+					&::-webkit-scrollbar-track {
+						border-radius: 10px;
+						background-color: #f5f5f5;
+					}
+
+					&::-webkit-scrollbar-thumb {
+						border-radius: 10px;
+						background-color: #b8b8b8;
+					}
 				}
 				.total {
+					font-size: 1.4em;
+					text-align: end;
+					color: black;
+				}
+				.actionBtns {
+					display: grid;
+					column-gap: 10em;
+					grid-template-columns: 1fr 2fr;
+					.cancelBtn {
+						height: 3em;
+						margin: auto 4px;
+					}
+					.cobrarBtn {
+						height: 3em;
+						color: #ffffff;
+						font-weight: bold;
+						margin: auto 4px;
+						background-color: #4caf50;
+						&:hover {
+							background-color: #429745;
+						}
+					}
 				}
 			}
 		}

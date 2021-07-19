@@ -6,7 +6,9 @@ function POS(props) {
 	console.log(props);
 	return (
 		<div className="POSC">
-			<h1>{props.transaction.title}</h1>
+			<h1>
+				{props.transaction.title} - ${props.transaction.cart?.total}{" "}
+			</h1>
 		</div>
 	);
 }
