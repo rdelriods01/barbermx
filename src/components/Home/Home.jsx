@@ -77,9 +77,17 @@ function Home() {
 			setOpenCart(false);
 		}
 	};
-	const transactionDone = async (transaction) => {
-		console.log(transaction);
-		setOpenPOS(false);
+	const transactionDone = async (cancel, back, transaction) => {
+		console.log(cancel, back, transaction);
+		if (cancel) {
+			setOpenPOS(false);
+		} else if (back) {
+			setOpenPOS(false);
+			setOpenCart(true);
+		} else {
+			// code to transaction
+			setOpenPOS(false);
+		}
 		// getEvents(currentDate)
 	};
 

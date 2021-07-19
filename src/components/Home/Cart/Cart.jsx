@@ -16,11 +16,17 @@ function Cart(props) {
 	const [products, setProducts] = useState([...productsDB]);
 	const [services, setServices] = useState([...servicesDB]);
 
-	const [productsInCart, setProductsInCart] = useState([]);
-	const [servicesInCart, setServicesInCart] = useState([
-		...props.transaction.service,
-	]);
-	const [total, setTotal] = useState(0);
+	const [productsInCart, setProductsInCart] = useState(
+		props.transaction.cart ? props.transaction.cart.productsInCart : []
+	);
+	const [servicesInCart, setServicesInCart] = useState(
+		props.transaction.cart
+			? props.transaction.cart.servicesInCart
+			: props.transaction.service
+	);
+	const [total, setTotal] = useState(
+		props.transaction.cart ? props.transaction.cart.total : 0
+	);
 
 	useEffect(() => {
 		getTotal();
@@ -274,7 +280,7 @@ function Cart(props) {
 									console.log({ servicesInCart, productsInCart, total });
 									props.onClose(false);
 								}}>
-								Cancel
+								Cancelar
 							</Button>
 							<Button
 								variant="contained"

@@ -241,9 +241,9 @@
 						color: #ffffff;
 						font-weight: bold;
 						margin: auto 4px;
-						background-color: #4caf50;
+						background-color: $pay;
 						&:hover {
-							background-color: #429745;
+							background-color: $payHover;
 						}
 					}
 				}
