@@ -3,11 +3,26 @@ import React from "react";
 import { Button, IconButton } from "@material-ui/core";
 
 import "./POS.scss";
+import Cobrar from "./Cobrar";
 
 function POS(props) {
-	console.log(props);
+	const servicesInCart = props.transaction.cart
+		? props.transaction.cart.servicesInCart
+		: props.transaction.service;
+	const productsInCart = props.transaction.cart
+		? props.transaction.cart.productsInCart
+		: [];
 
-	const { servicesInCart, productsInCart, total } = props.transaction.cart;
+	const cobrarDone = (done, transaction) => {
+		console.log(done, transaction);
+		if (done) {
+			console.log(transaction);
+			props.onClose(false, false, { ...props.transaction, ...transaction });
+		} else {
+			console.log("Cerrar cobrar OK");
+			props.onClose(false, false);
+		}
+	};
 
 	return (
 		<div className="POSC">
@@ -16,7 +31,6 @@ function POS(props) {
 					<IconButton
 						className="backBtn"
 						onClick={() => {
-							console.log({ servicesInCart, productsInCart, total });
 							props.onClose(false, true);
 						}}>
 						<i className="material-icons">arrow_back</i>
@@ -52,18 +66,8 @@ function POS(props) {
 							</li>
 						))}
 					</div>
-					<h3 className="total"> {`Total: $${total}`} </h3>
 					{/* <div className="actionBtns">
-						<Button
-							className="cancelBtn"
-							color="primary"
-							variant="contained"
-							onClick={() => {
-								console.log({ servicesInCart, productsInCart, total });
-								props.onClose(false, true);
-							}}>
-							Atras
-						</Button>
+						
 						<Button
 							className="cancelBtn"
 							onClick={() => {
@@ -72,18 +76,11 @@ function POS(props) {
 							}}>
 							Cancelar
 						</Button>
-						<Button
-							variant="contained"
-							className="cobrarBtn"
-							disabled={total === 0}
-							onClick={() => {
-								console.log({ servicesInCart, productsInCart, total });
-								props.onClose({ servicesInCart, productsInCart, total });
-							}}>
-							Cobrar
-						</Button>
 					</div> */}
 				</div>
+			</div>
+			<div className="right">
+				<Cobrar onClose={cobrarDone} transaction={props.transaction} />
 			</div>
 		</div>
 	);

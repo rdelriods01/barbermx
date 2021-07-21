@@ -74,7 +74,7 @@ const Calendario = () => {
 				// dia: format(event.start, "yyyy-MM-dd"),
 				resourceId: event.barber,
 				// barber: barbers[event.barber - 1],
-				service: event.service,
+				cart: event.cart,
 			};
 			console.log(newEvent);
 			await axios.post("http://localhost:4000/api/events", newEvent);
@@ -93,11 +93,11 @@ const Calendario = () => {
 		end,
 		client,
 		barber,
-		service,
+		cart,
 		ready,
 		remove,
 	}) => {
-		console.log({ start, end, client, barber, service, ready });
+		console.log({ start, end, client, barber, cart, ready });
 		setOpenEdit(false);
 		if (ready || remove) {
 			if (remove) {
@@ -109,21 +109,14 @@ const Calendario = () => {
 					start,
 					end,
 					resourceId: barber,
-					service,
+					cart,
 				});
 			}
 		}
 	};
 
-	const editEvent = async ({
-		event,
-		client,
-		start,
-		end,
-		resourceId,
-		service,
-	}) => {
-		console.log({ event, client, start, end, resourceId, service });
+	const editEvent = async ({ event, client, start, end, resourceId, cart }) => {
+		console.log({ event, client, start, end, resourceId, cart });
 		let newEvent = null;
 		if (resourceId === undefined || resourceId === null) {
 			console.log("undefined");
@@ -156,8 +149,8 @@ const Calendario = () => {
 				newEvent = { ...newEvent, client, title: client.name };
 			}
 		}
-		if (service !== undefined) {
-			newEvent = { ...newEvent, service };
+		if (cart !== undefined) {
+			newEvent = { ...newEvent, cart };
 		}
 		await axios.put(`http://localhost:4000/api/events/${event._id}`, {
 			...newEvent,
@@ -254,7 +247,7 @@ const Calendario = () => {
 					max={new Date("2019, 1, 1, 22:00")}
 					style={{ height: "85vh" }}
 					tooltipAccessor={(ev) =>
-						`${ev.title} - ${ev.service[0].description} con ${
+						`${ev.title} - ${ev.cart.servicesInCart[0].description} con ${
 							barbers[ev.resourceId]
 						} `
 					}
@@ -283,7 +276,7 @@ const Calendario = () => {
 						event: (ev) => (
 							<div className="event">
 								<p>{ev.title}</p>
-								<span>{ev.event.service[0].description}</span>
+								<span>{ev.event.cart.servicesInCart[0].description}</span>
 							</div>
 						),
 					}}

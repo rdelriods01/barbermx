@@ -30,6 +30,7 @@ const Cita = (props) => {
 	const [servicesSelected, setServicesSelected] = useState(
 		props.event.service ? props.event.service : []
 	);
+	const [total, setTotal] = useState(0);
 	const [barber, setBarber] = useState(
 		props.event.resourceId ? props.event.resourceId : 1
 	);
@@ -183,7 +184,13 @@ const Cita = (props) => {
 		}, []);
 		console.log(myServices);
 		setServicesSelected(myServices);
-
+		// Obtener el total
+		let sum = 0;
+		for (let i = 0; i < myServices.length; i++) {
+			sum = sum + Number(myServices[i].price);
+		}
+		setTotal(sum);
+		// Poner flag de service Selected
 		if (servicesSelected.length > 0) {
 			setServiceSelected(true);
 		} else {
@@ -530,7 +537,11 @@ const Cita = (props) => {
 							end,
 							client,
 							barber,
-							service: servicesSelected,
+							cart: {
+								servicesInCart: servicesSelected,
+								productsInCart: [],
+								total: total,
+							},
 							ready: true,
 						});
 					}}>

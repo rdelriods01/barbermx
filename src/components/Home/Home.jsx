@@ -86,6 +86,7 @@ function Home() {
 			setOpenCart(true);
 		} else {
 			// code to transaction
+			console.log(transaction);
 			setOpenPOS(false);
 		}
 		// getEvents(currentDate)
@@ -133,11 +134,11 @@ function Home() {
 													<b>{evnt.title}</b>
 													{expanded === i ? null : (
 														<span>
-															{evnt.service.length > 1
-																? `${evnt.service[0].description} + ${
-																		evnt.service.length - 1
-																  }`
-																: evnt.service[0].description}{" "}
+															{evnt.cart.servicesInCart.length > 1
+																? `${
+																		evnt.cart.servicesInCart[0].description
+																  } + ${evnt.cart.servicesInCart.length - 1}`
+																: evnt.cart.servicesInCart[0].description}{" "}
 														</span>
 													)}
 												</div>
@@ -152,7 +153,7 @@ function Home() {
 										}}
 										className="acordionDetails">
 										<div className="acordionDetailsGrid">
-											{evnt.service.map((serv) => (
+											{evnt.cart.servicesInCart.map((serv) => (
 												<div className="serviceItem">
 													<p>{serv.description}</p>
 													<b>{serv.price}</b>

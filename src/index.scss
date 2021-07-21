@@ -4,7 +4,17 @@ body {
 	background: white;
 	font-family: Product Sans;
 }
-.POSDrawer,
+.POSDrawer {
+	display: flex;
+	div.MuiPaper-root {
+		border-top-left-radius: 1em;
+		border-bottom-left-radius: 1em;
+		height: fit-content;
+		margin: auto 0 auto auto;
+		position: relative;
+		flex: none;
+	}
+}
 .CartDrawer {
 	div.MuiPaper-root {
 		margin-top: 1em;

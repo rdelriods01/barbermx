@@ -1,0 +1,137 @@
+.cobrarC {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 2em;
+  border-radius: 20px !important;
+  min-height: 39vh !important;
+  /* max-height: 48vh !important; */
+  background-color: white;
+  color: dimgray;
+  padding: 2em;
+  // width: 60vw;
+  margin: auto;
+  transition: all 1s;
+  outline: none;
+  .left {
+    text-align: center;
+    h1 {
+      text-align: center;
+    }
+    #total {
+      font-size: 5em;
+      text-align: center;
+      margin: auto;
+      color: black;
+    }
+    .gridCambio {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      align-items: baseline;
+      p {
+        text-align: right;
+        padding-right: 1em;
+      }
+      strong {
+        margin: auto;
+        margin-left: 0;
+      }
+    }
+    .cobrar {
+      width: 92%;
+      font-size: 2em;
+      height: 2em;
+      margin-top: 1em;
+      border-radius: 10px;
+    }
+  }
+  .right {
+    width: 25em;
+    height: 24em;
+    .pago {
+      color: darkgray;
+      .radioFormaDePago {
+        margin-bottom: 1em;
+        .radioGroupFdP {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          justify-items: center;
+        }
+      }
+      .efectivo {
+        .inputKB {
+          // background-color: #212121;
+          border: 1px solid gray;
+          border-radius: 10px;
+          color: dimgray;
+          font-size: 2em;
+          text-align: center;
+          outline: none;
+          margin: 0 auto 0.2em auto;
+          display: flex;
+        }
+        .KB {
+          display: grid;
+          grid-template-columns: 3fr 1fr;
+          div div button {
+            min-height: 5em;
+            border-radius: 8px;
+            white-space: normal;
+            line-height: normal;
+            font-weight: bold;
+          }
+          .num1-9 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+          }
+          .num0-00 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+          }
+          .back {
+            display: grid;
+            grid-template-rows: 2fr 1fr 1fr;
+            .punto {
+              span {
+                font-size: 3em;
+                margin-top: -18px;
+              }
+            }
+          }
+        }
+      }
+      .tarjeta {
+        margin-top: 1em;
+        ol li {
+          font-weight: bold;
+        }
+        .tipoTarjeta {
+          margin: 1em 0;
+          display: block;
+          text-align: center;
+        }
+        .digitos {
+          display: flex;
+          justify-content: center;
+          input {
+            margin: 1em;
+            width: 5em;
+            margin-left: 0;
+          }
+        }
+        .espacio {
+          text-align: center;
+          i {
+            font-size: 2em;
+          }
+        }
+        .autorizacion {
+          text-align: center;
+          input {
+            width: 10em;
+            height: 1.4em;
+          }
+        }
+      }
+    }
+  }
+}
