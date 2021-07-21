@@ -6,6 +6,7 @@ import "./POS.scss";
 import Cobrar from "./Cobrar";
 
 function POS(props) {
+	console.log(props.transaction);
 	const servicesInCart = props.transaction.cart
 		? props.transaction.cart.servicesInCart
 		: props.transaction.service;

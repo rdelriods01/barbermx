@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import axios from "axios";
+
 import { endOfDay, startOfDay, parseISO, format } from "date-fns";
 import {
 	Accordion,
@@ -87,6 +88,10 @@ function Home() {
 		} else {
 			// code to transaction
 			console.log(transaction);
+			await axios.put(`http://localhost:4000/api/events/${transaction._id}`, {
+				...transaction,
+			});
+			getEvents(currentDate);
 			setOpenPOS(false);
 		}
 		// getEvents(currentDate)
@@ -143,8 +148,13 @@ function Home() {
 													)}
 												</div>
 											</div>
-
-											<i className="material-icons pending">pending_actions</i>
+											{evnt.pagado ? (
+												<i className="material-icons done">done</i>
+											) : (
+												<i className="material-icons pending">
+													pending_actions
+												</i>
+											)}
 										</div>
 									</AccordionSummary>
 									<AccordionDetails
