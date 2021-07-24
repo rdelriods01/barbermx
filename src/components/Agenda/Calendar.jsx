@@ -84,8 +84,13 @@ const Calendario = () => {
 	};
 
 	const openEditModal = (ev) => {
-		setActualEvent(ev);
-		setOpenEdit(true);
+		console.log(ev);
+		if (ev.pagado) {
+			alert("No se puede editar un evento terminado");
+		} else {
+			setActualEvent(ev);
+			setOpenEdit(true);
+		}
 	};
 
 	const closeEditModal = ({
@@ -117,17 +122,12 @@ const Calendario = () => {
 
 	const editEvent = async ({ event, client, start, end, resourceId, cart }) => {
 		console.log({ event, client, start, end, resourceId, cart });
-		let newEvent = null;
-		if (resourceId === undefined || resourceId === null) {
-			console.log("undefined");
-			newEvent = {
-				...event,
-				start,
-				end,
-				startTS: getTime(start),
-			};
+		if (event.pagado) {
+			alert("No se puede editar un evento terminado");
 		} else {
-			if (event.resourceId === resourceId) {
+			let newEvent = null;
+			if (resourceId === undefined || resourceId === null) {
+				console.log("undefined");
 				newEvent = {
 					...event,
 					start,
@@ -135,27 +135,36 @@ const Calendario = () => {
 					startTS: getTime(start),
 				};
 			} else {
-				newEvent = {
-					...event,
-					start,
-					end,
-					startTS: getTime(start),
-					resourceId: resourceId,
-				};
+				if (event.resourceId === resourceId) {
+					newEvent = {
+						...event,
+						start,
+						end,
+						startTS: getTime(start),
+					};
+				} else {
+					newEvent = {
+						...event,
+						start,
+						end,
+						startTS: getTime(start),
+						resourceId: resourceId,
+					};
+				}
 			}
-		}
-		if (client !== undefined) {
-			if (event.client._id !== client._id) {
-				newEvent = { ...newEvent, client, title: client.name };
+			if (client !== undefined) {
+				if (event.client._id !== client._id) {
+					newEvent = { ...newEvent, client, title: client.name };
+				}
 			}
+			if (cart !== undefined) {
+				newEvent = { ...newEvent, cart };
+			}
+			await axios.put(`http://localhost:4000/api/events/${event._id}`, {
+				...newEvent,
+			});
+			getRangeOfTimeAndEvents(currentDate);
 		}
-		if (cart !== undefined) {
-			newEvent = { ...newEvent, cart };
-		}
-		await axios.put(`http://localhost:4000/api/events/${event._id}`, {
-			...newEvent,
-		});
-		getRangeOfTimeAndEvents(currentDate);
 	};
 
 	const deleteEvent = async (event) => {

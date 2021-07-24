@@ -28,7 +28,7 @@ const Cita = (props) => {
 
 	const [clients, setClients] = useState([]);
 	const [servicesSelected, setServicesSelected] = useState(
-		props.event.service ? props.event.service : []
+		props.event.cart ? props.event.cart.servicesInCart : []
 	);
 	const [total, setTotal] = useState(0);
 	const [barber, setBarber] = useState(
@@ -148,9 +148,12 @@ const Cita = (props) => {
 
 	const findCheckedOnEdit = () => {
 		let myEstado = [...checkedState];
-		for (let i = 0; i < props.event.service.length; i++) {
+		for (let i = 0; i < props.event.cart.servicesInCart.length; i++) {
 			for (let j = 0; j < services.length; j++) {
-				if (props.event.service[i].description === services[j].description) {
+				if (
+					props.event.cart.servicesInCart[i].description ===
+					services[j].description
+				) {
 					myEstado[j] = true;
 				}
 			}
