@@ -20,6 +20,7 @@ import MiniCalendar from "./MiniCalendar";
 import Clock from "./Clock";
 import POS from "./POS/POS";
 import Cart from "./Cart/Cart";
+import Ticket from "./Ticket/Ticket";
 
 function Home() {
 	const barbers = ["", "Barber 1", "Barber 2", "Barber 3", "Barber 4"];
@@ -31,6 +32,7 @@ function Home() {
 
 	const [openPOS, setOpenPOS] = useState(false);
 	const [openCart, setOpenCart] = useState(false);
+	const [openTicket, setOpenTicket] = useState(false);
 	const [actualTransaction, setActualTransaction] = useState(null);
 
 	useEffect(() => {
@@ -95,6 +97,10 @@ function Home() {
 			setOpenPOS(false);
 		}
 		// getEvents(currentDate)
+	};
+
+	const ticketDone = () => {
+		console.log("Ticket Done");
 	};
 
 	return (
@@ -170,26 +176,44 @@ function Home() {
 												</div>
 											))}
 										</div>
-										<Button
-											variant="contained"
-											color="primary"
-											className="actionBtn addToCartBtn"
-											onClick={() => {
-												setActualTransaction(evnt);
-												setOpenCart(true);
-											}}>
-											<i className="material-icons">shopping_cart</i>
-										</Button>
-										<Button
-											variant="contained"
-											color="primary"
-											className="actionBtn cobrarBtn"
-											onClick={() => {
-												setActualTransaction(evnt);
-												setOpenPOS(true);
-											}}>
-											Cobrar
-										</Button>
+										{evnt.pagado ? (
+											<>
+												<div></div>
+												<Button
+													variant="contained"
+													color="primary"
+													className="actionBtn addToCartBtn"
+													onClick={() => {
+														setActualTransaction(evnt);
+														setOpenTicket(true);
+													}}>
+													<i className="material-icons">receipt</i>
+												</Button>
+											</>
+										) : (
+											<>
+												<Button
+													variant="contained"
+													color="primary"
+													className="actionBtn addToCartBtn"
+													onClick={() => {
+														setActualTransaction(evnt);
+														setOpenCart(true);
+													}}>
+													<i className="material-icons">shopping_cart</i>
+												</Button>
+												<Button
+													variant="contained"
+													color="primary"
+													className="actionBtn cobrarBtn"
+													onClick={() => {
+														setActualTransaction(evnt);
+														setOpenPOS(true);
+													}}>
+													Cobrar
+												</Button>
+											</>
+										)}
 									</AccordionDetails>
 								</Accordion>
 							))}
@@ -219,6 +243,13 @@ function Home() {
 				anchor="right"
 				onClose={() => setOpenCart(false)}>
 				<Cart transaction={actualTransaction} onClose={cartDone}></Cart>
+			</Drawer>
+			<Drawer
+				className="TicketDrawer"
+				open={openTicket}
+				anchor="bottom"
+				onClose={() => setOpenTicket(false)}>
+				<Ticket transaction={actualTransaction} onClose={ticketDone}></Ticket>
 			</Drawer>
 		</div>
 	);

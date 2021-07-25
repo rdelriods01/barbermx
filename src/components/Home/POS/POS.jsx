@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { Button, IconButton } from "@material-ui/core";
 
@@ -14,11 +14,40 @@ function POS(props) {
 		? props.transaction.cart.productsInCart
 		: [];
 
-	const cobrarDone = (done, transaction) => {
+	// const [iva, setIVA] = useState(
+	// 	props.transaction.cart ? props.transaction.cart.iva : 0
+	// );
+	// const [subTotal, setSubTotal] = useState(
+	// 	props.transaction.cart ? props.transaction.cart.subTotal : 0
+	// );
+	// const [articulos, setArticulos] = useState(
+	// 	props.transaction.cart ? props.transaction.cart.articulos : 0
+	// );
+
+	const cobrarDone = async (done, transaction) => {
 		console.log(done, transaction);
 		if (done) {
 			console.log(transaction);
-			props.onClose(false, false, { ...props.transaction, ...transaction });
+			// await getTotal();
+			let sum = 0;
+			let articulos = 0;
+			for (let i = 0; i < servicesInCart.length; i++) {
+				sum = sum + Number(servicesInCart[i].price);
+				articulos = articulos + 1;
+			}
+			for (let i = 0; i < productsInCart.length; i++) {
+				sum = sum + Number(productsInCart[i].total);
+				articulos = articulos + productsInCart[i].cant;
+			}
+			let iva = (sum * 0.16).toFixed(2);
+			let subTotal = (sum - iva).toFixed(2);
+			props.onClose(false, false, {
+				...props.transaction,
+				...transaction,
+				articulos,
+				subTotal,
+				iva,
+			});
 		} else {
 			console.log("Cerrar cobrar OK");
 			props.onClose(false, false);

@@ -23,3 +23,15 @@ body {
 		height: 96%;
 	}
 }
+.TicketDrawer {
+	display: flex;
+	div.MuiPaper-root {
+		border-radius: 1em;
+		height: fit-content;
+		min-width: 20vw;
+		margin: auto;
+		position: relative;
+		flex: none;
+		overflow: visible;
+	}
+}

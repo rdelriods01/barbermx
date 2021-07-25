@@ -1,0 +1,105 @@
+@import "../../../variables.module.scss";
+
+.TicketC {
+	margin: 2em;
+	button {
+		position: absolute;
+		top: 0;
+		right: 0;
+		transform: translate(130%, 0%);
+		border-radius: 12px;
+		background-color: $primary;
+		font-size: 2em;
+		width: 2em;
+		height: 2em;
+		color: white;
+		border: none;
+		cursor: pointer;
+		&:hover {
+			background-color: $primaryHover;
+		}
+	}
+	.logo {
+		text-align: center;
+		img {
+			max-width: 25vw;
+		}
+	}
+	.misDatos {
+		margin: 1em 0;
+		text-align: center;
+		p {
+			margin: 0;
+		}
+	}
+	.datosSuperior {
+		margin: 1em 0;
+		p {
+			margin: 0;
+			&:last-of-type {
+				margin-top: 1em;
+			}
+		}
+	}
+	.datosCliente {
+		text-align: center;
+		margin: 1em 0;
+	}
+	.gridElements {
+		.headers {
+			display: grid;
+			grid-template-columns: 1fr 4fr 1fr 1fr;
+			align-items: center;
+			justify-items: center;
+		}
+		.cartProducts li,
+		.cartServices li {
+			display: grid;
+			list-style: none;
+			grid-template-columns: 1fr 4fr 1fr 1fr;
+			align-items: center;
+			justify-items: center;
+			text-align: center;
+			height: auto;
+			p {
+				margin: 0;
+			}
+		}
+	}
+	.datosInferior {
+		display: grid;
+		grid-template-columns: 2fr 1fr;
+		margin: 1em 0;
+
+		span {
+			text-align: right;
+		}
+		strong {
+			text-align: center;
+		}
+		.total {
+			font-size: 1.5em;
+		}
+	}
+	.pago {
+		margin: 1em 0;
+		p {
+			margin-bottom: 0;
+			font-weight: bold;
+		}
+		div {
+			display: grid;
+		}
+	}
+	.footer {
+		text-align: center;
+		margin-top: 2em;
+	}
+}
+
+@media only screen and (max-device-width: 824px) and (-webkit-min-device-pixel-ratio: 2) {
+	.ticket {
+		height: 112vh;
+		width: 42vw;
+	}
+}
