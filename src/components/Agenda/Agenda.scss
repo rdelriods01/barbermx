@@ -126,6 +126,11 @@
 				margin: 0;
 				background-color: #f4f4fa;
 			}
+			.done {
+				color: $pay;
+				font-size: 1.1em;
+				padding-left: 4px;
+			}
 		}
 		.rbc-event:hover {
 			background-color: #f4f4fa;

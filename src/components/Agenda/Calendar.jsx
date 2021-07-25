@@ -284,7 +284,12 @@ const Calendario = () => {
 						},
 						event: (ev) => (
 							<div className="event">
-								<p>{ev.title}</p>
+								<p>
+									{ev.title}
+									{ev.event.pagado ? (
+										<i className="material-icons done">done</i>
+									) : null}
+								</p>
 								<span>{ev.event.cart.servicesInCart[0].description}</span>
 							</div>
 						),
