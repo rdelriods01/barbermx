@@ -141,13 +141,19 @@
 				grid-template-rows: 1fr auto 1fr 4fr 1fr 1fr;
 				margin: 0 4em;
 				height: 82vh;
-				h3 {
+				h3,
+				.total {
 					border-top: 2px solid lightgray;
 					border-bottom: 2px solid lightgray;
 					color: #989898;
 					margin: 0 0 1em 0;
 					padding: 1em 0;
 					max-height: 1em;
+				}
+				.total {
+					display: grid;
+					grid-auto-flow: column;
+					justify-content: space-between;
 				}
 				.cartServices,
 				.cartProducts {

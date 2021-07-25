@@ -27,6 +27,9 @@ function Cart(props) {
 	const [total, setTotal] = useState(
 		props.transaction.cart ? props.transaction.cart.total : 0
 	);
+	const [articulos, setArticulos] = useState(
+		props.transaction.cart ? props.transaction.cart.articulos : 0
+	);
 
 	useEffect(() => {
 		getTotal();
@@ -134,12 +137,16 @@ function Cart(props) {
 
 	const getTotal = () => {
 		let sum = 0;
+		let cant = 0;
 		for (let i = 0; i < servicesInCart.length; i++) {
 			sum = sum + Number(servicesInCart[i].price);
+			cant = cant + 1;
 		}
 		for (let i = 0; i < productsInCart.length; i++) {
 			sum = sum + Number(productsInCart[i].total);
+			cant = cant + productsInCart[i].cant;
 		}
+		setArticulos(cant);
 		setTotal(sum);
 	};
 
@@ -272,12 +279,14 @@ function Cart(props) {
 								</li>
 							))}
 						</div>
-						<h3 className="total"> {`Total: $${total}`} </h3>
+						<div className="total">
+							<span>{`Articulos: ${articulos}`}</span>
+							<span>{`Total: $${total}`}</span>
+						</div>
 						<div className="actionBtns">
 							<Button
 								className="cancelBtn"
 								onClick={() => {
-									console.log({ servicesInCart, productsInCart, total });
 									props.onClose(false);
 								}}>
 								Cancelar
@@ -288,7 +297,11 @@ function Cart(props) {
 								disabled={total === 0}
 								onClick={() => {
 									console.log({ servicesInCart, productsInCart, total });
-									props.onClose({ servicesInCart, productsInCart, total });
+									props.onClose({
+										servicesInCart,
+										productsInCart,
+										total,
+									});
 								}}>
 								Cobrar
 							</Button>
