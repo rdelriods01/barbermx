@@ -6,6 +6,7 @@ import variables from "../../../variables.module.scss";
 import defaultPP from "../../../assets/pp.png";
 
 const Sidebar = (props) => {
+	const admin = true;
 	const logout = () => {
 		// firebase.auth().signOut();
 		console.log("logout");
@@ -60,6 +61,15 @@ const Sidebar = (props) => {
 					<i className="material-icons">receipt</i>
 					<span>Servicios</span>
 				</NavLink>
+				{admin ? (
+					<NavLink
+						className="li line"
+						to="/admindb"
+						activeStyle={{ color: variables.primary }}>
+						<i className="material-icons">storage</i>
+						<span>Database</span>
+					</NavLink>
+				) : null}
 				<span className="spacer" />
 				<div className="li" onClick={logout}>
 					<i className="material-icons">exit_to_app</i>

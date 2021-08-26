@@ -73,6 +73,9 @@
 				transition: transform 0.5s;
 			}
 		}
+		.line {
+			border-top: 2px solid lightgray;
+		}
 		.spacer {
 			flex: 1 1 auto;
 		}

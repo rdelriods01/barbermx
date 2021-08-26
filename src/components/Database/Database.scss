@@ -1,0 +1,56 @@
+.DatabaseC {
+	text-align: center;
+	font-size: 0.7em;
+	.tableContainer {
+		overflow-x: scroll;
+		.table {
+			display: grid;
+			grid-auto-flow: row;
+			width: max-content;
+			.headers {
+				display: grid;
+				grid-template-columns: 1fr 2fr 5fr 3fr 2fr 3fr 3fr 1fr 5fr 3fr 3fr 1fr 1fr 1fr 1fr 2fr 1fr 1fr 2fr 1fr 2fr 2fr;
+				.th {
+					border: 1px solid lightgray;
+				}
+			}
+			.dataTable {
+				.row {
+					display: grid;
+					grid-template-columns: 1fr 2fr 5fr 3fr 2fr 3fr 3fr 1fr 5fr 3fr 3fr 1fr 1fr 1fr 1fr 2fr 1fr 1fr 2fr 1fr 2fr 2fr;
+					&:hover {
+						background-color: #dddddd;
+					}
+					.cell {
+						border: 1px solid lightgray;
+						display: grid;
+						align-content: center;
+					}
+					.cliente {
+						grid-template-columns: 2fr 3fr;
+					}
+					.cart {
+						.cartItems {
+							p {
+								font-weight: bold;
+							}
+						}
+						.prodRow {
+							display: grid;
+							grid-template-columns: 1fr 3fr 1fr 1fr;
+						}
+						.servRow,
+						.cartRow {
+							display: grid;
+							grid-template-columns: 3fr 1fr;
+						}
+						.total {
+							font-weight: bold;
+							margin: 1em 0;
+						}
+					}
+				}
+			}
+		}
+	}
+}
