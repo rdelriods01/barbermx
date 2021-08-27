@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import "./Database.scss";
 import axios from "axios";
+import { format } from "date-fns";
+import { es } from "date-fns/locale";
 
 function Database() {
 	const [events, setEvents] = useState([]);
@@ -55,9 +57,11 @@ function Database() {
 							<div key={index} className="row">
 								<div className="cell">{index + 1}</div>
 								<div className="cell">
-									<button onClick={() => deleteEvent(event)}>
-										<i className="material-icons">delete</i>
-									</button>
+									<div className="btns">
+										<button onClick={() => deleteEvent(event)}>
+											<i className="material-icons">delete</i>
+										</button>
+									</div>
 								</div>
 								<div className="cell cliente">
 									<div className="clientCell">{event.client.name}</div>
@@ -67,8 +71,16 @@ function Database() {
 								</div>
 								<div className="cell">{event._id}</div>
 								<div className="cell">{event.title}</div>
-								<div className="cell">{event.start}</div>
-								<div className="cell">{event.end}</div>
+								<div className="cell">
+									{format(new Date(event.start), "dd-MMM-yy HH:mm", {
+										locale: es,
+									})}
+								</div>
+								<div className="cell">
+									{format(new Date(event.end), "dd-MMM-yy HH:mm", {
+										locale: es,
+									})}
+								</div>
 								<div className="cell">{event.resourceId}</div>
 								<div className="cell cart">
 									{event.cart.productsInCart.length > 0 ? (
@@ -98,8 +110,16 @@ function Database() {
 										<span>{event.cart.total}</span>
 									</div>
 								</div>
-								<div className="cell">{event.createdAt}</div>
-								<div className="cell">{event.updatedAt}</div>
+								<div className="cell">
+									{format(new Date(event.createdAt), "dd-MMM-yy HH:mm", {
+										locale: es,
+									})}
+								</div>
+								<div className="cell">
+									{format(new Date(event.updatedAt), "dd-MMM-yy HH:mm", {
+										locale: es,
+									})}
+								</div>
 								<div className="cell">{event.articulos}</div>
 								<div className="cell">{event.autorizacion}</div>
 								<div className="cell">{event.cambio}</div>
