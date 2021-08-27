@@ -112,6 +112,7 @@ function Home() {
 				<div className="weather">
 					<Weather />
 				</div>
+				<Clock />
 			</div>
 			<div className="grid">
 				<div className="left">
@@ -227,7 +228,6 @@ function Home() {
 				</div>
 				<div className="right">
 					<MiniCalendar onChange={(d) => getEvents(d)} />
-					<Clock />
 				</div>
 			</div>
 			<Drawer
