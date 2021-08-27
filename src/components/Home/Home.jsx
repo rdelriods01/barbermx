@@ -150,7 +150,7 @@ function Home() {
 																? `${
 																		evnt.cart.servicesInCart[0].description
 																  } + ${evnt.cart.servicesInCart.length - 1}`
-																: evnt.cart.servicesInCart[0].description}{" "}
+																: evnt.cart.servicesInCart[0].description}
 														</span>
 													)}
 												</div>

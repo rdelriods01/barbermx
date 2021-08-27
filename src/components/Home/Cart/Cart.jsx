@@ -30,9 +30,15 @@ function Cart(props) {
 	const [articulos, setArticulos] = useState(
 		props.transaction.cart ? props.transaction.cart.articulos : 0
 	);
+	const [disabled, setDisabled] = useState(false);
 
 	useEffect(() => {
 		getTotal();
+		if (servicesInCart.length === 0) {
+			setDisabled(true);
+		} else {
+			setDisabled(false);
+		}
 	}, [servicesInCart, productsInCart]);
 
 	const handleTabChange = (event, newValue) => {
@@ -293,8 +299,8 @@ function Cart(props) {
 							</Button>
 							<Button
 								variant="contained"
-								className="cobrarBtn"
-								disabled={total === 0}
+								className={disabled ? "cobrarBtn disabled" : "cobrarBtn"}
+								disabled={disabled}
 								onClick={() => {
 									console.log({ servicesInCart, productsInCart, total });
 									props.onClose({
