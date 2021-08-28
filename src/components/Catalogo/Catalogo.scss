@@ -1,0 +1,110 @@
+@import "../../variables.module.scss";
+
+.CatalogoC {
+	.superior {
+		h2 {
+			text-align: left;
+			margin: 0 1em;
+			color: rgb(77, 77, 77);
+			display: flex;
+			i {
+				margin-right: 6px;
+				color: $primary;
+				font-size: 1.3em;
+			}
+		}
+	}
+	.grid {
+		display: grid;
+		grid-template-columns: 2fr 3fr;
+		column-gap: 1em;
+		margin-top: 4em;
+		h3 {
+			margin: 0 1em 0 2em;
+			padding-bottom: 6px;
+			color: $primary;
+			border-bottom: 1px solid $primary;
+		}
+		.services {
+			display: grid;
+			box-shadow: 0 1px 28px rgba(0, 0, 0, 0.25), 0 1px 10px rgba(0, 0, 0, 0.22);
+			padding: 2em;
+			background-color: white;
+			margin: 1em;
+			border-radius: 8px;
+			.servSuperior {
+				display: grid;
+				grid-template-columns: 2fr 4fr 2fr 2fr 2fr;
+				margin: auto;
+				text-align: center;
+				justify-items: center;
+				align-items: center;
+				input {
+					background-color: #f4f4fa;
+					border-radius: 8px;
+					width: 96%;
+					padding-left: 1em;
+					height: 2em;
+					border: 1px solid lightgray;
+					outline: none;
+					&:focus {
+						border: 2px solid $primary;
+					}
+					&::placeholder {
+						color: dimgray;
+						// font-size: 1.5em;
+					}
+					&::-webkit-search-cancel-button {
+						position: relative;
+						right: 20px;
+					}
+				}
+				.btns {
+					i {
+						border-radius: 8px;
+						border: 1px solid transparent;
+						background-color: $primary;
+						padding: 2px;
+						color: #f4f4f4;
+						font-size: 1.6em;
+						width: 1.4em;
+						&:hover {
+							background-color: $primaryHover;
+							color: #f4f4f4;
+							border: 1px solid $primaryHover;
+							cursor: pointer;
+						}
+					}
+				}
+			}
+			.servInferior {
+				margin: 1em;
+				.row {
+					display: grid;
+					grid-template-columns: 4fr 1fr 1fr;
+					border-top: 1px solid #d4d4d4;
+					padding: 0.5em 0;
+					align-items: center;
+					.descripcion {
+						&::first-letter {
+							text-transform: capitalize;
+						}
+					}
+					i {
+						border-radius: 8px;
+						border: 1px solid transparent;
+						background-color: #f4f4fa;
+						padding: 2px;
+						color: #989898;
+						&:hover {
+							background-color: #f4f4fa;
+							color: #ff8a8a;
+							border: 1px solid #ff8a8a;
+							cursor: pointer;
+						}
+					}
+				}
+			}
+		}
+	}
+}

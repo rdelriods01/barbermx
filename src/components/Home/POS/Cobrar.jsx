@@ -1,16 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./Cobrar.scss";
 
-import {
-	RadioGroup,
-	FormControlLabel,
-	Button,
-	Radio,
-	Dialog,
-	Zoom,
-} from "@material-ui/core";
-
-// import { db } from "../../index";
+import { RadioGroup, FormControlLabel, Button, Radio } from "@material-ui/core";
 
 function Cobrar(props) {
 	const user = props.transaction.resourceId;
@@ -110,18 +101,6 @@ function Cobrar(props) {
 			autorizacion,
 			owner: user,
 		});
-		// db.collection("tickets").add({
-		//   ...props.transaccion,
-		//   pagado: myTime,
-		//   ticket: myTime,
-		//   pagacon,
-		//   cambio,
-		//   formaDePago,
-		//   tipoDeTarjeta,
-		//   digitos,
-		//   autorizacion,
-		//   owner: user,
-		// });
 		if (formaDePago === "efectivo") {
 			props.onClose(true, {
 				...props.transaccion,
@@ -142,10 +121,6 @@ function Cobrar(props) {
 				tipoDeTarjeta,
 			});
 		}
-	};
-
-	const handleClose = () => {
-		props.onClose(false);
 	};
 
 	return (

@@ -13,14 +13,7 @@ import defaultPP from "../../assets/pp_default.svg";
 
 const Cita = (props) => {
 	console.log(props);
-	const services = useContext(ServicesContext);
-	// const clients = [
-	// 	{ uid: "1", name: "Ricardo Del Rio", tel: "8711126205" },
-	// 	{ uid: "2", name: "Alberto Saavedra", tel: "8712222222" },
-	// 	{ uid: "3", name: "Osvaldo Aleman", tel: "8713333333" },
-	// 	{ uid: "4", name: "Gerardo Alba", tel: "8714444444" },
-	// 	{ uid: "5", name: "Hector Ramirez", tel: "8715555555" },
-	// ];
+	const { services } = useContext(ServicesContext);
 	const barbers = ["", "Barber 1", "Barber 2", "Barber 3", "Barber 4"];
 	const [checkedState, setCheckedState] = useState(
 		new Array(services.length).fill(false)

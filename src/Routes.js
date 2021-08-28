@@ -1,7 +1,7 @@
 import Agenda from "./components/Agenda/Agenda";
 import Home from "./components/Home/Home";
 import Database from "./components/Database/Database";
-import Services from "./components/Services/Services";
+import Catalogo from "./components/Catalogo/Catalogo";
 // import Venta from "./components/Venta/Venta";
 
 const routes = [
@@ -14,8 +14,8 @@ const routes = [
 		component: Agenda,
 	},
 	{
-		path: "/services",
-		component: Services,
+		path: "/catalogue",
+		component: Catalogo,
 	},
 	//   {
 	//     path: "/clients",

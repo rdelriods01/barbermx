@@ -14,7 +14,7 @@ function Cart(props) {
 	const servicesDB = useContext(ServicesContext);
 
 	const [products, setProducts] = useState([...productsDB]);
-	const [services, setServices] = useState([...servicesDB]);
+	const [services, setServices] = useState([...servicesDB.services]);
 
 	const [productsInCart, setProductsInCart] = useState(
 		props.transaction.cart ? props.transaction.cart.productsInCart : []
@@ -88,6 +88,7 @@ function Cart(props) {
 				alreadyAdded = true;
 				return true; // stop searching
 			}
+			return null;
 		});
 		if (alreadyAdded) {
 			setServicesInCart(arr);
@@ -106,6 +107,7 @@ function Cart(props) {
 				setProductsInCart(arr);
 				return true; // stop searching
 			}
+			return null;
 		});
 		if (!find) {
 			arr.push({ ...prod, cant: 1, total: Number(prod.price) });
@@ -120,6 +122,7 @@ function Cart(props) {
 				arr.splice(i, 1);
 				return true; // stop searching
 			}
+			return null;
 		});
 		setServicesInCart(arr);
 	};
@@ -138,6 +141,7 @@ function Cart(props) {
 				setProductsInCart(arr);
 				return true; // stop searching
 			}
+			return null;
 		});
 	};
 

@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 
-import { Button, IconButton } from "@material-ui/core";
+import { IconButton } from "@material-ui/core";
 
 import "./POS.scss";
 import Cobrar from "./Cobrar";
@@ -14,21 +14,10 @@ function POS(props) {
 		? props.transaction.cart.productsInCart
 		: [];
 
-	// const [iva, setIVA] = useState(
-	// 	props.transaction.cart ? props.transaction.cart.iva : 0
-	// );
-	// const [subTotal, setSubTotal] = useState(
-	// 	props.transaction.cart ? props.transaction.cart.subTotal : 0
-	// );
-	// const [articulos, setArticulos] = useState(
-	// 	props.transaction.cart ? props.transaction.cart.articulos : 0
-	// );
-
 	const cobrarDone = async (done, transaction) => {
 		console.log(done, transaction);
 		if (done) {
 			console.log(transaction);
-			// await getTotal();
 			let sum = 0;
 			let articulos = 0;
 			for (let i = 0; i < servicesInCart.length; i++) {
@@ -96,17 +85,6 @@ function POS(props) {
 							</li>
 						))}
 					</div>
-					{/* <div className="actionBtns">
-						
-						<Button
-							className="cancelBtn"
-							onClick={() => {
-								console.log({ servicesInCart, productsInCart, total });
-								props.onClose(false);
-							}}>
-							Cancelar
-						</Button>
-					</div> */}
 				</div>
 			</div>
 			<div className="right">

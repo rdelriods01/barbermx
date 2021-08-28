@@ -56,10 +56,10 @@ const Sidebar = (props) => {
 				</NavLink>
 				<NavLink
 					className="li"
-					to="/services"
+					to="/catalogue"
 					activeStyle={{ color: variables.primary }}>
-					<i className="material-icons">receipt</i>
-					<span>Servicios</span>
+					<i className="material-icons">apps</i>
+					<span>Catalogo</span>
 				</NavLink>
 				{admin ? (
 					<NavLink
