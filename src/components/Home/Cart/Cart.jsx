@@ -13,9 +13,11 @@ function Cart(props) {
 	const productsDB = useContext(ProductsContext);
 	const servicesDB = useContext(ServicesContext);
 
-	const [products, setProducts] = useState([...productsDB]);
+	const [products, setProducts] = useState([...productsDB.products]);
 	const [services, setServices] = useState([...servicesDB.services]);
 
+	console.log(productsDB);
+	console.log(products);
 	const [productsInCart, setProductsInCart] = useState(
 		props.transaction.cart ? props.transaction.cart.productsInCart : []
 	);

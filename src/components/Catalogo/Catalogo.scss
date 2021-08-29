@@ -18,23 +18,25 @@
 		display: grid;
 		grid-template-columns: 2fr 3fr;
 		column-gap: 1em;
-		margin-top: 4em;
+		margin-top: 2em;
 		h3 {
 			margin: 0 1em 0 2em;
 			padding-bottom: 6px;
 			color: $primary;
 			border-bottom: 1px solid $primary;
 		}
-		.services {
+		.services,
+		.products {
 			display: grid;
 			box-shadow: 0 1px 28px rgba(0, 0, 0, 0.25), 0 1px 10px rgba(0, 0, 0, 0.22);
 			padding: 2em;
 			background-color: white;
 			margin: 1em;
+			height: max-content;
 			border-radius: 8px;
-			.servSuperior {
+			.servSuperior,
+			.prodSuperior {
 				display: grid;
-				grid-template-columns: 2fr 4fr 2fr 2fr 2fr;
 				margin: auto;
 				text-align: center;
 				justify-items: center;
@@ -77,31 +79,141 @@
 					}
 				}
 			}
-			.servInferior {
+			.servSuperior {
+				grid-template-columns: 2fr 4fr 2fr 2fr 2fr;
+			}
+			.prodSuperior {
+				grid-template-columns: 8fr 1fr;
+				.prows {
+					display: grid;
+					row-gap: 1em;
+					.row1 {
+						display: grid;
+						grid-template-columns: 1fr 1fr 2fr 4fr 1fr 1fr;
+						justify-items: center;
+						align-items: center;
+					}
+					.row2 {
+						display: grid;
+						grid-template-columns: 1.5fr 4fr 1.5fr 2fr 1fr 1fr;
+						justify-items: center;
+						align-items: center;
+					}
+				}
+			}
+			.productsSettings {
+				display: grid;
+				grid-template-columns: 20fr 1fr;
+				margin: 1em;
+				.leyend {
+					text-align: end;
+					align-content: center;
+					display: grid;
+					color: dimgray;
+					font-size: 0.9em;
+					margin-right: 10px;
+				}
+				i {
+					border-radius: 8px;
+					border: 1px solid transparent;
+					background-color: $primary;
+					padding: 2px;
+					color: #f4f4f4;
+					font-size: 1.6em;
+					&:hover {
+						background-color: $primaryHover;
+						color: #f4f4f4;
+						border: 1px solid $primaryHover;
+						cursor: pointer;
+					}
+				}
+			}
+			.servInferior,
+			.prodInferior {
 				margin: 1em;
 				.row {
 					display: grid;
-					grid-template-columns: 4fr 1fr 1fr;
 					border-top: 1px solid #d4d4d4;
 					padding: 0.5em 0;
 					align-items: center;
+					justify-items: center;
 					.descripcion {
 						&::first-letter {
 							text-transform: capitalize;
 						}
 					}
-					i {
-						border-radius: 8px;
-						border: 1px solid transparent;
-						background-color: #f4f4fa;
-						padding: 2px;
-						color: #989898;
-						&:hover {
+					img {
+						height: 3em;
+					}
+					.btns {
+						width: 100%;
+						display: flex;
+						justify-content: space-evenly;
+						i {
+							border-radius: 8px;
+							border: 1px solid transparent;
 							background-color: #f4f4fa;
-							color: #ff8a8a;
-							border: 1px solid #ff8a8a;
-							cursor: pointer;
+							padding: 2px;
+							color: #989898;
+							&:hover {
+								background-color: #f4f4fa;
+								color: $primary;
+								border: 1px solid $primary;
+								cursor: pointer;
+							}
 						}
+						i.delete {
+							&:hover {
+								color: #ff8a8a;
+								border: 1px solid #ff8a8a;
+							}
+						}
+					}
+				}
+			}
+			.servInferior {
+				.row {
+					grid-template-columns: 4fr 1fr 1fr;
+				}
+			}
+			.prodInferior {
+				.row {
+					grid-template-columns: 1fr 3fr 3fr 1fr 1fr 2fr 1fr;
+				}
+			}
+
+			.productInfGrid {
+				display: grid;
+				grid-template-columns: 1fr 1fr 1fr 1fr;
+				// overflow-y: scroll;
+				// overflow-x: hidden;
+				// padding-right: 1%;
+				// width: 102%;
+				// height: 77%;
+				.productInGrid {
+					width: 14em;
+					height: 10em;
+					margin: 1em auto;
+					background-color: #f4f4fa;
+					border-radius: 1em;
+					display: grid;
+					grid-template-rows: 8fr 1fr 1fr;
+					text-align: center;
+					padding: 1em;
+					box-sizing: border-box;
+					img {
+						width: 50%;
+						margin: auto;
+					}
+					span {
+						color: dimgray;
+						&::first-letter {
+							text-transform: capitalize;
+						}
+					}
+					&:hover {
+						background-color: $primaryLightHover;
+						color: $primary;
 					}
 				}
 			}
