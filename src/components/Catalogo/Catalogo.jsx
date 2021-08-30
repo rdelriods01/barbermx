@@ -7,8 +7,11 @@ import noimage from "../../assets/noimage.png";
 
 function Catalogo() {
 	const { services, setServices } = useContext(ServicesContext);
+	const [sID, setSID] = useState("");
 	const [sDesc, setSDesc] = useState("");
 	const [sPrice, setSPrice] = useState("");
+	const [editServiceF, setEditServiceF] = useState(false);
+	const [requiredServF, setRequiredServF] = useState(false);
 
 	const { products, setProducts } = useContext(ProductsContext);
 	const [pID, setPID] = useState("");
@@ -20,18 +23,24 @@ function Catalogo() {
 	const [pPhoto, setPPhoto] = useState("");
 	const [gridView, setGridView] = useState(false);
 	const [editProductF, setEditProductF] = useState(false);
-	const [requiredF, setRequiredF] = useState(false);
+	const [requiredProdF, setRequiredProdF] = useState(false);
 
 	// Services
 	const addService = async () => {
-		console.log(`se agregó ${sDesc} con el precio ${sPrice} a la BD`);
-		await axios.post("http://localhost:4000/api/services", {
-			description: sDesc,
-			price: sPrice,
-		});
-		setSDesc("");
-		setSPrice("");
-		getServices();
+		if (sDesc === "" || sPrice === "") {
+			setRequiredServF(true);
+			setTimeout(() => {
+				setRequiredServF(false);
+				console.log("off");
+			}, 10000);
+		} else {
+			await axios.post("http://localhost:4000/api/services", {
+				description: sDesc,
+				price: sPrice,
+			});
+			resetServData();
+			getServices();
+		}
 	};
 
 	const deleteService = async (serv) => {
@@ -48,9 +57,36 @@ function Catalogo() {
 			setServices(myServices);
 		});
 	};
+
+	const sendServiceToEdit = (serv) => {
+		console.log(serv);
+		setEditServiceF(true);
+		setSID(serv._id);
+		setSDesc(serv.description);
+		setSPrice(serv.price);
+	};
+
+	const editService = async () => {
+		let newServiceData = {
+			description: sDesc,
+			price: sPrice,
+		};
+		await axios.put(`http://localhost:4000/api/services/${sID}`, {
+			...newServiceData,
+		});
+		resetServData();
+	};
+
+	const resetServData = () => {
+		setEditServiceF(false);
+		setRequiredServF(false);
+		setSID("");
+		setSDesc("");
+		setSPrice("");
+		getServices();
+	};
 	// Products
 	const addProduct = async () => {
-		console.log(`se agregó ${pName} con el precio ${pPrice} a la BD`);
 		if (
 			pSKU === "" ||
 			pName === "" ||
@@ -58,9 +94,9 @@ function Catalogo() {
 			pPrice === "" ||
 			pInv === ""
 		) {
-			setRequiredF(true);
+			setRequiredProdF(true);
 			setTimeout(() => {
-				setRequiredF(false);
+				setRequiredProdF(false);
 				console.log("off");
 			}, 10000);
 		} else {
@@ -75,7 +111,8 @@ function Catalogo() {
 			resetProdData();
 		}
 	};
-	const sendDataToEdit = (prod) => {
+
+	const sendProductToEdit = (prod) => {
 		console.log(prod);
 		setEditProductF(true);
 		setPID(prod._id);
@@ -104,7 +141,7 @@ function Catalogo() {
 
 	const resetProdData = () => {
 		setEditProductF(false);
-		setRequiredF(false);
+		setRequiredProdF(false);
 		setPID("");
 		setPSKU("");
 		setPName("");
@@ -136,6 +173,16 @@ function Catalogo() {
 
 	return (
 		<div className="CatalogoC">
+			{requiredProdF ? (
+				<div className="notification">
+					<span>Revisa que los campos sean correctos</span>
+				</div>
+			) : null}
+			{requiredServF ? (
+				<div className="notification">
+					<span>Revisa que los campos sean correctos</span>
+				</div>
+			) : null}
 			<div className="superior">
 				<h2>
 					<i className="material-icons">apps</i> Catálogo
@@ -150,6 +197,7 @@ function Catalogo() {
 						<input
 							type="text"
 							value={sDesc}
+							className={requiredServF && sDesc === "" ? "required" : "null"}
 							placeholder="Agregar descripción del servicio..."
 							onChange={(ev) => setSDesc(ev.target.value.toLowerCase())}
 						/>
@@ -158,6 +206,7 @@ function Catalogo() {
 						<input
 							type="text"
 							value={sPrice}
+							className={requiredServF && sPrice === "" ? "required" : "null"}
 							placeholder="Fijar precio..."
 							onChange={(event) => {
 								setSPrice(event.target.value);
@@ -165,10 +214,23 @@ function Catalogo() {
 						/>
 
 						<div className="btns">
+							{editServiceF ? (
+								<i
+									onClick={() => editService()}
+									className="material-icons blueBtn">
+									done
+								</i>
+							) : (
+								<i
+									onClick={() => addService()}
+									className="material-icons blueBtn">
+									add
+								</i>
+							)}
 							<i
-								onClick={() => addService()}
-								className="material-icons blueBtn">
-								add
+								onClick={() => resetServData()}
+								className="material-icons reset">
+								cancel
 							</i>
 						</div>
 					</div>
@@ -185,6 +247,11 @@ function Catalogo() {
 											onClick={() => deleteService(service)}>
 											delete
 										</i>
+										<i
+											className="material-icons"
+											onClick={() => sendServiceToEdit(service)}>
+											edit
+										</i>
 									</div>
 								</div>
 							))}
@@ -197,7 +264,7 @@ function Catalogo() {
 								<b>SKU</b>
 								<input
 									type="text"
-									className={requiredF && pSKU === "" ? "required" : "null"}
+									className={requiredProdF && pSKU === "" ? "required" : "null"}
 									value={pSKU}
 									placeholder="Agregar sku..."
 									onChange={(ev) => setPSKU(ev.target.value.toLowerCase())}
@@ -205,7 +272,9 @@ function Catalogo() {
 								<b>Nombre</b>
 								<input
 									type="text"
-									className={requiredF && pName === "" ? "required" : "null"}
+									className={
+										requiredProdF && pName === "" ? "required" : "null"
+									}
 									value={pName}
 									placeholder="Agregar nombre..."
 									onChange={(ev) => setPName(ev.target.value.toLowerCase())}
@@ -213,7 +282,9 @@ function Catalogo() {
 								<b>Precio</b>
 								<input
 									type="text"
-									className={requiredF && pPrice === "" ? "required" : "null"}
+									className={
+										requiredProdF && pPrice === "" ? "required" : "null"
+									}
 									value={pPrice}
 									placeholder="Fijar precio..."
 									onChange={(event) => {
@@ -225,7 +296,9 @@ function Catalogo() {
 								<b>Descripción</b>
 								<input
 									type="text"
-									className={requiredF && pDesc === "" ? "required" : "null"}
+									className={
+										requiredProdF && pDesc === "" ? "required" : "null"
+									}
 									value={pDesc}
 									placeholder="Agregar descripción..."
 									onChange={(ev) => setPDesc(ev.target.value.toLowerCase())}
@@ -233,7 +306,7 @@ function Catalogo() {
 								<b>Inventario</b>
 								<input
 									type="text"
-									className={requiredF && pInv === "" ? "required" : "null"}
+									className={requiredProdF && pInv === "" ? "required" : "null"}
 									value={pInv}
 									placeholder="Agregar cantidad inicial..."
 									onChange={(ev) => setPInv(ev.target.value)}
@@ -255,11 +328,18 @@ function Catalogo() {
 									done
 								</i>
 							) : (
-								<i
-									onClick={() => addProduct()}
-									className="material-icons blueBtn">
-									add
-								</i>
+								<>
+									<i
+										onClick={() => addProduct()}
+										className="material-icons blueBtn">
+										add
+									</i>
+									<i
+										onClick={() => console.log(`searching ${pSKU} ${pName}`)}
+										className="material-icons blueBtn">
+										search
+									</i>
+								</>
 							)}
 							<i
 								onClick={() => resetProdData()}
@@ -268,11 +348,7 @@ function Catalogo() {
 							</i>
 						</div>
 					</div>
-					{requiredF ? (
-						<div className="requiredLeyend">
-							<span>Revisa que los campos sean correctos</span>
-						</div>
-					) : null}
+
 					<div className="productsSettings">
 						<div className="leyend">
 							Vista {gridView ? "cuadriculada" : "de lista"}
@@ -320,7 +396,7 @@ function Catalogo() {
 												</i>
 												<i
 													className="material-icons"
-													onClick={() => sendDataToEdit(product)}>
+													onClick={() => sendProductToEdit(product)}>
 													edit
 												</i>
 											</div>

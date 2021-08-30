@@ -92,22 +92,7 @@
 					}
 				}
 			}
-			.requiredLeyend {
-				color: #ff8a8a;
-				text-align: center;
-				position: absolute;
-				animation: notification 10s;
-				height: 4em;
-				border-radius: 8px;
-				background-color: #3f3f3f;
-				opacity: 0;
-				z-index: -1000;
-				top: 10px;
-				display: flex;
-				span {
-					margin: auto 1em;
-				}
-			}
+
 			.productsSettings {
 				display: grid;
 				grid-template-columns: 20fr 1fr;
@@ -244,6 +229,22 @@
 					}
 				}
 			}
+		}
+	}
+	.notification {
+		color: #ff8a8a;
+		text-align: center;
+		position: absolute;
+		animation: notification 10s;
+		height: 4em;
+		border-radius: 8px;
+		background-color: #3f3f3f;
+		opacity: 0;
+		z-index: -1000;
+		top: 10px;
+		display: flex;
+		span {
+			margin: auto 1em;
 		}
 	}
 }
