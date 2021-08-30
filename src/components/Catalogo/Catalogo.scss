@@ -41,6 +41,9 @@
 				text-align: center;
 				justify-items: center;
 				align-items: center;
+				b {
+					color: dimgray;
+				}
 				input {
 					background-color: #f4f4fa;
 					border-radius: 8px;
@@ -61,44 +64,48 @@
 						right: 20px;
 					}
 				}
-				.btns {
-					i {
-						border-radius: 8px;
-						border: 1px solid transparent;
-						background-color: $primary;
-						padding: 2px;
-						color: #f4f4f4;
-						font-size: 1.6em;
-						width: 1.4em;
-						&:hover {
-							background-color: $primaryHover;
-							color: #f4f4f4;
-							border: 1px solid $primaryHover;
-							cursor: pointer;
-						}
-					}
+				.required {
+					border: 1px solid #ff8a8a;
 				}
 			}
 			.servSuperior {
 				grid-template-columns: 2fr 4fr 2fr 2fr 2fr;
 			}
 			.prodSuperior {
-				grid-template-columns: 8fr 1fr;
+				grid-template-columns: 7fr 1fr;
 				.prows {
 					display: grid;
 					row-gap: 1em;
 					.row1 {
 						display: grid;
-						grid-template-columns: 1fr 1fr 2fr 4fr 1fr 1fr;
+						grid-template-columns: 1fr 1fr 1fr 3fr 1fr 1fr;
+						margin: 0 0.5em;
 						justify-items: center;
 						align-items: center;
 					}
 					.row2 {
 						display: grid;
-						grid-template-columns: 1.5fr 4fr 1.5fr 2fr 1fr 1fr;
+						margin: 0 0.5em;
+						grid-template-columns: 1.5fr 6fr 1.5fr 1fr 1fr 1fr;
 						justify-items: center;
 						align-items: center;
 					}
+				}
+			}
+			.requiredLeyend {
+				color: #ff8a8a;
+				text-align: center;
+				position: absolute;
+				animation: notification 10s;
+				height: 4em;
+				border-radius: 8px;
+				background-color: #3f3f3f;
+				opacity: 0;
+				z-index: -1000;
+				top: 10px;
+				display: flex;
+				span {
+					margin: auto 1em;
 				}
 			}
 			.productsSettings {
@@ -145,30 +152,9 @@
 					img {
 						height: 3em;
 					}
-					.btns {
-						width: 100%;
-						display: flex;
-						justify-content: space-evenly;
-						i {
-							border-radius: 8px;
-							border: 1px solid transparent;
-							background-color: #f4f4fa;
-							padding: 2px;
-							color: #989898;
-							&:hover {
-								background-color: #f4f4fa;
-								color: $primary;
-								border: 1px solid $primary;
-								cursor: pointer;
-							}
-						}
-						i.delete {
-							&:hover {
-								color: #ff8a8a;
-								border: 1px solid #ff8a8a;
-							}
-						}
-					}
+				}
+				.editing {
+					color: $primary;
 				}
 			}
 			.servInferior {
@@ -217,6 +203,96 @@
 					}
 				}
 			}
+			.btns {
+				display: flex;
+				justify-content: space-evenly;
+				width: 100%;
+				i {
+					border-radius: 8px;
+					border: 1px solid transparent;
+					background-color: #f4f4fa;
+					padding: 2px;
+					color: #989898;
+					&:hover {
+						background-color: #f4f4fa;
+						color: $primary;
+						border: 1px solid $primary;
+						cursor: pointer;
+					}
+				}
+				.reset {
+					&:hover {
+						background-color: #f4f4fa;
+						border: 1px solid #989898;
+						color: #989898;
+					}
+				}
+				.delete {
+					&:hover {
+						color: #ff8a8a;
+						border: 1px solid #ff8a8a;
+					}
+				}
+				.blueBtn {
+					background-color: $primary;
+					color: #f4f4f4;
+					font-size: 1.6em;
+					&:hover {
+						background-color: $primaryHover;
+						color: #f4f4f4;
+						border: 1px solid $primaryHover;
+					}
+				}
+			}
 		}
+	}
+}
+
+@keyframes notification {
+	0% {
+		opacity: 1;
+		z-index: 1000;
+		right: 0;
+	}
+
+	50% {
+		right: 2%;
+		opacity: 1;
+		z-index: 1000;
+	}
+	100% {
+		opacity: 0;
+		z-index: -1000;
+	}
+}
+
+.prodInferior {
+	position: relative;
+	.editing:before {
+		content: "";
+		position: absolute;
+		width: 20%;
+		height: 20%;
+		transform: translate(-50%, -14%) skewX(-15deg);
+		animation-name: slide;
+		animation-duration: 3s;
+		animation-timing-function: ease-in-out;
+		animation-iteration-count: infinite;
+		animation-direction: alternate;
+		background: linear-gradient(
+			to right,
+			rgba(246, 249, 255, 0.13) 0%,
+			rgba(189, 218, 255, 0.35) 77%,
+			rgba(142, 210, 255, 0.212) 92%,
+			rgba(239, 249, 255, 0) 100%
+		);
+	}
+}
+@keyframes slide {
+	0% {
+		left: 0%;
+	}
+	100% {
+		left: 80%;
 	}
 }

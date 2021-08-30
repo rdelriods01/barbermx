@@ -11,13 +11,16 @@ function Catalogo() {
 	const [sPrice, setSPrice] = useState("");
 
 	const { products, setProducts } = useContext(ProductsContext);
+	const [pID, setPID] = useState("");
 	const [pSKU, setPSKU] = useState("");
 	const [pName, setPName] = useState("");
 	const [pDesc, setPDesc] = useState("");
 	const [pPrice, setPPrice] = useState("");
 	const [pInv, setPInv] = useState("");
 	const [pPhoto, setPPhoto] = useState("");
-	const [gridView, setGridView] = useState(true);
+	const [gridView, setGridView] = useState(false);
+	const [editProductF, setEditProductF] = useState(false);
+	const [requiredF, setRequiredF] = useState(false);
 
 	// Services
 	const addService = async () => {
@@ -48,14 +51,61 @@ function Catalogo() {
 	// Products
 	const addProduct = async () => {
 		console.log(`se agregó ${pName} con el precio ${pPrice} a la BD`);
-		await axios.post("http://localhost:4000/api/products", {
+		if (
+			pSKU === "" ||
+			pName === "" ||
+			pDesc === "" ||
+			pPrice === "" ||
+			pInv === ""
+		) {
+			setRequiredF(true);
+			setTimeout(() => {
+				setRequiredF(false);
+				console.log("off");
+			}, 10000);
+		} else {
+			await axios.post("http://localhost:4000/api/products", {
+				sku: pSKU,
+				name: pName,
+				description: pDesc,
+				price: pPrice,
+				inv: pInv,
+				photo: pPhoto,
+			});
+			resetProdData();
+		}
+	};
+	const sendDataToEdit = (prod) => {
+		console.log(prod);
+		setEditProductF(true);
+		setPID(prod._id);
+		setPSKU(prod.sku);
+		setPName(prod.name);
+		setPPrice(prod.price);
+		setPDesc(prod.description);
+		setPInv(prod.inv);
+		setPPhoto(prod.photo);
+	};
+
+	const editProduct = async () => {
+		let newProductData = {
 			sku: pSKU,
 			name: pName,
-			description: pDesc,
 			price: pPrice,
+			description: pDesc,
 			inv: pInv,
 			photo: pPhoto,
+		};
+		await axios.put(`http://localhost:4000/api/products/${pID}`, {
+			...newProductData,
 		});
+		resetProdData();
+	};
+
+	const resetProdData = () => {
+		setEditProductF(false);
+		setRequiredF(false);
+		setPID("");
 		setPSKU("");
 		setPName("");
 		setPPrice("");
@@ -115,7 +165,9 @@ function Catalogo() {
 						/>
 
 						<div className="btns">
-							<i onClick={() => addService()} className="material-icons">
+							<i
+								onClick={() => addService()}
+								className="material-icons blueBtn">
 								add
 							</i>
 						</div>
@@ -145,6 +197,7 @@ function Catalogo() {
 								<b>SKU</b>
 								<input
 									type="text"
+									className={requiredF && pSKU === "" ? "required" : "null"}
 									value={pSKU}
 									placeholder="Agregar sku..."
 									onChange={(ev) => setPSKU(ev.target.value.toLowerCase())}
@@ -152,6 +205,7 @@ function Catalogo() {
 								<b>Nombre</b>
 								<input
 									type="text"
+									className={requiredF && pName === "" ? "required" : "null"}
 									value={pName}
 									placeholder="Agregar nombre..."
 									onChange={(ev) => setPName(ev.target.value.toLowerCase())}
@@ -159,6 +213,7 @@ function Catalogo() {
 								<b>Precio</b>
 								<input
 									type="text"
+									className={requiredF && pPrice === "" ? "required" : "null"}
 									value={pPrice}
 									placeholder="Fijar precio..."
 									onChange={(event) => {
@@ -170,6 +225,7 @@ function Catalogo() {
 								<b>Descripción</b>
 								<input
 									type="text"
+									className={requiredF && pDesc === "" ? "required" : "null"}
 									value={pDesc}
 									placeholder="Agregar descripción..."
 									onChange={(ev) => setPDesc(ev.target.value.toLowerCase())}
@@ -177,6 +233,7 @@ function Catalogo() {
 								<b>Inventario</b>
 								<input
 									type="text"
+									className={requiredF && pInv === "" ? "required" : "null"}
 									value={pInv}
 									placeholder="Agregar cantidad inicial..."
 									onChange={(ev) => setPInv(ev.target.value)}
@@ -190,13 +247,32 @@ function Catalogo() {
 								/>
 							</div>
 						</div>
-
 						<div className="btns">
-							<i onClick={() => addProduct()} className="material-icons">
-								add
+							{editProductF ? (
+								<i
+									onClick={() => editProduct()}
+									className="material-icons blueBtn">
+									done
+								</i>
+							) : (
+								<i
+									onClick={() => addProduct()}
+									className="material-icons blueBtn">
+									add
+								</i>
+							)}
+							<i
+								onClick={() => resetProdData()}
+								className="material-icons reset">
+								cancel
 							</i>
 						</div>
 					</div>
+					{requiredF ? (
+						<div className="requiredLeyend">
+							<span>Revisa que los campos sean correctos</span>
+						</div>
+					) : null}
 					<div className="productsSettings">
 						<div className="leyend">
 							Vista {gridView ? "cuadriculada" : "de lista"}
@@ -224,7 +300,9 @@ function Catalogo() {
 									</div>
 								) : (
 									<>
-										<div className="row" key={index}>
+										<div
+											className={pID === product._id ? "row editing" : "row"}
+											key={index}>
 											<span>{product.sku}</span>
 											<span className="descripcion">{product.name}</span>
 											<span className="descripcion">{product.description}</span>
@@ -242,7 +320,7 @@ function Catalogo() {
 												</i>
 												<i
 													className="material-icons"
-													onClick={() => console.log(product)}>
+													onClick={() => sendDataToEdit(product)}>
 													edit
 												</i>
 											</div>
