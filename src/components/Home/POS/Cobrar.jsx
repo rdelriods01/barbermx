@@ -20,21 +20,6 @@ function Cobrar(props) {
 	const [cambioFontSize, setCambioFontSize] = useState("1em");
 
 	useEffect(() => {
-		console.log(pagacon);
-		calcular();
-	}, [pagacon]);
-
-	useEffect(() => {
-		if (formaDePago === "tarjeta") {
-			setPagaCon("");
-			setCambio(0);
-			setPorpagar(0);
-		}
-	}, [formaDePago]);
-
-	const calcular = () => {
-		console.log(total);
-		console.log(pagacon);
 		let ppagar = total - Number(pagacon);
 		console.log(ppagar);
 		if (ppagar <= 0) {
@@ -54,7 +39,16 @@ function Cobrar(props) {
 			setCambioColor("#2196f3");
 			setCambioFontSize("2em");
 		}
-	};
+	}, [pagacon]);
+
+	useEffect(() => {
+		if (formaDePago === "tarjeta") {
+			setPagaCon("");
+			setCambio(0);
+			setPorpagar(0);
+		}
+	}, [formaDePago]);
+
 	const sendNum = (v) => {
 		console.log(v);
 		if (pagacon === "") {

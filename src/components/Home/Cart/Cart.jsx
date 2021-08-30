@@ -35,12 +35,23 @@ function Cart(props) {
 	const [disabled, setDisabled] = useState(false);
 
 	useEffect(() => {
-		getTotal();
 		if (servicesInCart.length === 0) {
 			setDisabled(true);
 		} else {
 			setDisabled(false);
 		}
+		let sum = 0;
+		let cant = 0;
+		for (let i = 0; i < servicesInCart.length; i++) {
+			sum = sum + Number(servicesInCart[i].price);
+			cant = cant + 1;
+		}
+		for (let i = 0; i < productsInCart.length; i++) {
+			sum = sum + Number(productsInCart[i].total);
+			cant = cant + productsInCart[i].cant;
+		}
+		setArticulos(cant);
+		setTotal(sum);
 	}, [servicesInCart, productsInCart]);
 
 	const handleTabChange = (event, newValue) => {
@@ -145,21 +156,6 @@ function Cart(props) {
 			}
 			return null;
 		});
-	};
-
-	const getTotal = () => {
-		let sum = 0;
-		let cant = 0;
-		for (let i = 0; i < servicesInCart.length; i++) {
-			sum = sum + Number(servicesInCart[i].price);
-			cant = cant + 1;
-		}
-		for (let i = 0; i < productsInCart.length; i++) {
-			sum = sum + Number(productsInCart[i].total);
-			cant = cant + productsInCart[i].cant;
-		}
-		setArticulos(cant);
-		setTotal(sum);
 	};
 
 	return (
