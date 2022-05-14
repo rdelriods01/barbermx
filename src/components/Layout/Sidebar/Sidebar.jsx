@@ -18,11 +18,11 @@ const Sidebar = (props) => {
 				<i className="material-icons  " onClick={props.onChange}>
 					menu
 				</i>
-				<div className="brand-logo">
+				{/* <div className="brand-logo">
 					<Link to="/">
 						<h3>barberMX</h3>
 					</Link>
-				</div>
+				</div> */}
 			</div>
 			<ul>
 				<NavLink
@@ -30,8 +30,8 @@ const Sidebar = (props) => {
 					exact
 					to="/"
 					activeStyle={{ color: variables.primary }}>
-					<i className="material-icons">point_of_sale</i>
-					<span>Venta</span>
+					<i className="material-icons">dashboard</i>
+					<span>Dashboard</span>
 				</NavLink>
 				<NavLink
 					className="li"
@@ -45,7 +45,7 @@ const Sidebar = (props) => {
 					to="/clientes"
 					activeStyle={{ color: variables.primary }}>
 					<i className="material-icons">people</i>
-					<span>Clientes</span>
+					<span>Pacientes</span>
 				</NavLink>
 				<NavLink
 					className="li"
