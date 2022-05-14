@@ -13,6 +13,7 @@ import {
 
 import nothingYet from "../../assets/nothingyet.png";
 import defaultPP from "../../assets/pp_default.svg";
+import LZlogo from "../../assets/LZlogo.png";
 
 import "./Home.scss";
 import Weather from "./Weather";
@@ -106,9 +107,10 @@ function Home() {
 	return (
 		<div className="HomeC">
 			<div className="superior">
-				<h2>
-					<i className="material-icons">home</i> Home
-				</h2>
+				<div className="brand">
+					<img src={LZlogo} alt="LZlogo" />
+					<span>LightZone</span>
+				</div>
 				<div className="weather">
 					<Weather />
 				</div>
