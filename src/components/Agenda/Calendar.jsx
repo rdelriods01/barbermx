@@ -40,7 +40,6 @@ const localizer = dateFnsLocalizer({
 const DragAndDropCalendar = withDragAndDrop(Calendar);
 
 const Calendario = () => {
-	const barbers = ["", "Barber 1", "Barber 2", "Barber 3", "Barber 4"];
 	const [events, setEvents] = useState([]);
 	const [openCreate, setOpenCreate] = useState(false);
 	const [openEdit, setOpenEdit] = useState(false);
@@ -71,9 +70,7 @@ const Calendario = () => {
 				startTS: getTime(event.start),
 				end: event.end,
 				client: event.client,
-				// dia: format(event.start, "yyyy-MM-dd"),
-				resourceId: event.barber,
-				// barber: barbers[event.barber - 1],
+				resourceId: event.worker,
 				cart: event.cart,
 			};
 			console.log(newEvent);
@@ -97,12 +94,12 @@ const Calendario = () => {
 		start,
 		end,
 		client,
-		barber,
+		worker,
 		cart,
 		ready,
 		remove,
 	}) => {
-		console.log({ start, end, client, barber, cart, ready });
+		console.log({ start, end, client, worker, cart, ready });
 		setOpenEdit(false);
 		if (ready || remove) {
 			if (remove) {
@@ -113,7 +110,7 @@ const Calendario = () => {
 					client,
 					start,
 					end,
-					resourceId: barber,
+					resourceId: worker,
 					cart,
 				});
 			}
@@ -217,10 +214,10 @@ const Calendario = () => {
 	};
 
 	const resourceMap = [
-		{ resourceId: 1, barber: "Barber 1", color: "#00bcd4" },
-		{ resourceId: 2, barber: "Barber 2", color: "#FFC107" },
-		{ resourceId: 3, barber: "Barber 3", color: "#4caf50" },
-		{ resourceId: 4, barber: "Barber 4", color: "#e91e63" },
+		{ resourceId: 1, worker: "Karen Guerra", color: "#00bcd4" },
+		// { resourceId: 2, worker: "Worker 2", color: "#FFC107" },
+		// { resourceId: 3, worker: "Worker 3", color: "#4caf50" },
+		// { resourceId: 4, worker: "Worker 4", color: "#e91e63" },
 	];
 
 	return (
@@ -240,7 +237,7 @@ const Calendario = () => {
 					defaultView={view}
 					resources={view === "week" ? null : resourceMap}
 					resourceIdAccessor="resourceId"
-					resourceTitleAccessor="barber"
+					resourceTitleAccessor="worker"
 					step={30}
 					messages={{
 						previous: "<",
@@ -257,8 +254,10 @@ const Calendario = () => {
 					style={{ height: "85vh" }}
 					tooltipAccessor={(ev) =>
 						`${ev.title} - ${ev.cart.servicesInCart[0].description} con ${
-							barbers[ev.resourceId]
-						} `
+							ev.resourceId > resourceMap.length
+								? null
+								: resourceMap[ev.resourceId - 1].worker
+						}`
 					}
 					components={{
 						agenda: {
@@ -273,7 +272,7 @@ const Calendario = () => {
 												textDecoration: "none",
 											}}>
 											{`${ev.title} - ${
-												resourceMap[ev.event.resourceId - 1].barber
+												resourceMap[ev.event.resourceId - 1].worker
 											}`}
 										</Link>
 									) : (
@@ -295,42 +294,27 @@ const Calendario = () => {
 						),
 					}}
 					eventPropGetter={(event) => {
-						if (event.resourceId === 1 && view !== "agenda") {
-							return {
-								style: {
-									borderTopColor: resourceMap[event.resourceId - 1].color,
-								},
-							};
-						}
-						if (event.resourceId === 2 && view !== "agenda") {
-							return {
-								style: {
-									borderTopColor: resourceMap[event.resourceId - 1].color,
-								},
-							};
-						}
-						if (event.resourceId === 3 && view !== "agenda") {
-							return {
-								style: {
-									borderTopColor: resourceMap[event.resourceId - 1].color,
-								},
-							};
-						}
-						if (event.resourceId === 4 && view !== "agenda") {
-							return {
-								style: {
-									borderTopColor: resourceMap[event.resourceId - 1].color,
-								},
-							};
+						for (let i = 1; i <= resourceMap.length; i++) {
+							if (event.resourceId === i && view !== "agenda") {
+								console.log(
+									"resource ID current: " +
+										resourceMap[event.resourceId - 1].color
+								);
+								return {
+									style: {
+										borderTopColor: resourceMap[event.resourceId - 1].color,
+									},
+								};
+							}
 						}
 					}}
 				/>
 				{view !== "day" && view !== "agenda" ? (
 					<div className="leyenda">
-						{resourceMap.map((barber) => {
+						{resourceMap.map((worker) => {
 							return (
-								<b key={barber.resourceId} style={{ color: barber.color }}>
-									{barber.barber}
+								<b key={worker.resourceId} style={{ color: worker.color }}>
+									{worker.worker}
 								</b>
 							);
 						})}
