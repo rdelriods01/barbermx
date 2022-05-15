@@ -213,6 +213,8 @@ const Calendario = () => {
 			});
 	};
 
+	// Calendar Component is ready for import ResourceMap from other component
+
 	const resourceMap = [
 		{ resourceId: 1, worker: "Karen Guerra", color: "#00bcd4" },
 		// { resourceId: 2, worker: "Worker 2", color: "#FFC107" },
