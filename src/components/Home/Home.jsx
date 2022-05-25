@@ -224,7 +224,7 @@ function Home() {
 					) : (
 						<div className="withoutEvents">
 							<img src={nothingYet} alt="nothingYetImg" />
-							<h1>No hay citas el día de hoy</h1>
+							<h1>No hay citas</h1>
 						</div>
 					)}
 				</div>
