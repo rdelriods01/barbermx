@@ -14,7 +14,7 @@ import defaultPP from "../../assets/pp_default.svg";
 const Cita = (props) => {
 	console.log(props);
 	const { services } = useContext(ServicesContext);
-	const barbers = ["", "Barber 1", "Barber 2", "Barber 3", "Barber 4"];
+	const workers = ["", "Worker 1", "Worker 2", "Worker 3", "Worker 4"];
 	const [checkedState, setCheckedState] = useState(
 		new Array(services.length).fill(false)
 	);
@@ -24,7 +24,7 @@ const Cita = (props) => {
 		props.event.cart ? props.event.cart.servicesInCart : []
 	);
 	const [total, setTotal] = useState(0);
-	const [barber, setBarber] = useState(
+	const [worker, setWorker] = useState(
 		props.event.resourceId ? props.event.resourceId : 1
 	);
 	const [client, setClient] = useState(
@@ -47,7 +47,7 @@ const Cita = (props) => {
 	const [showCardHoras, setShowCardHoras] = useState(false);
 	const [horasSelected, setHorasSelected] = useState(false);
 
-	const [showBarberSelect, setShowBarberSelect] = useState(false);
+	const [showWorkerSelect, setShowWorkerSelect] = useState(false);
 	const [saveBtnDisabled, setSaveBtnDisabled] = useState(true);
 
 	//COMPONENT USEEFFECTS
@@ -93,12 +93,12 @@ const Cita = (props) => {
 	}, [start, end]);
 
 	useEffect(() => {
-		if (serviceSelected && barber !== null && clientSelected && horasSelected) {
+		if (serviceSelected && worker !== null && clientSelected && horasSelected) {
 			setSaveBtnDisabled(false);
 		} else {
 			setSaveBtnDisabled(true);
 		}
-	}, [serviceSelected, barber, clientSelected, horasSelected]);
+	}, [serviceSelected, worker, clientSelected, horasSelected]);
 
 	// COMPONENT FUNCTIONS
 
@@ -235,48 +235,48 @@ const Cita = (props) => {
 										))}
 									</div>
 									<span
-										className="barberSelect"
-										onClick={() => setShowBarberSelect((prev) => !prev)}>
-										{barbers[barber]}
+										className="workerSelect"
+										onClick={() => setShowWorkerSelect((prev) => !prev)}>
+										{workers[worker]}
 										<i className="material-icons">arrow_drop_down</i>
 									</span>
 									<div
 										className={
-											showBarberSelect
+											showWorkerSelect
 												? "dropdown selectDropDown"
 												: "dropdown selectDropDown hide"
 										}>
 										<label
 											className="option"
 											onClick={() => {
-												setBarber(1);
-												setShowBarberSelect(false);
+												setWorker(1);
+												setShowWorkerSelect(false);
 											}}>
-											Barber 1
+											Worker 1
 										</label>
 										<label
 											className="option"
 											onClick={() => {
-												setBarber(2);
-												setShowBarberSelect(false);
+												setWorker(2);
+												setShowWorkerSelect(false);
 											}}>
-											Barber 2
+											Worker 2
 										</label>
 										<label
 											className="option"
 											onClick={() => {
-												setBarber(3);
-												setShowBarberSelect(false);
+												setWorker(3);
+												setShowWorkerSelect(false);
 											}}>
-											Barber 3
+											Worker 3
 										</label>
 										<label
 											className="option"
 											onClick={() => {
-												setBarber(4);
-												setShowBarberSelect(false);
+												setWorker(4);
+												setShowWorkerSelect(false);
 											}}>
-											Barber 4
+											Worker 4
 										</label>
 									</div>
 								</div>
@@ -287,7 +287,7 @@ const Cita = (props) => {
 									<b>AGREGAR SERVICIO</b>
 								</div>
 								<button onClick={() => setShowServicesCard((prev) => !prev)}>
-									Seleccionar service
+									Seleccionar servicio
 								</button>
 							</div>
 						)}
@@ -385,7 +385,7 @@ const Cita = (props) => {
 									<b>AGREGAR CLIENTE</b>
 								</div>
 								<button onClick={() => setShowClientsCard((prev) => !prev)}>
-									Seleccionar client
+									Seleccionar cliente
 								</button>
 							</div>
 						)}
@@ -532,7 +532,7 @@ const Cita = (props) => {
 							start,
 							end,
 							client,
-							barber,
+							worker,
 							cart: {
 								servicesInCart: servicesSelected,
 								productsInCart: [],
