@@ -15,7 +15,7 @@ const Cita = (props) => {
 	console.log(props);
 	const { services } = useContext(ServicesContext);
 	// Ready to bring workers/rooms from DB
-	const workers = ["Worker 1", "Worker 2"];
+	const workers = ["Karen Guerra"];
 	const [checkedState, setCheckedState] = useState(
 		new Array(services.length).fill(false)
 	);
@@ -239,7 +239,6 @@ const Cita = (props) => {
 										className="workerSelect"
 										onClick={() => setShowWorkerSelect((prev) => !prev)}>
 										{workers[worker - 1]}
-										<i className="material-icons">arrow_drop_down</i>
 									</span>
 									<div
 										className={showWorkerSelect ? "dropDownBackground" : "hide"}
