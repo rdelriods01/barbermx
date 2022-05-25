@@ -94,6 +94,9 @@
 						li {
 							color: dimgray;
 							font-size: 0.9em;
+							&::first-letter {
+								text-transform: capitalize;
+							}
 						}
 						span {
 							padding: 1em;
@@ -103,7 +106,7 @@
 							margin: 1em 0;
 							text-align: center;
 						}
-						.barberSelect {
+						.workerSelect {
 							display: flex;
 							cursor: pointer;
 							position: relative;
@@ -308,9 +311,12 @@
 					}
 				}
 				.selectDropDown {
-					margin: 8vh 0 0 9vw;
 					min-width: 10vw;
 					width: 10vw;
+					position: absolute;
+					top: 28%;
+					right: 2%;
+					border-radius: 8px;
 					.option {
 						display: block;
 						margin: 0;
@@ -326,11 +332,18 @@
 						}
 					}
 				}
+				.dropDownBackground {
+					position: fixed;
+					width: 100vw;
+					height: 100vh;
+					top: 0;
+					left: 0;
+				}
 				.hide {
-					max-height: 0px;
 					padding: 0;
-					// width: 20vw;
+					max-height: 0px;
 					* {
+						max-height: 0px;
 						visibility: hidden;
 						opacity: 0;
 					}

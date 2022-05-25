@@ -298,10 +298,6 @@ const Calendario = () => {
 					eventPropGetter={(event) => {
 						for (let i = 1; i <= resourceMap.length; i++) {
 							if (event.resourceId === i && view !== "agenda") {
-								console.log(
-									"resource ID current: " +
-										resourceMap[event.resourceId - 1].color
-								);
 								return {
 									style: {
 										borderTopColor: resourceMap[event.resourceId - 1].color,

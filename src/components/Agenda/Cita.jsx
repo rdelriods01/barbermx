@@ -14,7 +14,8 @@ import defaultPP from "../../assets/pp_default.svg";
 const Cita = (props) => {
 	console.log(props);
 	const { services } = useContext(ServicesContext);
-	const workers = ["", "Worker 1", "Worker 2", "Worker 3", "Worker 4"];
+	// Ready to bring workers/rooms from DB
+	const workers = ["Worker 1", "Worker 2"];
 	const [checkedState, setCheckedState] = useState(
 		new Array(services.length).fill(false)
 	);
@@ -237,47 +238,26 @@ const Cita = (props) => {
 									<span
 										className="workerSelect"
 										onClick={() => setShowWorkerSelect((prev) => !prev)}>
-										{workers[worker]}
+										{workers[worker - 1]}
 										<i className="material-icons">arrow_drop_down</i>
 									</span>
 									<div
-										className={
-											showWorkerSelect
-												? "dropdown selectDropDown"
-												: "dropdown selectDropDown hide"
-										}>
-										<label
-											className="option"
-											onClick={() => {
-												setWorker(1);
-												setShowWorkerSelect(false);
-											}}>
-											Worker 1
-										</label>
-										<label
-											className="option"
-											onClick={() => {
-												setWorker(2);
-												setShowWorkerSelect(false);
-											}}>
-											Worker 2
-										</label>
-										<label
-											className="option"
-											onClick={() => {
-												setWorker(3);
-												setShowWorkerSelect(false);
-											}}>
-											Worker 3
-										</label>
-										<label
-											className="option"
-											onClick={() => {
-												setWorker(4);
-												setShowWorkerSelect(false);
-											}}>
-											Worker 4
-										</label>
+										className={showWorkerSelect ? "dropDownBackground" : "hide"}
+										onClick={() => {
+											setShowWorkerSelect(false);
+										}}>
+										<div className="dropdown selectDropDown">
+											{workers.map((wrkr, index) => (
+												<label
+													className="option"
+													onClick={() => {
+														setWorker(index + 1);
+														setShowWorkerSelect(false);
+													}}>
+													{wrkr}
+												</label>
+											))}
+										</div>
 									</div>
 								</div>
 							</div>
