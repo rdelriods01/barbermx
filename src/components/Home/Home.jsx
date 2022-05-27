@@ -24,8 +24,8 @@ import Cart from "./Cart/Cart";
 import Ticket from "./Ticket/Ticket";
 
 function Home() {
-	const barbers = ["", "Barber 1", "Barber 2", "Barber 3", "Barber 4"];
-	const colores = ["", "#00bcd4", "#FFC107", "#4caf50", "#e91e63"];
+	const workers = ["Karen Guerra"];
+	const colores = ["#00bcd4"];
 
 	const [events, setEvents] = useState([]);
 	const [currentDate, setCurrentDate] = useState(new Date());
@@ -130,7 +130,7 @@ function Home() {
 										aria-controls="panel1bh-content"
 										id="panel1bh-header"
 										style={{
-											borderLeftColor: colores[evnt.resourceId],
+											borderLeftColor: colores[evnt.resourceId - 1],
 										}}
 										className={
 											expanded === i
@@ -140,7 +140,7 @@ function Home() {
 										<div className="acordionHeaderContent">
 											<div className="tiempoCita">
 												<b>{format(evnt.start, "HH:mm")}</b>
-												<span>{barbers[evnt.resourceId]}</span>
+												<span>{workers[evnt.resourceId - 1]}</span>
 											</div>
 											<div className="nombreCita">
 												<img src={defaultPP} alt="PP" />
@@ -168,7 +168,7 @@ function Home() {
 									</AccordionSummary>
 									<AccordionDetails
 										style={{
-											borderLeftColor: colores[evnt.resourceId],
+											borderLeftColor: colores[evnt.resourceId - 1],
 										}}
 										className="acordionDetails">
 										<div className="acordionDetailsGrid">
