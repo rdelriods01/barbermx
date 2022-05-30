@@ -15,7 +15,8 @@ body {
 		flex: none;
 	}
 }
-.CartDrawer {
+.CartDrawer,
+.CurrentAppointmentDrawer {
 	div.MuiPaper-root {
 		margin-top: 1em;
 		border-top-left-radius: 1em;

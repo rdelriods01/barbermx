@@ -22,6 +22,7 @@ import Clock from "./Clock";
 import POS from "./POS/POS";
 import Cart from "./Cart/Cart";
 import Ticket from "./Ticket/Ticket";
+import CurrentAppointment from "./Clients/CurrentAppointment";
 
 function Home() {
 	const workers = ["Karen Guerra"];
@@ -34,6 +35,7 @@ function Home() {
 	const [openPOS, setOpenPOS] = useState(false);
 	const [openCart, setOpenCart] = useState(false);
 	const [openTicket, setOpenTicket] = useState(false);
+	const [openCurrentAppointment, setOpenCurrentAppointment] = useState(false);
 	const [actualTransaction, setActualTransaction] = useState(null);
 
 	useEffect(() => {
@@ -102,6 +104,10 @@ function Home() {
 
 	const ticketDone = () => {
 		console.log("Ticket Done");
+	};
+
+	const currentAppointmentDone = () => {
+		console.log("Current Appointment Done");
 	};
 
 	return (
@@ -208,6 +214,16 @@ function Home() {
 												<Button
 													variant="contained"
 													color="primary"
+													className="actionBtn currentAppointmentBtn"
+													onClick={() => {
+														setActualTransaction(evnt);
+														setOpenCurrentAppointment(true);
+													}}>
+													<i className="material-icons">dashboard</i>
+												</Button>
+												<Button
+													variant="contained"
+													color="primary"
 													className="actionBtn cobrarBtn"
 													onClick={() => {
 														setActualTransaction(evnt);
@@ -252,6 +268,15 @@ function Home() {
 				anchor="bottom"
 				onClose={() => setOpenTicket(false)}>
 				<Ticket transaction={actualTransaction} onClose={ticketDone}></Ticket>
+			</Drawer>
+			<Drawer
+				className="CurrentAppointmentDrawer"
+				open={openCurrentAppointment}
+				anchor="right"
+				onClose={() => setOpenCurrentAppointment(false)}>
+				<CurrentAppointment
+					transaction={actualTransaction}
+					onClose={currentAppointmentDone}></CurrentAppointment>
 			</Drawer>
 		</div>
 	);
