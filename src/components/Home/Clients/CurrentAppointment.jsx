@@ -66,7 +66,17 @@ function CurrentAppointment(props) {
 					</div>
 				</div>
 			</div>
-			<div className="inferior"></div>
+			<div className="inferior">
+					<div className="todayDataGrid">
+						<div className="todayDataSup">
+							<div><b>Peso:</b><input type="text" className="inputMeasurements" /><span>Kg.</span></div>
+							<div><b>Grasa:</b><input type="text" className="inputMeasurements" /><span>Kg.</span></div>
+							<div><b>Musculo:</b><input type="text" className="inputMeasurements" /><span>%</span></div>
+						</div>
+						<div className="todayDataInf"></div>
+					</div>
+
+			</div>
 		</div>
 	);
 }

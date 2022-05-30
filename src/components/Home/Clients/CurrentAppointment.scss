@@ -68,4 +68,18 @@
 			}
 		}
 	}
+	.inferior{
+		.todayDataGrid{
+			display: grid;
+			grid-template-rows: 1fr 1fr;
+			.todayDataSup{
+				display: grid;
+				grid-template-columns: 1fr 1fr 1fr;
+			}
+			.todayDataInf{
+				display: grid;
+				grid-template-columns: 1fr 1fr 1fr;
+			}
+		}
+	}
 }
