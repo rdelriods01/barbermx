@@ -22,7 +22,7 @@ import Clock from "./Clock";
 import POS from "./POS/POS";
 import Cart from "./Cart/Cart";
 import Ticket from "./Ticket/Ticket";
-import CurrentAppointment from "./Clients/CurrentAppointment";
+import CurrentAppointment from "./CurrentAppointment/CurrentAppointment";
 
 function Home() {
 	const workers = ["Karen Guerra"];
@@ -117,9 +117,7 @@ function Home() {
 					<img src={LZlogo} alt="LZlogo" />
 					<span>LightZone</span>
 				</div>
-				<div className="weather">
-					<Weather />
-				</div>
+				<Weather />
 				<Clock />
 			</div>
 			<div className="grid">
@@ -201,7 +199,7 @@ function Home() {
 											</>
 										) : (
 											<>
-												<Button
+												{/* <Button
 													variant="contained"
 													color="primary"
 													className="actionBtn addToCartBtn"
@@ -210,7 +208,7 @@ function Home() {
 														setOpenCart(true);
 													}}>
 													<i className="material-icons">shopping_cart</i>
-												</Button>
+												</Button> */}
 												<Button
 													variant="contained"
 													color="primary"
