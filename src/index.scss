@@ -24,7 +24,8 @@ body {
 		height: 96%;
 	}
 }
-.TicketDrawer {
+.TicketDrawer,
+.NewPatientDrawer {
 	display: flex;
 	div.MuiPaper-root {
 		border-radius: 1em;
