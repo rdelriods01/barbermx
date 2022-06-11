@@ -124,84 +124,88 @@ const NewPatient = (props) => {
 		if (gender === "") {
 			alert("ingrese el genero correctamente");
 		} else {
-			if (age) {
-				let name =
-					firstname +
-					(secondname ? ` ${secondname} ` : " ") +
-					lastname +
-					(seclastname ? ` ${seclastname}` : "");
-
-				let mins = getMinutes(horaCita);
-				let hours = getHours(horaCita);
-				let start = new Date(diaCita);
-				start.setHours(hours);
-				start.setMinutes(mins);
-				let end = addMinutes(start, 30);
-
-				let newPatient = {
-					regid,
-					name,
-					secondname,
-					lastname,
-					seclastname,
-					dob: format(dob, "dd-MMM-yyyy"),
-					age,
-					gender,
-					tel,
-					email,
-					demographics: {
-						address,
-						numExt,
-						numInt,
-						county,
-						postalCode,
-						city,
-						state,
-					},
-					medicalHistory: {
-						reason: "",
-						conditions: "",
-						illness: "",
-						allergies: "",
-						notIncluded: "",
-						waterConsuption: "",
-						exercise: "",
-						comments: "",
-					},
-				};
-				console.log(newPatient);
-				await axios
-					.post("http://localhost:4000/api/clients", newPatient)
-					.then(async (response) => {
-						console.log(response);
-						let newEvent = {
-							title: name,
-							start,
-							startTS: getTime(start),
-							end,
-							client: { ...response.data.client, avatar: "" },
-							resourceId: sala,
-							cart: {
-								servicesInCart: [
-									{
-										description: services[service].description,
-										price: services[service].price,
-									},
-								],
-								productsInCart: [],
-								total: services[service].price,
-							},
-						};
-						console.log(newEvent);
-						await axios.post("http://localhost:4000/api/events", newEvent);
-					})
-					.catch((error) => {
-						console.log(error);
-					});
-
-				props.onClose();
+			if (diaCita === null || horaCita === null) {
+				alert("Debe programar cita correctamente ");
 			} else {
-				alert("Ingresa correctamente la fecha de nacimiento");
+				if (age) {
+					let name =
+						firstname +
+						(secondname ? ` ${secondname} ` : " ") +
+						lastname +
+						(seclastname ? ` ${seclastname}` : "");
+
+					let mins = getMinutes(horaCita);
+					let hours = getHours(horaCita);
+					let start = new Date(diaCita);
+					start.setHours(hours);
+					start.setMinutes(mins);
+					let end = addMinutes(start, 30);
+
+					let newPatient = {
+						regid,
+						name,
+						secondname,
+						lastname,
+						seclastname,
+						dob: format(dob, "dd-MMM-yyyy"),
+						age,
+						gender,
+						tel,
+						email,
+						demographics: {
+							address,
+							numExt,
+							numInt,
+							county,
+							postalCode,
+							city,
+							state,
+						},
+						medicalHistory: {
+							reason: "",
+							conditions: "",
+							illness: "",
+							allergies: "",
+							notIncluded: "",
+							waterConsuption: "",
+							exercise: "",
+							comments: "",
+						},
+					};
+					console.log(newPatient);
+					await axios
+						.post("http://localhost:4000/api/clients", newPatient)
+						.then(async (response) => {
+							console.log(response);
+							let newEvent = {
+								title: name,
+								start,
+								startTS: getTime(start),
+								end,
+								client: { ...response.data.client, avatar: "" },
+								resourceId: sala,
+								cart: {
+									servicesInCart: [
+										{
+											description: services[service].description,
+											price: services[service].price,
+										},
+									],
+									productsInCart: [],
+									total: services[service].price,
+								},
+							};
+							console.log(newEvent);
+							await axios.post("http://localhost:4000/api/events", newEvent);
+						})
+						.catch((error) => {
+							console.log(error);
+						});
+
+					props.onClose();
+				} else {
+					alert("Ingresa correctamente la fecha de nacimiento");
+				}
 			}
 		}
 	};
@@ -402,6 +406,7 @@ const NewPatient = (props) => {
 								autoOk
 								className="pickerInput"
 								inputVariant="outlined"
+								required
 								size="small"
 								value={diaCita}
 								onChange={setDiaCita}
@@ -416,6 +421,7 @@ const NewPatient = (props) => {
 								className="pickerInput"
 								value={horaCita}
 								size="small"
+								required
 								onChange={setHoraCita}
 								minutesStep="5"
 							/>
