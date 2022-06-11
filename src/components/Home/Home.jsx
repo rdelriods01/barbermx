@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 import axios from "axios";
 
@@ -63,7 +64,7 @@ function Home() {
 					};
 					myEvents.push(ev);
 				});
-				// console.log(myEvents);
+				console.log(myEvents);
 				setEvents(myEvents);
 			});
 	};
@@ -179,10 +180,19 @@ function Home() {
 											{evnt.cart.servicesInCart.map((serv) => (
 												<div className="serviceItem">
 													<p>{serv.description}</p>
-													<b>{serv.price}</b>
+													{/* <b>{serv.price}</b> */}
+													<b></b>
 												</div>
 											))}
 										</div>
+										<Button
+											variant="contained"
+											color="primary"
+											className="actionBtn goToProfileBtn">
+											<Link to={{ pathname: `/clients/${evnt.client._id}` }}>
+												<i className="material-icons">contact_page</i>
+											</Link>
+										</Button>
 										{evnt.pagado ? (
 											<>
 												<div></div>
