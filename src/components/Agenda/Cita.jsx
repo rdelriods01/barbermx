@@ -414,7 +414,13 @@ const Cita = (props) => {
 											value={client.name}
 											onClick={() => {
 												setShowClientsCard(false);
-												setClient(client);
+												setClient({
+													name: client.name,
+													avatar: client.avatar,
+													tel: client.tel,
+													email: client.email,
+													_id: client._id,
+												});
 											}}>
 											<span>{client.name}</span>
 											<span className="costo">{client.tel}</span>
