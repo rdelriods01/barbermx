@@ -151,6 +151,8 @@ const NewPatient = (props) => {
 						dob: format(dob, "dd-MMM-yyyy"),
 						age,
 						gender,
+						height: "",
+						goal: null,
 						tel,
 						email,
 						demographics: {
@@ -172,18 +174,21 @@ const NewPatient = (props) => {
 							exercise: "",
 							comments: "",
 						},
+						appointments: [],
 					};
 					console.log(newPatient);
+					let newPatientID = "";
 					await axios
 						.post("http://localhost:4000/api/clients", newPatient)
 						.then(async (response) => {
 							console.log(response);
+							newPatientID = response.data.client._id;
 							let newEvent = {
 								title: name,
 								start,
 								startTS: getTime(start),
 								end,
-								client: { ...response.data.client, avatar: "" },
+								client: { ...response.data.client, avatar: "" }, //Revisar si es necesario que se cargue todo el cliente completo o si solo algunas propiedades
 								resourceId: sala,
 								cart: {
 									servicesInCart: [
@@ -197,7 +202,15 @@ const NewPatient = (props) => {
 								},
 							};
 							console.log(newEvent);
-							await axios.post("http://localhost:4000/api/events", newEvent);
+							await axios
+								.post("http://localhost:4000/api/events", newEvent)
+								.then(async (response) => {
+									console.log(response);
+									await axios.put(
+										`http://localhost:4000/api/clients/${newPatientID}`,
+										{ appointments: [response.data.event._id] }
+									);
+								});
 						})
 						.catch((error) => {
 							console.log(error);
