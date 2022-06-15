@@ -1,0 +1,291 @@
+@import "../../variables.module.scss";
+.editPatientDataC {
+	width: 60vw;
+	height: 100%;
+	.newPatientForm {
+		background-color: #fefefe;
+		margin: auto;
+		border-radius: 10px;
+		padding: 2em;
+		display: grid;
+		row-gap: 2em;
+		.superiorData {
+			display: grid;
+			grid-template-columns: 1fr 1fr 1fr 1fr;
+			row-gap: 1em;
+			column-gap: 1em;
+			border-bottom: 1px solid lightgray;
+			padding-bottom: 1em;
+			grid-template-areas:
+				"id . . ."
+				"nombre secName apellP apellM"
+				"dob dob age gen ";
+			div {
+				display: flex;
+				align-items: center;
+			}
+			.id {
+				grid-area: id;
+				p {
+					color: $primary;
+					font-weight: bold;
+				}
+			}
+			.nombre {
+				grid-area: nombre;
+			}
+			.secondName {
+				grid-area: secName;
+			}
+			.apellidoP {
+				grid-area: apellP;
+			}
+			.apellidoM {
+				grid-area: apellM;
+			}
+			.dob {
+				grid-area: dob;
+				align-items: baseline;
+				.dobInput {
+					input {
+						height: 1em !important;
+						font-size: 0.8em;
+					}
+					label,
+					.MuiFormHelperText-root.Mui-error {
+						display: none;
+					}
+				}
+			}
+			.age {
+				grid-area: age;
+				span {
+					font-size: 0.9em;
+				}
+			}
+			.selectGender {
+				grid-area: gen;
+			}
+		}
+		.inferiorData {
+			display: grid;
+			grid-template-columns: 1fr 3fr;
+			column-gap: 1em;
+			border-bottom: 1px solid lightgray;
+			padding-bottom: 2em;
+			div {
+				display: flex;
+				align-items: center;
+			}
+			.infLeft {
+				display: grid;
+				grid-template-columns: 1fr;
+				row-gap: 1em;
+			}
+			.infRight {
+				display: grid;
+				grid-template-columns: repeat(12, 1fr);
+				grid-template-rows: auto;
+				row-gap: 1em;
+				column-gap: 1em;
+				grid-template-areas:
+					"dire dire dire dire dire dire dire dire ext ext int int"
+					"col col col col cp cp ciu ciu ciu est est est";
+				.direccion {
+					grid-area: dire;
+				}
+				.numExt {
+					grid-area: ext;
+				}
+				.numInt {
+					grid-area: int;
+				}
+				.colonia {
+					grid-area: col;
+				}
+				.postalCode {
+					grid-area: cp;
+				}
+				.ciudad {
+					grid-area: ciu;
+				}
+				.estado {
+					grid-area: est;
+					.estadoInput {
+						.MuiAutocomplete-inputRoot {
+							padding: 6px !important;
+							font-size: 0.8em;
+							input {
+								height: 100%;
+								padding: 8px 6px;
+							}
+						}
+					}
+				}
+			}
+		}
+		.agendarPaciente {
+			display: grid;
+			grid-template-columns: 1fr 1fr 1fr 1fr;
+			column-gap: 2em;
+			align-items: center;
+			div {
+				display: flex;
+				align-items: center;
+			}
+			h4 {
+				text-align: end;
+				margin: 0 auto;
+			}
+			.picker {
+				align-items: baseline;
+				.pickerInput {
+					.MuiOutlinedInput-root:hover {
+						border: none;
+					}
+					input {
+						height: 1em !important;
+						font-size: 0.8em;
+					}
+					label,
+					.MuiFormHelperText-root.Mui-error {
+						display: none;
+					}
+				}
+			}
+		}
+		.addBtn {
+			justify-self: end;
+			width: 20%;
+		}
+		b {
+			color: dimgray;
+			margin-right: 6px;
+		}
+		input {
+			background-color: #f4f4fa;
+			border-radius: 8px;
+			width: 100%;
+			padding-left: 1em;
+			height: 2em;
+			border: 1px solid lightgray;
+			outline: none;
+			&:focus {
+				border: 2px solid $primary;
+			}
+			&:hover {
+				border: 2px solid $primary;
+			}
+			&::placeholder {
+				color: dimgray;
+				// font-size: 1.5em;
+			}
+			&::-webkit-search-cancel-button {
+				position: relative;
+				right: 20px;
+			}
+		}
+		.selectForm {
+			background-color: #f4f4fa;
+			border-radius: 8px;
+			border: 1px solid lightgray;
+			outline: none;
+			div#mui-component-select-gender,
+			div#mui-component-select-service {
+				padding: 5px 34px 5px 12px;
+				font-size: 0.8em;
+			}
+			&:hover {
+				border: 2px solid $primary;
+			}
+			fieldset {
+				z-index: -1;
+			}
+			legend {
+				display: none;
+			}
+		}
+		.MuiOutlinedInput-root {
+			border-radius: 8px;
+		}
+		fieldset.PrivateNotchedOutline-root-1.MuiOutlinedInput-notchedOutline {
+			border: none;
+		}
+		.MuiOutlinedInput-root.Mui-error .MuiOutlinedInput-notchedOutline {
+			border: 1px solid red !important;
+		}
+	}
+}
+
+@media only screen and (max-width: 1500px) {
+	.newPatientModal {
+		#form-dialog-name {
+			padding: 12px 16px;
+			border-bottom: 1px solid lightgray;
+			h2 {
+				font-size: 1em;
+			}
+		}
+		.newPatientModalContent {
+			height: 69vh;
+			.contentNewPatientModal {
+				padding: 1em 0;
+				.superiorData {
+					grid-template-columns: 1fr 1fr 1fr;
+					grid-template-areas:
+						"id gen gen"
+						"nombre nombre nombre"
+						"secName secName secName"
+						"apellP apellP apellP"
+						"apellM apellM apellM"
+						"dob dob age";
+				}
+
+				.inferiorData {
+					grid-template-columns: 1fr;
+					row-gap: 1em;
+					.infRight {
+						grid-template-columns: repeat(3, 1fr);
+						grid-template-rows: auto;
+						row-gap: 1em;
+						column-gap: 1em;
+						grid-template-areas:
+							"dire dire dire"
+							"ext int cp"
+							"col col col"
+							"ciu ciu ciu"
+							"est est est";
+					}
+				}
+				.agendarPaciente {
+					grid-template-columns: 1fr 1fr;
+					row-gap: 2em;
+					grid-template-areas:
+						"progCita progCita"
+						"citaF citaH"
+						"sala sala";
+					.progCita {
+						grid-area: progCita;
+					}
+					.fechaCita {
+						grid-area: citaF;
+					}
+					.horaCita {
+						grid-area: citaH;
+					}
+					.selectSala {
+						grid-area: sala;
+					}
+				}
+				.addBtn {
+					width: 100%;
+					height: 3.5em;
+					margin-bottom: 1em;
+				}
+			}
+		}
+		.newPatientModalContent * {
+			font-size: 2.5vw !important;
+		}
+	}
+}
