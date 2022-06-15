@@ -1,0 +1,117 @@
+@import "../../variables.module.scss";
+
+.patientProfileC {
+	display: grid;
+	grid-template-rows: 1fr auto;
+	.superior {
+		display: grid;
+		grid-template-columns: 1fr 6fr;
+		.supLeft {
+			height: 75%;
+			max-height: 10em;
+			margin: auto;
+			transition: transform 0.5s;
+			border-radius: 50%;
+			border: 4px solid transparent;
+			background-image: linear-gradient(white, white),
+				radial-gradient(circle at top left, #46d0f7, #7d2ae8);
+			background-origin: border-box;
+			background-clip: content-box, border-box;
+		}
+		.supRight {
+			display: grid;
+			grid-template-columns: 1fr 3fr;
+			.mainClientData {
+				margin-top: 1em;
+				align-self: center;
+				.nameAndActions{
+					display: grid;
+					grid-template-columns: 6fr 1fr;
+					.clientName {
+						color: dimgray;
+						font-size: 1.4em;
+						margin: auto 0;
+						text-transform: capitalize;
+						// display: block;
+					}
+					.actionsBtn{
+						font-weight: bold;
+						border: none;
+						border-radius: 8px;
+						margin: auto;
+						padding: 0 1em;
+						background: none;
+						color: gray;
+						i{
+							vertical-align: middle;
+						}
+						&:hover {
+							background-color: #e3e3e3;
+						}
+					}
+					.dropdown {
+						max-height: 21em;
+						height: -fit-content;
+						position: absolute;
+						height: fit-content;
+						background-color: white;
+						margin: -1vw 0 0 1vw;
+						width: 20vw;
+						transition: max-height 0.25s ease-out;
+						box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25),
+							0 10px 10px rgba(0, 0, 0, 0.22);
+						overflow-y: hidden;
+						z-index: 300;
+					}
+					.selectDropDown {
+						min-width: 10vw;
+						width: 10vw;
+						position: absolute;
+						top: 10%;
+						left: 30%;
+						border-radius: 8px;
+						.option {
+							display: block;
+							margin: 0;
+							background-color: white;
+							color: dimgray;
+							padding: 1em;
+							text-align: center;
+							border-bottom: 1px solid #f4f4fa;
+							&:hover {
+								border-left: 2px solid $primary;
+								background-color: #f5fafa;
+								color: $primary;
+							}
+						}
+					}
+					.dropDownBackground {
+						position: fixed;
+						width: 100vw;
+						height: 100vh;
+						top: 0;
+						left: 0;
+					}
+					.hide {
+						padding: 0;
+						max-height: 0px;
+						* {
+							max-height: 0px;
+							visibility: hidden;
+							opacity: 0;
+						}
+					}
+				}
+				.mainClientDataGrid {
+					display: grid;
+					grid-template-columns: 1fr 4fr;
+					font-size: 0.9em;
+				}
+			}
+		}
+	}
+	.inferior {
+		display: grid;
+		grid-template-rows: 4fr 1fr;
+	}
+}
