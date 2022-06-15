@@ -25,7 +25,7 @@ function ClinicHistory(props) {
 						<b>No incluir en la dieta</b>
 						<p>{data.notIncluded === "" ? "-" : data.notIncluded}</p>
 						<b>Ingesta de agua</b>
-						<p>{data.waterConsuption === "" ? "-" : data.waterConsuption}</p>
+						<p>{data.waterConsumption === "" ? "-" : data.waterConsumption}</p>
 						<b>Ejercicio</b>
 						<p>{data.exercise === "" ? "-" : data.exercise}</p>
 						<b>Observaciones:</b>

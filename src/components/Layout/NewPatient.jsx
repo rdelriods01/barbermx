@@ -168,7 +168,7 @@ const NewPatient = (props) => {
 							illness: "",
 							allergies: "",
 							notIncluded: "",
-							waterConsuption: "",
+							waterConsumption: "",
 							exercise: "",
 							comments: "",
 						},
