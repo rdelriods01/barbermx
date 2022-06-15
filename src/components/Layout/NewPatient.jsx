@@ -144,6 +144,7 @@ const NewPatient = (props) => {
 					let newPatient = {
 						regid,
 						name,
+						firstname,
 						secondname,
 						lastname,
 						seclastname,
