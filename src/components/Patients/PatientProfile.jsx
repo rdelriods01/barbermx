@@ -26,7 +26,23 @@ function PatientProfile(props) {
 			.get(`http://localhost:4000/api/clients/${patientID}`)
 			.then((data) => {
 				console.log(data.data);
-				setPatient(data.data);
+				if (data.data.hasOwnProperty("medicalHistory")) {
+					setPatient(data.data);
+				} else {
+					setPatient({
+						...data.data,
+						medicalHistory: {
+							reason: "",
+							conditions: "",
+							illness: "",
+							allergies: "",
+							notIncluded: "",
+							waterConsumption: "",
+							exercise: "",
+							comments: "",
+						},
+					});
+				}
 			});
 	};
 
@@ -44,6 +60,7 @@ function PatientProfile(props) {
 	const editMedicalDataDone = () => {
 		console.log("editMedicalDataDone");
 		setOpenEditMedicalData(false);
+		getPatient();
 	};
 
 	return (
@@ -134,6 +151,7 @@ function PatientProfile(props) {
 						onClose={() => setOpenEditMedicalData(false)}>
 						<EditMedicalData
 							data={patient.medicalHistory}
+							patientId={patientID}
 							onClose={editMedicalDataDone}></EditMedicalData>
 					</Drawer>
 				</>
