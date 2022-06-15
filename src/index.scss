@@ -25,7 +25,7 @@ body {
 	}
 }
 .TicketDrawer,
-.NewPatientDrawer {
+.NewPatientDrawer, .EditPatientDataDrawer , .EditMedicalDataDrawer{
 	display: flex;
 	div.MuiPaper-root {
 		border-radius: 1em;
