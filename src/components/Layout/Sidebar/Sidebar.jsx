@@ -42,7 +42,7 @@ const Sidebar = (props) => {
 				</NavLink>
 				<NavLink
 					className="li"
-					to="/clientes"
+					to="/clients"
 					activeStyle={{ color: variables.primary }}>
 					<i className="material-icons">people</i>
 					<span>Pacientes</span>
