@@ -62,6 +62,11 @@ function PatientProfile(props) {
 		setOpenEditMedicalData(false);
 		getPatient();
 	};
+	const deletePatient = () => {
+		window.confirm(`Estas seguro que deseas eliminar a ${patient.name}`)
+			? alert(`Se eliminó a ${patient.name}`)
+			: console.log("culo");
+	};
 
 	return (
 		<div className="patientProfileC">
@@ -69,7 +74,7 @@ function PatientProfile(props) {
 				<>
 					<div className="superior">
 						<img
-							className="supLeft"
+							className={patient.gender === "M" ? "male" : "female"}
 							src={
 								props.transaction?.client?.avatar
 									? props.transaction.client.avatar
@@ -79,7 +84,7 @@ function PatientProfile(props) {
 						/>
 
 						<div className="supRight">
-							<div className="mainClientData">
+							<div className="patientData">
 								<div className="nameAndActions">
 									<b className="clientName">{patient.name}</b>
 									<button
@@ -92,7 +97,7 @@ function PatientProfile(props) {
 										onClick={() => {
 											setShowActionsMenu(false);
 										}}>
-										<div className="dropdown selectDropDown">
+										<div className="dropdown">
 											<label
 												className="option"
 												onClick={() => {
@@ -109,14 +114,40 @@ function PatientProfile(props) {
 												}}>
 												Editar Historia Clínica
 											</label>
+											<label
+												className="option"
+												onClick={() => {
+													setShowActionsMenu(false);
+													deletePatient();
+												}}>
+												Eliminar
+											</label>
 										</div>
 									</div>
 								</div>
-								<p>
-									{patient.gender === "M" ? "Hombre" : "Mujer"} de {patient.age}{" "}
-									años
-								</p>
-								<div className="mainClientDataGrid">
+								<div className="shapeData">
+									<div className="patientAge">
+										<b>Edad:</b>
+										<span>{patient.age} años</span>
+									</div>
+									<div
+										className={
+											patient.height
+												? "patientHeight"
+												: "patientHeight required"
+										}>
+										<b>Estatura:</b>
+										<span>{patient.height}mts</span>
+									</div>
+									<div
+										className={
+											patient.goal ? "patientGoal" : "patientGoal required"
+										}>
+										<b>Peso deseado:</b>
+										<span>{patient.goal}Kgs</span>
+									</div>
+								</div>
+								<div className="personalData">
 									<b>Tel:</b>
 									<span>{patient.tel}</span>
 									<b>e-mail:</b>

@@ -27,9 +27,11 @@ function EditPatientData(props) {
 	const [secondname, setSecondName] = useState(patient.secondname);
 	const [lastname, setLastName] = useState(patient.lastname);
 	const [seclastname, setSecLastName] = useState(patient.seclastname);
-	const [dob, setDOB] = useState(new Date(patient.dob));
+	const [dob, setDOB] = useState(patient.dob ? new Date(patient.dob) : null);
 	const [age, setAge] = useState(patient.age);
 	const [gender, setGender] = useState(patient.gender);
+	const [height, setHeight] = useState(patient.height);
+	const [goal, setGoal] = useState(patient.goal);
 	const [tel, setTel] = useState(patient.tel);
 	const [email, setEmail] = useState(patient.email);
 	const [address, setAddress] = useState(patient.demographics?.address);
@@ -120,6 +122,8 @@ function EditPatientData(props) {
 					dob: format(dob, "dd-MMM-yyyy"),
 					age,
 					gender,
+					height,
+					goal,
 					tel,
 					email,
 					demographics: {
@@ -154,6 +158,7 @@ function EditPatientData(props) {
 
 	return (
 		<div className="editPatientDataC">
+			<h3>Editar datos del paciente</h3>
 			<form onSubmit={handleSubmit} className="newPatientForm">
 				<div className="superiorData">
 					<div className="nombre">
@@ -232,8 +237,8 @@ function EditPatientData(props) {
 						</FormControl>
 					</div>
 				</div>
-				<div className="inferiorData">
-					<div className="infLeft">
+				<div className="middleData">
+					<div className="middleLeft">
 						<div className="tel">
 							<b>Teléfono*</b>
 							<input
@@ -258,7 +263,7 @@ function EditPatientData(props) {
 							/>
 						</div>
 					</div>
-					<div className="infRight">
+					<div className="middleRight">
 						<div className="direccion">
 							<b>Dirección</b>
 							<input
@@ -273,6 +278,7 @@ function EditPatientData(props) {
 							<input
 								type="text"
 								value={numExt}
+								maxLength="10"
 								placeholder="No. Ext..."
 								onChange={(ev) =>
 									setNumExt(ev.target.value.replace(/[^\d]/, "").trim())
@@ -335,8 +341,30 @@ function EditPatientData(props) {
 						</div>
 					</div>
 				</div>
+				<div className="inferiorData">
+					<div></div>
+					<div className="height">
+						<b>Estatura</b>
+						<input
+							type="text"
+							value={height}
+							onChange={(ev) => setHeight(ev.target.value)}
+						/>
+						mts.
+					</div>
+					<div className="goal">
+						<b>Peso deseado</b>
+						<input
+							type="text"
+							value={goal}
+							onChange={(ev) => setGoal(ev.target.value)}
+						/>
+						Kgs.
+					</div>
+					<div></div>
+				</div>
 				<Button
-					className="addBtn"
+					className="submitBtn"
 					type="submit"
 					variant="contained"
 					color="primary">

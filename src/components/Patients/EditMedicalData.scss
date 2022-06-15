@@ -10,7 +10,7 @@
 		background-color: #fefefe;
 		margin: auto;
 		border-radius: 10px;
-		padding: 2em;
+		padding: 1em 2em 2em 2em;
 		display: grid;
         grid-template-rows: 8fr 1fr;
         .inputs{
@@ -47,6 +47,7 @@
 		b {
 			color: dimgray;
 			margin-right: 6px;
+			white-space: nowrap;
 		}
 		textarea {
 			background-color: #f4f4fa;
