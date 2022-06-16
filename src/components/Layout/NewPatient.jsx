@@ -188,7 +188,7 @@ const NewPatient = (props) => {
 								start,
 								startTS: getTime(start),
 								end,
-								client: { ...response.data.client, avatar: "" }, //Revisar si es necesario que se cargue todo el cliente completo o si solo algunas propiedades
+								client: { ...response.data.client, avatar: "" }, //Se avienta todo el Obj completo, pero en el backend el Model limita las propiedades deseadas
 								resourceId: sala,
 								cart: {
 									servicesInCart: [
@@ -205,7 +205,7 @@ const NewPatient = (props) => {
 							await axios
 								.post("http://localhost:4000/api/events", newEvent)
 								.then(async (response) => {
-									console.log(response);
+									console.log(response); //Por eso aqui solo llegan pocas propiedades en event.client
 									await axios.put(
 										`http://localhost:4000/api/clients/${newPatientID}`,
 										{ appointments: [response.data.event._id] }
