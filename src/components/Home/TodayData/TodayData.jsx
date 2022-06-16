@@ -9,43 +9,46 @@ function TodayData(props) {
 
 	return (
 		<div className="todayDataC">
-			<div className="todayDataGrid">
-				<div className="todayDataSup">
+			<div className="title">
+				<h2>{props.transaction.title}</h2>
+			</div>
+			<div className="todayDataContainer">
+				<div className="todayDataGrid superior">
 					<fieldset>
 						<legend>Peso:</legend>
-						<input type="text" className="inputMeasurements" />
+						<input type="text" maxLength={5} className="inputMeasurements" />
 						<span>Kg.</span>
 					</fieldset>
 					<fieldset>
 						<legend>Grasa:</legend>
-						<input type="text" className="inputMeasurements" />
+						<input type="text" maxLength={5} className="inputMeasurements" />
 						<span>Kg.</span>
 					</fieldset>
 					<fieldset>
 						<legend>Musculo:</legend>
-						<input type="text" className="inputMeasurements" />
+						<input type="text" maxLength={5} className="inputMeasurements" />
 						<span>%</span>
 					</fieldset>
 				</div>
-				<div className="todayDataSup">
+				<div className="todayDataGrid inferior">
 					<fieldset>
-						<legend>Peso:</legend>
-						<input type="text" className="inputMeasurements" />
-						<span>Kg.</span>
+						<legend>Abdomen:</legend>
+						<input type="text" maxLength={5} className="inputMeasurements" />
+						<span>cms.</span>
 					</fieldset>
 					<fieldset>
-						<legend>Grasa:</legend>
-						<input type="text" className="inputMeasurements" />
-						<span>Kg.</span>
+						<legend>Cadera:</legend>
+						<input type="text" maxLength={5} className="inputMeasurements" />
+						<span>cms.</span>
 					</fieldset>
-					<fieldset>
-						<legend>Musculo:</legend>
+					{/* <fieldset>
+						<legend>Glucosa:</legend>
 						<input type="text" className="inputMeasurements" />
-						<span>%</span>
-					</fieldset>
+						<span>mg/dl</span>
+					</fieldset> */}
 				</div>
 			</div>
-			<div className="actionsBtn">
+			<div className="actionBtn">
 				<Button
 					className="step1Btn"
 					variant="contained"

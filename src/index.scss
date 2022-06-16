@@ -4,7 +4,7 @@ body {
 	background: white;
 	font-family: Product Sans;
 }
-.POSDrawer, .TodayDataDrawer {
+.POSDrawer {
 	display: flex;
 	div.MuiPaper-root {
 		border-top-left-radius: 1em;
@@ -25,7 +25,7 @@ body {
 }
 
 .TicketDrawer,
-.NewPatientDrawer, .EditPatientDataDrawer , .EditMedicalDataDrawer{
+.NewPatientDrawer, .EditPatientDataDrawer , .EditMedicalDataDrawer, .TodayDataDrawer{
 	display: flex;
 	div.MuiPaper-root {
 		border-radius: 1em;

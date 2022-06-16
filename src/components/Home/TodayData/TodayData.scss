@@ -1,16 +1,21 @@
 @import "../../../variables.module.scss";
 
 .todayDataC {
-	width: 90vw;
-
-	.todayDataGrid {
+	width: 60vw;
+	margin: 2em;
+	.title{
+		color: dimgray;
+		text-transform: capitalize;
+		h2{
+			margin-top: 0;
+			margin-bottom: 2em;}
+	}
+	.todayDataContainer {
 		margin: 1em 10%;
-		border: 1px solid lightgray;
-		border-radius: 8px;
-		padding: 2em;
-		.todayDataSup {
-			display: grid;
-			grid-template-columns: 1fr 1fr 1fr;
+		display: grid;
+		grid-template-rows: 1fr;
+		row-gap: 2em;
+		.todayDataGrid {
 			align-items: center;
 			justify-items: center;
 			fieldset {
@@ -18,23 +23,40 @@
 				border-radius: 8px;
 				border-color: lightgray;
 				border-style: solid;
+				legend{
+					font-size: 1.2em;
+					font-weight: bold;
+				}
 				input {
 					width: 3em;
 					font-size: 5em;
-					color: dimgray;
+					color: #989898;
 					background: transparent;
 					border-style: none;
 					outline: none;
-					text-align: end;
+					text-align: center;
 				}
 				span {
-					text-align: end;
+					display: flex;
+					justify-content: end;
 				}
 			}
 		}
-		.todayDataInf {
+		.superior{
 			display: grid;
 			grid-template-columns: 1fr 1fr 1fr;
+		}
+		.inferior {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+		}
+	}
+	.actionBtn{
+		display: flex;
+		width: 100%;
+		button{
+			margin: auto 4em auto auto;
+			width: 10em;
 		}
 	}
 }
