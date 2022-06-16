@@ -112,11 +112,19 @@ function Home() {
 		console.log("Ticket Done");
 	};
 
-	const todayDataDone = () => {
+	const todayDataDone = (measurements) => {
 		console.log("TodayData Done");
-		setOpenTodayData(false);
-		setOpenReview(true);
+		if (measurements) {
+			console.log(measurements);
+			setOpenTodayData(false);
+			setActualTransaction({ ...actualTransaction, measurements });
+			setOpenReview(true);
+		} else {
+			console.log(measurements);
+			setOpenTodayData(false);
+		}
 	};
+
 	const reviewDone = (cancel, back, next, transaction) => {
 		console.log("Review Done");
 		if (cancel) {

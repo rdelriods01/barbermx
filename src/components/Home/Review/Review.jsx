@@ -3,6 +3,8 @@ import React from "react";
 import { Button } from "@material-ui/core";
 
 function Review(props) {
+	console.log(props);
+
 	return (
 		<div className="reviewC">
 			<div className="title">Review of {props.transaction.title}</div>
