@@ -152,12 +152,42 @@ function PatientProfile(props) {
 									<span>{patient.tel}</span>
 									<b>e-mail:</b>
 									<span>{patient.email}</span>
-									<b>Dirección:</b>
-									<span>{`${patient.demographics?.address} ${patient.demographics?.numExt}${patient.demographics?.numInt} ${patient.demographics?.county} ${patient.demographics?.postalCode}`}</span>
-									<b></b>
-									<span>
-										{patient.demographics?.city}, {patient.demographics?.state}
-									</span>
+									{patient.demographics ? (
+										<>
+											<b>Dirección:</b>
+											<span>{`${
+												patient.demographics.address
+													? patient.demographics.address
+													: ""
+											} ${
+												patient.demographics.numExt
+													? patient.demographics.numExt
+													: ""
+											}${
+												patient.demographics.numInt
+													? patient.demographics.numInt
+													: ""
+											} ${
+												patient.demographics.county
+													? patient.demographics.county
+													: ""
+											} ${
+												patient.demographics.postalCode
+													? patient.demographics.postalCode
+													: ""
+											}`}</span>
+											<b></b>
+											<span>
+												{patient.demographics.city
+													? patient.demographics.city
+													: ""}
+												,{" "}
+												{patient.demographics.state
+													? patient.demographics.state
+													: ""}
+											</span>
+										</>
+									) : null}
 								</div>
 							</div>
 							<ClinicHistory
