@@ -23,7 +23,9 @@ import Clock from "./Clock";
 import POS from "./POS/POS";
 import Cart from "./Cart/Cart";
 import Ticket from "./Ticket/Ticket";
-import CurrentAppointment from "./CurrentAppointment/CurrentAppointment";
+import TodayData from "./TodayData/TodayData";
+import Review from "./Review/Review";
+import AddMenu from "./AddMenu/AddMenu";
 
 function Home() {
 	const workers = ["Karen Guerra"];
@@ -36,21 +38,24 @@ function Home() {
 	const [openPOS, setOpenPOS] = useState(false);
 	const [openCart, setOpenCart] = useState(false);
 	const [openTicket, setOpenTicket] = useState(false);
-	const [openCurrentAppointment, setOpenCurrentAppointment] = useState(false);
+	const [openTodayData, setOpenTodayData] = useState(false);
+	const [openReview, setOpenReview] = useState(false);
+	const [openAddMenu, setOpenAddMenu] = useState(false);
+
 	const [actualTransaction, setActualTransaction] = useState(null);
 
 	useEffect(() => {
 		getEvents(currentDate);
 	}, []);
 
-	const getEvents = (date) => {
+	const getEvents = async (date) => {
 		setCurrentDate(date);
 		let start, end;
 		start = startOfDay(date);
 		end = endOfDay(date);
 		console.log("look for events from " + date);
 		// Search for events
-		axios
+		await axios
 			.get("http://localhost:4000/api/events/range", {
 				params: { startDate: start, endDate: end },
 			})
@@ -107,8 +112,28 @@ function Home() {
 		console.log("Ticket Done");
 	};
 
-	const currentAppointmentDone = () => {
-		console.log("Current Appointment Done");
+	const todayDataDone = () => {
+		console.log("TodayData Done");
+		setOpenTodayData(false);
+		setOpenReview(true);
+	};
+	const reviewDone = (cancel, back, next, transaction) => {
+		console.log("Review Done");
+		if (cancel) {
+			setOpenReview(false);
+		} else if (back) {
+			setOpenReview(false);
+			setOpenTodayData(true);
+		} else if (next) {
+			console.log(transaction);
+			setOpenReview(false);
+			// Save data to DB
+			setOpenAddMenu(true);
+		}
+	};
+	const addMenuDone = () => {
+		console.log("AddMenu Done");
+		setOpenAddMenu(false);
 	};
 
 	return (
@@ -225,7 +250,7 @@ function Home() {
 													className="actionBtn currentAppointmentBtn"
 													onClick={() => {
 														setActualTransaction(evnt);
-														setOpenCurrentAppointment(true);
+														setOpenTodayData(true);
 													}}>
 													<i className="material-icons">dashboard</i>
 												</Button>
@@ -278,13 +303,29 @@ function Home() {
 				<Ticket transaction={actualTransaction} onClose={ticketDone}></Ticket>
 			</Drawer>
 			<Drawer
-				className="CurrentAppointmentDrawer"
-				open={openCurrentAppointment}
+				className="TodayDataDrawer"
+				open={openTodayData}
 				anchor="right"
-				onClose={() => setOpenCurrentAppointment(false)}>
-				<CurrentAppointment
+				onClose={() => setOpenTodayData(false)}>
+				<TodayData
 					transaction={actualTransaction}
-					onClose={currentAppointmentDone}></CurrentAppointment>
+					onClose={todayDataDone}></TodayData>
+			</Drawer>
+			<Drawer
+				className="ReviewDrawer"
+				open={openReview}
+				anchor="right"
+				onClose={() => setOpenReview(false)}>
+				<Review transaction={actualTransaction} onClose={reviewDone}></Review>
+			</Drawer>
+			<Drawer
+				className="AddMenuDrawer"
+				open={openAddMenu}
+				anchor="right"
+				onClose={() => setOpenAddMenu(false)}>
+				<AddMenu
+					transaction={actualTransaction}
+					onClose={addMenuDone}></AddMenu>
 			</Drawer>
 		</div>
 	);

@@ -4,7 +4,7 @@ body {
 	background: white;
 	font-family: Product Sans;
 }
-.POSDrawer {
+.POSDrawer, .TodayDataDrawer {
 	display: flex;
 	div.MuiPaper-root {
 		border-top-left-radius: 1em;
@@ -15,8 +15,7 @@ body {
 		flex: none;
 	}
 }
-.CartDrawer,
-.CurrentAppointmentDrawer {
+.CartDrawer, .AddMenuC {
 	div.MuiPaper-root {
 		margin-top: 1em;
 		border-top-left-radius: 1em;
@@ -24,6 +23,7 @@ body {
 		height: 96%;
 	}
 }
+
 .TicketDrawer,
 .NewPatientDrawer, .EditPatientDataDrawer , .EditMedicalDataDrawer{
 	display: flex;

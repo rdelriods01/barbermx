@@ -1,0 +1,40 @@
+@import "../../../variables.module.scss";
+
+.todayDataC {
+	width: 90vw;
+
+	.todayDataGrid {
+		margin: 1em 10%;
+		border: 1px solid lightgray;
+		border-radius: 8px;
+		padding: 2em;
+		.todayDataSup {
+			display: grid;
+			grid-template-columns: 1fr 1fr 1fr;
+			align-items: center;
+			justify-items: center;
+			fieldset {
+				width: 3em;
+				border-radius: 8px;
+				border-color: lightgray;
+				border-style: solid;
+				input {
+					width: 3em;
+					font-size: 5em;
+					color: dimgray;
+					background: transparent;
+					border-style: none;
+					outline: none;
+					text-align: end;
+				}
+				span {
+					text-align: end;
+				}
+			}
+		}
+		.todayDataInf {
+			display: grid;
+			grid-template-columns: 1fr 1fr 1fr;
+		}
+	}
+}
