@@ -19,8 +19,66 @@
 	margin-left: 240px;
 }
 
-.newPatientBtn {
+.fabBtn {
 	position: fixed !important;
 	right: 25px;
 	bottom: 25px;
+	.rotate{
+		transition: all .5s;
+		transform: rotate(135deg);
+	}
+	.norotate{
+		transition: all .5s;
+		transform: rotate(0deg);
+	}
+}
+
+
+.dropDownBackground {
+	position: fixed;
+	width: 100vw;
+	height: 100vh;
+	top: 0;
+	left: 0;
+}
+.hide {
+	padding: 0;
+	max-height: 0px;
+	* {
+		max-height: 0px;
+		visibility: hidden;
+		opacity: 0;
+	}
+}
+
+.addButtons{
+	.newPatientBtn{
+		position: absolute;
+		right: 25px;
+		bottom:205px;
+		transition: all .5s;
+	}
+	.newPatientLabel{
+		position: absolute;
+		right: 100px;
+		bottom:225px;
+		transition: all .5s;
+	}
+	.searchBtn{
+		position: absolute;
+		right: 25px;
+		bottom:115px;
+		transition: all .25s;
+	}
+	.searchLabel{
+		position: absolute;
+		right: 100px;
+		bottom:135px;
+		transition: all .25s;
+	}
+	.hideBtn{
+		transition: all 1s;
+		position: relative;
+		bottom: 0;
+	}
 }
