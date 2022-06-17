@@ -69,8 +69,9 @@ function BookPatient() {
 						autoFocus
 						id="searchClients"
 						className="searchbarInDropdown"
+						autoComplete="off"
 						placeholder="Buscar paciente..."
-						onKeyUp={(ev) => searchClients(ev.target.value)}
+						onChange={(ev) => searchClients(ev.target.value)}
 					/>
 					<div className={clients.length > 0 ? "dropdownList" : "hide"}>
 						{clients &&

@@ -19,14 +19,19 @@
         }
         .dropdownList {
             overflow-y: scroll;
-            margin: 1em 0;
             height: fit-content;
             max-height: 10em;
-            display: block;
+            position: fixed;
+            z-index: 10;
+            top: 48vh;
+            left: 21vw;
+            background-color: white;
+            width: 20vw;
             li {
                 list-style: none;
                 padding: 1em;
                 display: grid;
+                align-items: center;
                 grid-auto-flow: column;
                 border-bottom: 1px solid #f4f3f4;
                 .costo {
