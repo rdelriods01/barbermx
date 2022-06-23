@@ -1,11 +1,21 @@
 @import "../../variables.module.scss";
 
 .bookPatientC{
-    width: 60vw;
+    width: 40vw;
 	height: 100%;
     margin: 2em;
     display: grid;
-    grid-template-columns: 3fr 5fr;
+    // grid-template-rows: auto 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    .title{
+        background-color: white;
+        border-radius: 8px;
+        padding: 0.5em 1em;
+        margin-top: -3em;
+        display: grid;
+        width: 9em;
+        height: fit-content;
+    }
     .searchContainer{
         display: grid;
         .searchbarInDropdown {
@@ -23,8 +33,8 @@
             max-height: 10em;
             position: fixed;
             z-index: 10;
-            top: 48vh;
-            left: 21vw;
+            top: 43vh;
+            left: 40vw;
             background-color: white;
             width: 20vw;
             li {
@@ -68,6 +78,7 @@
        h2{
            color: dimgray;
            text-transform: capitalize;
+           align-self: center;
        } 
        button{
            background-color: inherit;
@@ -156,10 +167,11 @@
     }
     }
     .saveBtn{
-        display: flex;
+        display: grid;
+        justify-content: end;
         button{
-            margin: 4em auto auto 0;
-            width: 40%;
+            margin: 2em auto;
+            width: 12em;
         }
     }
 }
