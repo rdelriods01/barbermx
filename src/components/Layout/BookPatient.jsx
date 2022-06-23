@@ -15,12 +15,13 @@ import {
 	TimePicker,
 	MuiPickersUtilsProvider,
 } from "@material-ui/pickers";
+import { getTime, getMinutes, getHours, addMinutes } from "date-fns";
 
 import { ServicesContext } from "../../Store";
 
 import "./BookPatient.scss";
 
-function BookPatient() {
+function BookPatient(props) {
 	const { services } = useContext(ServicesContext);
 
 	const [clients, setClients] = useState([]);
@@ -28,6 +29,7 @@ function BookPatient() {
 	const [diaCita, setDiaCita] = useState(null);
 	const [horaCita, setHoraCita] = useState(null);
 	const [service, setService] = useState(0);
+	const [sala, setSala] = useState(1);
 
 	const [disabledBtn, setDisabledBtn] = useState(true);
 
@@ -51,7 +53,6 @@ function BookPatient() {
 					data.data.forEach((client) => {
 						myClients.push(client);
 					});
-					console.log(myClients);
 					setClients(myClients);
 				});
 		} else {
@@ -59,8 +60,49 @@ function BookPatient() {
 		}
 	};
 
+	const bookMyPatient = async () => {
+		// Configuración y ajuste de tiempos
+		let mins = getMinutes(horaCita);
+		let hours = getHours(horaCita);
+		let start = new Date(diaCita);
+		start.setHours(hours);
+		start.setMinutes(mins);
+		let end = addMinutes(start, 30);
+		// Crear objeto Event
+		let newEvent = {
+			title: client.name,
+			start,
+			startTS: getTime(start),
+			end,
+			client,
+			resourceId: sala,
+			cart: {
+				servicesInCart: [
+					{
+						description: services[service].description,
+						price: services[service].price,
+					},
+				],
+				productsInCart: [],
+				total: services[service].price,
+			},
+		};
+		await axios
+			.post("http://localhost:4000/api/events", newEvent)
+			.then(async (response) => {
+				await axios.put(
+					`http://localhost:4000/api/clients/pushAppointments/${client._id}`, //se manda a llamar al push en el back para que en el array de Appointments del Paciente se agregue el nuevo evento
+					{
+						appointments: [response.data.event._id],
+					}
+				);
+			});
+		props.onClose();
+	};
+
 	return (
 		<div className="bookPatientC">
+			{/* <h3 className="title">Agendar paciente</h3> */}
 			{client === "" ? (
 				<div className="searchContainer">
 					<input
@@ -156,11 +198,11 @@ function BookPatient() {
 					</FormControl>
 				</div>
 			</div>
-			<div></div>
 			<div className="saveBtn">
 				<Button
 					disabled={disabledBtn}
 					variant="contained"
+					onClick={() => bookMyPatient()}
 					color={disabledBtn ? "default" : "primary"}>
 					Agendar
 				</Button>
