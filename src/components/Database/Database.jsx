@@ -19,7 +19,19 @@ function Database() {
 	};
 	const deleteEvent = async (event) => {
 		console.log(event);
-		await axios.delete(`http://localhost:4000/api/events/${event._id}`);
+		await axios
+			.delete(`http://localhost:4000/api/events/${event._id}`)
+			.then(async () => {
+				await axios
+					.put(
+						`http://localhost:4000/api/clients/pullAppointments/${event.client._id}`,
+
+						{ data: event._id }
+					)
+					.then((data) => {
+						console.log(data.data.myUpdatedClient);
+					});
+			});
 		getEvents();
 	};
 
