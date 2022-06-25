@@ -1,0 +1,19 @@
+.patientDataC{
+    .shapeData{
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        font-size: 0.9em;
+        margin-top: 1em;
+        span{
+            margin-left: 0.5em;
+        }
+    }
+    .personalData {
+        display: grid;
+        grid-template-columns: 1fr 4fr;
+        font-size: 0.9em;
+    }
+    .required{
+        color: red;
+    }
+}
