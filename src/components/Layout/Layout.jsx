@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useHistory } from "react-router-dom";
+
 import Fab from "@material-ui/core/Fab";
 import { Drawer } from "@material-ui/core";
 
@@ -11,6 +13,7 @@ import BookPatient from "./BookPatient";
 import "./Layout.scss";
 
 function Layout() {
+	const history = useHistory();
 	const [sidebarPos, setSidebarPos] = useState(1);
 	const [showButtons, setShowButtons] = useState(false);
 	const [newPatientModal, setNewPatientModal] = useState(false);
@@ -35,10 +38,20 @@ function Layout() {
 		mainClass.push("mainOpen");
 	}
 
-	const handleAddButton = () => {
-		setShowButtons(true);
+	const newPatientDone = () => {
+		setNewPatientModal(false);
+		if (history.location.pathname === "/") {
+			// I push some undefined route to history in order to force a refresh to update Patient List in Home
+			history.push("/someUndefinedRouteJustToReloadHome");
+		}
 	};
-
+	const bookPatientDone = () => {
+		setBookPatientModal(false);
+		if (history.location.pathname === "/") {
+			// I push some undefined route to history in order to force a refresh to update Patient List in Home
+			history.push("/someUndefinedRouteJustToReloadHome");
+		}
+	};
 	return (
 		<div className="layout">
 			{/* <Navbar  /> */}
@@ -90,14 +103,14 @@ function Layout() {
 				className="NewPatientDrawer"
 				anchor="bottom"
 				onClose={() => setNewPatientModal(false)}>
-				<NewPatient onClose={() => setNewPatientModal(false)} />
+				<NewPatient onClose={newPatientDone} />
 			</Drawer>
 			<Drawer
 				open={bookPatientModal}
 				className="BookPatientDrawer"
 				anchor="bottom"
 				onClose={() => setBookPatientModal(false)}>
-				<BookPatient onClose={() => setBookPatientModal(false)} />
+				<BookPatient onClose={bookPatientDone} />
 			</Drawer>
 		</div>
 	);
