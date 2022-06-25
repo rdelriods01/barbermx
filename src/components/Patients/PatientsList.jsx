@@ -23,6 +23,7 @@ function PatientsList() {
 			{patients &&
 				patients.map((patient, index) => (
 					<Link
+						key={index}
 						to={{ pathname: `/clients/${patient._id}` }}
 						className="patientElement">
 						<span> {patient.name} </span>
