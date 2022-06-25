@@ -50,7 +50,7 @@ function Layout() {
 			</div>
 			<Fab
 				className="fabBtn"
-				color={showButtons ? "other" : "primary"}
+				color={showButtons ? "inherit" : "primary"}
 				onClick={() => setShowButtons((prev) => !prev)}>
 				<i
 					className={
