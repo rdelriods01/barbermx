@@ -139,10 +139,13 @@ function EditPatientData(props) {
 				};
 				console.log(newPatientData);
 				await axios
-					.put(`http://localhost:4000/api/clients/${props.patient._id}`, {
-						old: patient,
-						new: newPatientData,
-					})
+					.put(
+						`http://localhost:4000/api/clients/updateName/${props.patient._id}`,
+						{
+							old: patient,
+							new: newPatientData,
+						}
+					)
 					.then(async (response) => {
 						console.log(response);
 					})
