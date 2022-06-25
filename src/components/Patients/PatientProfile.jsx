@@ -1,5 +1,7 @@
+/* eslint-disable no-unused-expressions */
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 
 import ClinicHistory from "./ClinicHistory";
 import defaultPP from "../../assets/pp_default.svg";
@@ -11,6 +13,9 @@ import { Drawer } from "@material-ui/core";
 
 function PatientProfile(props) {
 	console.log(props);
+
+	const history = useHistory();
+
 	const patientID = props.match.params.uid;
 	const [patient, setPatient] = useState(null);
 	const [openEditPatientData, setOpenEditPatientData] = useState(false);
@@ -62,9 +67,21 @@ function PatientProfile(props) {
 		setOpenEditMedicalData(false);
 		getPatient();
 	};
-	const deletePatient = () => {
+	const deletePatient = async () => {
 		window.confirm(`Estas seguro que deseas eliminar a ${patient.name}`)
-			? alert(`Se eliminó a ${patient.name}`)
+			? (console.log(patient),
+			  await axios
+					.delete(`http://localhost:4000/api/clients/${patientID}`, {
+						data: patient,
+					})
+					.then(async (response) => {
+						console.log(response);
+					})
+					.catch((error) => {
+						console.log(error);
+					}),
+			  alert(`Se eliminó a ${patient.name}`),
+			  history.push("/clients"))
 			: console.log("culo");
 	};
 
