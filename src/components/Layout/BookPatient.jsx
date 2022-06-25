@@ -128,6 +128,7 @@ function BookPatient(props) {
 											tel: client.tel,
 											email: client.email,
 											_id: client._id,
+											gender: client.gender,
 										});
 									}}>
 									<span>{client.name}</span>

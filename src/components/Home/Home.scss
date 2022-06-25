@@ -79,6 +79,14 @@
 									background-origin: border-box;
 									background-clip: content-box, border-box;
 								}
+								.male{
+									background-image: linear-gradient(white, white),
+									radial-gradient(circle at top left, #46d0f7, #7d2ae8);
+								}
+								.female{
+									background-image: linear-gradient(white, white),
+									radial-gradient(circle at top left, #ffc9f2, #c309e8);
+								}
 								b {
 									text-transform: capitalize;
 								}
@@ -157,6 +165,9 @@
 							background-color: $payHover;
 						}
 					}
+				}
+				.MuiAccordion-root:before{
+					height: 0;
 				}
 			}
 			.withoutEvents {

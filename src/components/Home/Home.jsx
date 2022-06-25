@@ -181,7 +181,13 @@ function Home() {
 												<span>{workers[evnt.resourceId - 1]}</span>
 											</div>
 											<div className="nombreCita">
-												<img src={defaultPP} alt="PP" />
+												<img
+													src={defaultPP}
+													alt="PP"
+													className={
+														evnt.client.gender === "M" ? "male" : "female"
+													}
+												/>
 												<div>
 													<b>{evnt.title}</b>
 													{expanded === i ? null : (
