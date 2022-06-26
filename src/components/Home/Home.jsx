@@ -216,8 +216,8 @@ function Home() {
 										}}
 										className="acordionDetails">
 										<div className="acordionDetailsGrid">
-											{evnt.cart.servicesInCart.map((serv) => (
-												<div className="serviceItem">
+											{evnt.cart.servicesInCart.map((serv, i) => (
+												<div className="serviceItem" key={i}>
 													<p>{serv.description}</p>
 													{/* <b>{serv.price}</b> */}
 													<b></b>

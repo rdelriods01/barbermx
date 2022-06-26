@@ -152,6 +152,7 @@ const NewPatient = (props) => {
 						gender,
 						height: "",
 						goal: null,
+						initialWeight: "",
 						tel,
 						email,
 						demographics: {

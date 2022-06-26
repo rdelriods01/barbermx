@@ -129,6 +129,8 @@ function BookPatient(props) {
 											email: client.email,
 											_id: client._id,
 											gender: client.gender,
+											goal: client.goal,
+											initialWeight: client.initialWeight,
 										});
 									}}>
 									<span>{client.name}</span>

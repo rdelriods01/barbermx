@@ -148,6 +148,9 @@ function PatientProfile(props) {
 							<ClinicHistory data={patient.medicalHistory} />
 						</div>
 					</div>
+					<div className="inferior">
+						<h1>Total de visitas: {patient.appointments.length}</h1>
+					</div>
 					<Drawer
 						className="EditPatientDataDrawer"
 						open={openEditPatientData}
