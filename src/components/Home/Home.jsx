@@ -124,7 +124,11 @@ function Home() {
 				measurements,
 				client: { ...actualTransaction.client, height, initialWeight, goal },
 			});
-			setOpenReview(true);
+			if (actualTransaction.client.consecutive > 1) {
+				setOpenReview(true);
+			} else {
+				setOpenAddMenu(true);
+			}
 		} else {
 			console.log(measurements);
 			setOpenTodayData(false);
@@ -145,8 +149,22 @@ function Home() {
 			setOpenAddMenu(true);
 		}
 	};
-	const addMenuDone = () => {
+	const addMenuDone = async (transaction) => {
 		console.log("AddMenu Done");
+		console.log(transaction);
+		// Actualizar los datos del paciente (Estatura, peso ideal, peso inicial)
+		await axios.put(
+			`http://localhost:4000/api/clients/${transaction.client._id}`,
+			{
+				height: transaction.client.height,
+				goal: transaction.client.goal,
+				initialWeight: transaction.client.initialWeight,
+			}
+		);
+		await axios.put(`http://localhost:4000/api/events/${transaction._id}`, {
+			...transaction,
+		});
+		getEvents(currentDate);
 		setOpenAddMenu(false);
 	};
 

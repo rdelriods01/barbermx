@@ -87,12 +87,7 @@ function TodayData(props) {
 							<input
 								type="text"
 								value={initialWeight}
-								onChange={(ev) =>
-									setInitialWeight(
-										ev.target.value.replace(/[^0-9.]+/g, "").trim()
-									)
-								}
-								maxLength={5}
+								readOnly
 								className="inputMeasurements"
 							/>
 							<span>Kg.</span>

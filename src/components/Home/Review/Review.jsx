@@ -80,6 +80,7 @@ function Review(props) {
 									style={{ strokeDashoffset: `-${spinnerValue}%` }}
 								/>
 							</svg>
+
 							<div className="lostWeight">
 								<p>
 									{lostWeight < 0
