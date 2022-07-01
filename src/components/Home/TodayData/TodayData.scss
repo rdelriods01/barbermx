@@ -7,8 +7,8 @@
 		color: dimgray;
 		text-transform: capitalize;
 		h2{
-			margin-top: 0;
-			margin-bottom: 2em;}
+			margin:0 auto;
+		}
 	}
 	.todayDataContainer {
 		margin: 1em 10%;
@@ -39,6 +39,24 @@
 				span {
 					display: flex;
 					justify-content: end;
+				}
+			}
+		}
+		.initialData{
+			display: grid;
+			grid-template-columns: 2fr 1fr 1fr 1fr;
+			fieldset{
+				legend{
+					font-size: 1em;
+				}
+				input{
+					font-size: 1em;
+					width: 8em;
+					font-weight: bold;
+				}
+				span{
+					font-size: 0.8em;
+					margin-top: -8px;
 				}
 			}
 		}

@@ -131,6 +131,7 @@ function BookPatient(props) {
 											gender: client.gender,
 											goal: client.goal,
 											initialWeight: client.initialWeight,
+											consecutive: client.appointments.length + 1,
 										});
 									}}>
 									<span>{client.name}</span>

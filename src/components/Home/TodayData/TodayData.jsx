@@ -6,41 +6,59 @@ import "./TodayData.scss";
 
 function TodayData(props) {
 	console.log(props);
+	let measurements = props.transaction.measurements;
 
-	const [peso, setPeso] = useState(
-		props.transaction.measurements?.peso
-			? props.transaction.measurements.peso
+	const [height, setHeight] = useState(
+		props.transaction.client.height ? props.transaction.client.height : ""
+	);
+	const [goal, setGoal] = useState(
+		props.transaction.client.goal ? props.transaction.client.goal : ""
+	);
+	const [initialWeight, setInitialWeight] = useState(
+		props.transaction.client.initialWeight
+			? props.transaction.client.initialWeight
 			: ""
 	);
+	const [peso, setPeso] = useState(measurements.peso ? measurements.peso : "");
 	const [grasa, setGrasa] = useState(
-		props.transaction.measurements?.grasa
-			? props.transaction.measurements.grasa
-			: ""
+		measurements.grasa ? measurements.grasa : ""
 	);
 	const [musculo, setMusculo] = useState(
-		props.transaction.measurements?.musculo
-			? props.transaction.measurements.musculo
-			: ""
+		measurements.musculo ? measurements.musculo : ""
 	);
 	const [abdomen, setAbdomen] = useState(
-		props.transaction.measurements?.abdomen
-			? props.transaction.measurements.abdomen
-			: ""
+		measurements.abdomen ? measurements.abdomen : ""
 	);
 	const [cadera, setCadera] = useState(
-		props.transaction.measurements?.cadera
-			? props.transaction.measurements.cadera
-			: ""
+		measurements.cadera ? measurements.cadera : ""
 	);
 	const [disabledBtn, setDisabledBtn] = useState(true);
 
 	useEffect(() => {
-		if ([peso, grasa, musculo, abdomen, cadera].includes("")) {
+		if ([height, goal, peso, grasa, musculo, abdomen, cadera].includes("")) {
 			setDisabledBtn(true);
 		} else {
 			setDisabledBtn(false);
 		}
-	}, [peso, grasa, musculo, abdomen, cadera]);
+	}, [height, goal, peso, grasa, musculo, abdomen, cadera]);
+
+	const handleClose = () => {
+		if (props.transaction.client.initialWeight === "") {
+			props.onClose(
+				{ peso, grasa, musculo, abdomen, cadera },
+				height,
+				peso,
+				goal
+			);
+		} else {
+			props.onClose(
+				{ peso, grasa, musculo, abdomen, cadera },
+				height,
+				initialWeight,
+				goal
+			);
+		}
+	};
 
 	return (
 		<div className="todayDataC">
@@ -48,12 +66,59 @@ function TodayData(props) {
 				<h2>{props.transaction.title}</h2>
 			</div>
 			<div className="todayDataContainer">
+				<div className="todayDataGrid initialData">
+					<div></div>
+					<fieldset>
+						<legend>Estatura:</legend>
+						<input
+							type="text"
+							value={height}
+							onChange={(ev) =>
+								setHeight(ev.target.value.replace(/[^0-9.]+/g, "").trim())
+							}
+							maxLength={5}
+							className="inputMeasurements"
+						/>
+						<span>cms.</span>
+					</fieldset>
+					{props.transaction.client.initialWeight === "" ? null : (
+						<fieldset>
+							<legend>Peso Inicial:</legend>
+							<input
+								type="text"
+								value={initialWeight}
+								onChange={(ev) =>
+									setInitialWeight(
+										ev.target.value.replace(/[^0-9.]+/g, "").trim()
+									)
+								}
+								maxLength={5}
+								className="inputMeasurements"
+							/>
+							<span>Kg.</span>
+						</fieldset>
+					)}
+					<fieldset>
+						<legend>Peso deseado:</legend>
+						<input
+							type="text"
+							value={goal}
+							onChange={(ev) =>
+								setGoal(ev.target.value.replace(/[^0-9.]+/g, "").trim())
+							}
+							maxLength={5}
+							className="inputMeasurements"
+						/>
+						<span>Kg.</span>
+					</fieldset>
+				</div>
 				<div className="todayDataGrid superior">
 					<fieldset>
 						<legend>Peso:</legend>
 						<input
 							type="text"
 							value={peso}
+							autoFocus
 							onChange={
 								(ev) => setPeso(ev.target.value.replace(/[^0-9.]+/g, "").trim()) //replace works with numbers and point
 							}
@@ -129,9 +194,7 @@ function TodayData(props) {
 					variant="contained"
 					disabled={disabledBtn}
 					color="primary"
-					onClick={() =>
-						props.onClose({ peso, grasa, musculo, abdomen, cadera })
-					}>
+					onClick={() => handleClose()}>
 					Ver resumen
 				</Button>
 			</div>

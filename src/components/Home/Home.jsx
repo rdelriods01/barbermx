@@ -89,6 +89,7 @@ function Home() {
 			setOpenCart(false);
 		}
 	};
+
 	const transactionDone = async (cancel, back, transaction) => {
 		console.log(cancel, back, transaction);
 		if (cancel) {
@@ -112,12 +113,17 @@ function Home() {
 		console.log("Ticket Done");
 	};
 
-	const todayDataDone = (measurements) => {
+	const todayDataDone = (measurements, height, initialWeight, goal) => {
 		console.log("TodayData Done");
 		if (measurements) {
 			console.log(measurements);
+			console.log(initialWeight);
 			setOpenTodayData(false);
-			setActualTransaction({ ...actualTransaction, measurements });
+			setActualTransaction({
+				...actualTransaction,
+				measurements,
+				client: { ...actualTransaction.client, height, initialWeight, goal },
+			});
 			setOpenReview(true);
 		} else {
 			console.log(measurements);

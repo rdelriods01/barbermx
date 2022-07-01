@@ -188,7 +188,7 @@ const NewPatient = (props) => {
 								start,
 								startTS: getTime(start),
 								end,
-								client: { ...response.data.client, avatar: "" }, //Se avienta todo el Obj completo, pero en el backend el Model limita las propiedades deseadas
+								client: { ...response.data.client, avatar: "", consecutive: 1 }, //Se avienta todo el Obj completo, pero en el backend el Model limita las propiedades deseadas
 								resourceId: sala,
 								cart: {
 									servicesInCart: [
@@ -199,6 +199,13 @@ const NewPatient = (props) => {
 									],
 									productsInCart: [],
 									total: services[service].price,
+								},
+								measurements: {
+									peso: "",
+									grasa: "",
+									musculo: "",
+									abdomen: "",
+									cadera: "",
 								},
 							};
 							console.log(newEvent);
