@@ -28,8 +28,8 @@ function Review(props) {
 			setShowSpinner(false);
 		} else {
 			setShowSpinner(true);
-			// let pesoInicial = props.transaction.client.initialWeight;
-			let pesoInicial = 120;
+			let pesoInicial = props.transaction.client.initialWeight;
+			// let pesoInicial = 120;
 			console.log(`El peso inicial es: ${pesoInicial}`);
 			let pesoFinal = props.transaction.client.goal;
 			let current = Number(props.transaction.measurements.peso);
@@ -81,8 +81,20 @@ function Review(props) {
 								/>
 							</svg>
 							<div className="lostWeight">
-								<p>-{lostWeight}kg</p>
-								<h5>Total bajado</h5>
+								<p>
+									{lostWeight < 0
+										? `+${lostWeight}kg`
+										: lostWeight > 0
+										? `-${lostWeight}kg`
+										: null}
+								</p>
+								<h5>
+									{lostWeight < 0
+										? "Total subido"
+										: lostWeight > 0
+										? "Total bajado"
+										: null}
+								</h5>
 							</div>
 						</div>
 						<div class="pesos">
@@ -91,8 +103,7 @@ function Review(props) {
 									{props.transaction.client.goal} kg <span>Peso ajustado</span>{" "}
 								</p>
 								<p>
-									{/* {props.transaction.client.initialWeight} kg{" "} */}
-									120 kg
+									{props.transaction.client.initialWeight} kg{" "}
 									<span>Peso inicial</span>{" "}
 								</p>
 							</div>
