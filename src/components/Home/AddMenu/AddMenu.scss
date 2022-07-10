@@ -1,5 +1,246 @@
 @import "../../../variables.module.scss";
 
-.addMenuC{
-    color: red;
+.addMenuC {
+	width: 90vw;
+	height: 100%;
+	.gridAddMenu {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		column-gap: 1em;
+		height: 100%;
+		.left {
+			margin: 2em 2em 2em 0;
+			display: grid;
+			grid-template-columns: 1fr auto;
+			overflow-y: hidden;
+			.swipeableViews {
+				overflow-y: hidden;
+			}
+			.viewContent{
+				display: grid;
+				grid-template-rows: 4em auto;
+				height: 100vh;
+				.viewContentList {
+                    overflow-y: auto;
+                    height: 93%;
+					li {
+						list-style: none;
+						padding: 0.5em;
+						display: grid;
+                        grid-template-columns: 1fr 2fr 6fr;
+						align-items: center;
+						margin: 1em 2em;
+						border-bottom: 1px solid #f4f3f4;
+						border-radius: 1em;
+						background-color: #f4f4fa;
+                        font-size: 0.8em;
+						i {
+							color: #989898;
+							padding: 8px;
+							border: 1px solid lightgray;
+							border-radius: 50%;
+						}
+						&:hover {
+							background-color: $primaryLightHover;
+							color: $primary;
+							i {
+								color: $primary;
+								border-color: $primary;
+							}
+						}
+					}
+				}
+			}
+			.searchBar {
+				text-align: center;
+				input {
+					background-color: #f4f4fa;
+					border-radius: 1em;
+					width: 96%;
+					height: 3em;
+					padding-left: 1em;
+					border: 1px solid lightgray;
+					font-size: 1em;
+					outline: none;
+					&:focus {
+						border: 2px solid $primary;
+					}
+					&::placeholder {
+						color: dimgray;
+						// font-size: 1.5em;
+					}
+					&::-webkit-search-cancel-button {
+						position: relative;
+						right: 20px;
+					}
+				}
+			}
+			.tabsFooter {
+				height: auto;
+				// border-radius: 0 0 1em 1em;
+				border-radius: 0;
+			}
+		}
+		.right {
+			.header {
+				display: grid;
+				grid-auto-flow: column;
+				color: dimgray;
+				font-size: 1.4em;
+				margin: 1em 4em;
+				justify-content: space-between;
+                align-items: center;
+				.patientName{
+
+					text-transform: capitalize;
+				}
+                .lastHeaderItem{
+                    display: grid;
+                    align-items: center;
+                    grid-auto-flow: column;
+                    .moreBtn{
+                        font-weight: bold;
+                        border: none;
+                        border-radius: 50%;
+                        height: 3.6em;
+                        margin: auto auto auto 1em;
+                        padding: 0 1em;
+                        background: none;
+                        color: gray;
+                        i{
+                            vertical-align: middle;
+                        }
+                        &:hover {
+                            background-color: #e3e3e3;
+                        }
+                    }
+                    .dropdown {
+                        max-height: 21em;
+                        position: absolute;
+                        height: fit-content;
+                        background-color: white;
+                        margin: -1vw 0 0 1vw;
+                        transition: max-height 0.5s ease-out;
+                        box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25),
+                            0 10px 10px rgba(0, 0, 0, 0.22);
+                        overflow-y: hidden;
+                        z-index: 300;
+                        position: absolute;
+                        top: 8%;
+                        font-size: 0.8em;
+                        right: 4%;
+                        border-radius: 8px;
+                        .option {
+                            display: block;
+                            margin: 0;
+                            background-color: white;
+                            color: dimgray;
+                            padding: 1em;
+                            font-size: 0.8em;
+                            text-align: center;
+                            border-bottom: 1px solid #f4f4fa;
+                            &:hover {
+                                border-left: 2px solid $primary;
+                                background-color: #f5fafa;
+                                color: $primary;
+                            }
+                        }
+                    }
+                    .moreMenuBackground {
+                        position: fixed;
+                        width: 100vw;
+                        height: 100vh;
+                        top: 0;
+                        left: 0;
+                    }
+                    .hide {
+                        padding: 0;
+                        max-height: 0px;
+                        * {
+                            max-height: 0px;
+                            visibility: hidden;
+                            opacity: 0;
+                        }
+                    }
+                }
+			}
+			.menuList {
+				display: grid;
+				grid-template-rows: auto auto auto auto auto auto auto auto 1fr ;
+				margin: 0 4em;
+				height: 82vh;
+                font-size: 0.8em;
+                overflow-y: auto;
+				h3 {
+					border-top: 2px solid lightgray;
+					border-bottom: 2px solid lightgray;
+					color: #989898;
+					margin: 0 0 1em 0;
+					padding: 1em 0;
+					max-height: 1em;
+				}
+				.menuListItems {
+					display: grid;
+					grid-auto-flow: row;
+					row-gap: 1em;
+					margin-bottom: 1em;
+					li {
+						list-style: none;
+						padding: 0 1em;
+						display: grid;
+						align-items: center;
+						margin: 0;
+						grid-template-columns: 1fr 2fr 6fr;
+						color: #989898;
+						div {
+							display: grid;
+							grid-auto-flow: column;
+							justify-content: left;
+							align-items: center;
+						}
+						i {
+							border-radius: 8px;
+							border: 1px solid transparent;
+							background-color: #f4f4fa;
+							padding: 2px;
+							&:hover {
+								background-color: #f4f4fa;
+								color: #ff8a8a;
+								border: 1px solid #ff8a8a;
+							}
+						}
+						span {
+							text-align: left;
+							&::first-letter {
+								text-transform: capitalize;
+							}
+						}
+					}
+				}
+			}
+            .actionBtns {
+                display: grid;
+                column-gap: 10em;
+                grid-template-columns: 1fr 2fr;
+                margin-top: 1em;
+                .cancelBtn {
+                    height: 3em;
+                    margin: auto 4px;
+                }
+                .guardarBtn {
+                    height: 3em;
+                    color: #ffffff;
+                    font-weight: bold;
+                    margin: auto 4px;
+                    background-color: $pay;
+                    &:hover {
+                        background-color: $payHover;
+                    }
+                }
+                .disabled {
+                    background-color: #989898;
+                }
+            }
+		}
+	}
 }

@@ -1,0 +1,22 @@
+@import "../../../variables.module.scss";
+
+.saveNewMenuC{
+    margin: 2em;
+    .searchbar {
+        width: 18.6vw;
+        padding: 1em;
+        margin: auto;
+        background-color: #f4f3f4;
+        border: none;
+        border-radius: 8px;
+        outline: none;
+    }
+    .saveBtn{
+        display: grid;
+        justify-content: end;
+        button{
+            margin: 2em auto;
+            width: 12em;
+        }
+    }
+}

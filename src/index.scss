@@ -25,7 +25,7 @@ body {
 }
 
 .TicketDrawer,
-.NewPatientDrawer, .BookPatientDrawer, .EditPatientDataDrawer , .EditMedicalDataDrawer, .TodayDataDrawer, .ReviewDrawer{
+.NewPatientDrawer, .BookPatientDrawer, .EditPatientDataDrawer , .EditMedicalDataDrawer, .TodayDataDrawer, .ReviewDrawer, .SearchMenuDrawer, .SaveNewMenuDrawer{
 	display: flex;
 	div.MuiPaper-root {
 		border-radius: 1em;

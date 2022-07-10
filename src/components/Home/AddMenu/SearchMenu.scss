@@ -1,0 +1,61 @@
+@import "../../../variables.module.scss";
+
+.searchMenuC{
+    margin: 2em;
+    .searchContainer{
+        display: grid;
+        .searchbar {
+            width: 18.6vw;
+            padding: 1em;
+            margin: auto;
+            background-color: #f4f3f4;
+            border: none;
+            border-radius: 8px;
+            outline: none;
+        }
+        .dropdownList {
+            overflow-y: scroll;
+            height: fit-content;
+            max-height: 10em;
+            position: fixed;
+            z-index: 10;
+            top: 43vh;
+            left: 40vw;
+            background-color: white;
+            width: 20vw;
+            li {
+                list-style: none;
+                padding: 1em;
+                display: grid;
+                align-items: center;
+                grid-auto-flow: column;
+                border-bottom: 1px solid #f4f3f4;
+                .costo {
+                    text-align: end;
+                    font-weight: bold;
+                }
+                &:hover {
+                    color: $primary;
+                    background-color: #f5fafa;
+                    border-left: 2px solid $primary;
+                }
+            }
+            &::-webkit-scrollbar {
+                width: 6px;
+                background-color: #f5f5f5;
+            }
+            &::-webkit-scrollbar-track {
+                border-radius: 10px;
+                background-color: #f5f5f5;
+            }
+
+            &::-webkit-scrollbar-thumb {
+                border-radius: 10px;
+                background-color: #b8b8b8;
+            }
+        }
+        .hide{
+            display: none;
+        }
+    }
+}
