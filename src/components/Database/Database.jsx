@@ -76,10 +76,10 @@ function Database() {
 									</div>
 								</div>
 								<div className="cell cliente">
-									<div className="clientCell">{event.client.name}</div>
-									<div className="clientCell">{event.client._id}</div>
-									<div className="clientCell">{event.client.tel}</div>
-									<div className="clientCell">{event.client.email}</div>
+									<div className="clientCell">{event.client?.name}</div>
+									<div className="clientCell">{event.client?._id}</div>
+									<div className="clientCell">{event.client?.tel}</div>
+									<div className="clientCell">{event.client?.email}</div>
 								</div>
 								<div className="cell">{event._id}</div>
 								<div className="cell">{event.title}</div>
@@ -95,7 +95,7 @@ function Database() {
 								</div>
 								<div className="cell">{event.resourceId}</div>
 								<div className="cell cart">
-									{event.cart.productsInCart.length > 0 ? (
+									{event.cart?.productsInCart.length > 0 ? (
 										<div className="cartItems">
 											<p>Products:</p>
 											{event.cart.productsInCart.map((prod, index) => (
@@ -110,7 +110,7 @@ function Database() {
 									) : null}
 									<div className="cartItems">
 										<p>Services:</p>
-										{event.cart.servicesInCart.map((serv, index) => (
+										{event.cart?.servicesInCart.map((serv, index) => (
 											<div key={index} className="servRow">
 												<span className="cartCell">{serv.description}</span>
 												<span className="cartCell">{serv.price} </span>
@@ -119,7 +119,7 @@ function Database() {
 									</div>
 									<div className="cartRow total">
 										<b>Total:</b>
-										<span>{event.cart.total}</span>
+										<span>{event.cart?.total}</span>
 									</div>
 								</div>
 								<div className="cell">
