@@ -205,6 +205,14 @@
 							padding: 2px;
 							&:hover {
 								background-color: #f4f4fa;
+								color: $primary;
+								border: 1px solid $primary;
+							}
+							
+						}
+						.deleteBtn{
+							margin-right: 4px;
+							&:hover {
 								color: #ff8a8a;
 								border: 1px solid #ff8a8a;
 							}
@@ -214,6 +222,17 @@
 							&::first-letter {
 								text-transform: capitalize;
 							}
+						}
+						input{
+							background-color: #fafafd;
+							border-radius: 6px;
+							padding-left: 10px;
+							width: 90%;
+							height: 1.6em;
+							color: dimgray;
+							border: 1px solid lightgray;
+							font-size: 1em;
+							outline: none;
 						}
 					}
 				}

@@ -127,6 +127,16 @@ function AddMenu(props) {
 	const [openSearchMenu, setOpenSearchMenu] = useState(false);
 	const [openSaveNewMenu, setOpenSaveNewMenu] = useState(false);
 
+	// const for Edit
+
+	const [titleEdited, setTitleEdited] = useState("");
+	const [descriptionEdited, setDescriptionEdited] = useState("");
+	const [editDesayuno, setEditDesayuno] = useState(false);
+	const [editComida, setEditComida] = useState(false);
+	const [editCena, setEditCena] = useState(false);
+	const [editSnack, setEditSnack] = useState(false);
+	const [editIndex, setEditIndex] = useState(999);
+
 	useEffect(() => {
 		if (
 			desayunosInMenu.length === 0 ||
@@ -288,7 +298,78 @@ function AddMenu(props) {
 			: setSnacksInMenu(arr);
 	};
 
+	const editFromMenu = (val, menuTime, index) => {
+		let arr =
+			menuTime === "desayuno"
+				? [...desayunosInMenu]
+				: menuTime === "comida"
+				? [...comidasInMenu]
+				: menuTime === "cena"
+				? [...cenasInMenu]
+				: [...snacksInMenu];
+		arr.find((o, i) => {
+			if (o.description === val.description) {
+				setTitleEdited(arr[i].title);
+				setDescriptionEdited(arr[i].description);
+				return true; // stop searching
+			}
+			return null;
+		});
+
+		switch (menuTime) {
+			case "desayuno":
+				setEditDesayuno(true);
+				break;
+			case "comida":
+				setEditComida(true);
+				break;
+			case "cena":
+				setEditCena(true);
+				break;
+			case "snack":
+				setEditSnack(true);
+				break;
+			default:
+				break;
+		}
+		setEditIndex(index);
+	};
+
+	const saveEditFromMenu = (menuTime, index) => {
+		let arr =
+			menuTime === "desayuno"
+				? [...desayunosInMenu]
+				: menuTime === "comida"
+				? [...comidasInMenu]
+				: menuTime === "cena"
+				? [...cenasInMenu]
+				: [...snacksInMenu];
+		arr[index] = { title: titleEdited, description: descriptionEdited };
+		switch (menuTime) {
+			case "desayuno":
+				setDesayunosInMenu(arr);
+				setEditDesayuno(false);
+				break;
+			case "comida":
+				setComidasInMenu(arr);
+				setEditComida(false);
+				break;
+			case "cena":
+				setCenasInMenu(arr);
+				setEditCena(false);
+				break;
+			case "snack":
+				setSnacksInMenu(arr);
+				setEditSnack(false);
+				break;
+			default:
+				break;
+		}
+		setEditIndex(999);
+	};
+
 	const bringLastMenu = () => {
+		// Aqui tengo que empezar a buscar dependiendo del consecutivo, esto lo puedo hacer en el back y nomas traer el menu.
 		console.log(tran.client.consecutive);
 	};
 	const bringSomeMenu = () => {
@@ -549,13 +630,50 @@ function AddMenu(props) {
 								<li key={index}>
 									<div>
 										<i
-											className="material-icons"
+											className="material-icons deleteBtn"
 											onClick={() => deleteFromMenu(desayuno, "desayuno")}>
 											delete
 										</i>
+										{editDesayuno && editIndex === index ? (
+											<i
+												className="material-icons"
+												onClick={() => saveEditFromMenu("desayuno", index)}>
+												save
+											</i>
+										) : (
+											<i
+												className="material-icons"
+												onClick={() =>
+													editFromMenu(desayuno, "desayuno", index)
+												}>
+												edit
+											</i>
+										)}
 									</div>
-									<b>{desayuno.title}</b>
-									<span>{desayuno.description}</span>
+									{editDesayuno && editIndex === index ? (
+										<>
+											<input
+												type="text"
+												value={titleEdited}
+												onChange={(ev) =>
+													setTitleEdited(ev.target.value.toLowerCase())
+												}
+											/>
+										</>
+									) : (
+										<b>{desayuno.title}</b>
+									)}
+									{editDesayuno && editIndex === index ? (
+										<input
+											type="text"
+											value={descriptionEdited}
+											onChange={(ev) =>
+												setDescriptionEdited(ev.target.value.toLowerCase())
+											}
+										/>
+									) : (
+										<span>{desayuno.description}</span>
+									)}
 								</li>
 							))}
 						</div>
@@ -565,13 +683,48 @@ function AddMenu(props) {
 								<li key={index}>
 									<div>
 										<i
-											className="material-icons"
+											className="material-icons deleteBtn"
 											onClick={() => deleteFromMenu(comida, "comida")}>
 											delete
 										</i>
+										{editComida && editIndex === index ? (
+											<i
+												className="material-icons"
+												onClick={() => saveEditFromMenu("comida", index)}>
+												save
+											</i>
+										) : (
+											<i
+												className="material-icons"
+												onClick={() => editFromMenu(comida, "comida", index)}>
+												edit
+											</i>
+										)}
 									</div>
-									<b>{comida.title}</b>
-									<span>{comida.description}</span>
+									{editComida && editIndex === index ? (
+										<>
+											<input
+												type="text"
+												value={titleEdited}
+												onChange={(ev) =>
+													setTitleEdited(ev.target.value.toLowerCase())
+												}
+											/>
+										</>
+									) : (
+										<b>{comida.title}</b>
+									)}
+									{editComida && editIndex === index ? (
+										<input
+											type="text"
+											value={descriptionEdited}
+											onChange={(ev) =>
+												setDescriptionEdited(ev.target.value.toLowerCase())
+											}
+										/>
+									) : (
+										<span>{comida.description}</span>
+									)}
 								</li>
 							))}
 						</div>
@@ -581,13 +734,48 @@ function AddMenu(props) {
 								<li key={index}>
 									<div>
 										<i
-											className="material-icons"
+											className="material-icons deleteBtn"
 											onClick={() => deleteFromMenu(cena, "cena")}>
 											delete
 										</i>
+										{editCena && editIndex === index ? (
+											<i
+												className="material-icons"
+												onClick={() => saveEditFromMenu("cena", index)}>
+												save
+											</i>
+										) : (
+											<i
+												className="material-icons"
+												onClick={() => editFromMenu(cena, "cena", index)}>
+												edit
+											</i>
+										)}
 									</div>
-									<b>{cena.title}</b>
-									<span>{cena.description}</span>
+									{editCena && editIndex === index ? (
+										<>
+											<input
+												type="text"
+												value={titleEdited}
+												onChange={(ev) =>
+													setTitleEdited(ev.target.value.toLowerCase())
+												}
+											/>
+										</>
+									) : (
+										<b>{cena.title}</b>
+									)}
+									{editCena && editIndex === index ? (
+										<input
+											type="text"
+											value={descriptionEdited}
+											onChange={(ev) =>
+												setDescriptionEdited(ev.target.value.toLowerCase())
+											}
+										/>
+									) : (
+										<span>{cena.description}</span>
+									)}
 								</li>
 							))}
 						</div>
@@ -597,13 +785,48 @@ function AddMenu(props) {
 								<li key={index}>
 									<div>
 										<i
-											className="material-icons"
+											className="material-icons deleteBtn"
 											onClick={() => deleteFromMenu(snack, "snack")}>
 											delete
 										</i>
+										{editSnack && editIndex === index ? (
+											<i
+												className="material-icons"
+												onClick={() => saveEditFromMenu("snack", index)}>
+												save
+											</i>
+										) : (
+											<i
+												className="material-icons"
+												onClick={() => editFromMenu(snack, "snack", index)}>
+												edit
+											</i>
+										)}
 									</div>
-									<b>{snack.title}</b>
-									<span>{snack.description}</span>
+									{editSnack && editIndex === index ? (
+										<>
+											<input
+												type="text"
+												value={titleEdited}
+												onChange={(ev) =>
+													setTitleEdited(ev.target.value.toLowerCase())
+												}
+											/>
+										</>
+									) : (
+										<b>{snack.title}</b>
+									)}
+									{editSnack && editIndex === index ? (
+										<input
+											type="text"
+											value={descriptionEdited}
+											onChange={(ev) =>
+												setDescriptionEdited(ev.target.value.toLowerCase())
+											}
+										/>
+									) : (
+										<span>{snack.description}</span>
+									)}
 								</li>
 							))}
 						</div>

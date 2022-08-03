@@ -152,20 +152,24 @@ function Home() {
 	const addMenuDone = async (transaction) => {
 		console.log("AddMenu Done");
 		console.log(transaction);
-		// Actualizar los datos del paciente (Estatura, peso ideal, peso inicial)
-		await axios.put(
-			`http://localhost:4000/api/clients/${transaction.client._id}`,
-			{
-				height: transaction.client.height,
-				goal: transaction.client.goal,
-				initialWeight: transaction.client.initialWeight,
-			}
-		);
-		await axios.put(`http://localhost:4000/api/events/${transaction._id}`, {
-			...transaction,
-		});
-		getEvents(currentDate);
-		setOpenAddMenu(false);
+		if (transaction) {
+			// Actualizar los datos del paciente (Estatura, peso ideal, peso inicial)
+			await axios.put(
+				`http://localhost:4000/api/clients/${transaction.client._id}`,
+				{
+					height: transaction.client.height,
+					goal: transaction.client.goal,
+					initialWeight: transaction.client.initialWeight,
+				}
+			);
+			await axios.put(`http://localhost:4000/api/events/${transaction._id}`, {
+				...transaction,
+			});
+			getEvents(currentDate);
+			setOpenAddMenu(false);
+		} else {
+			setOpenAddMenu(false);
+		}
 	};
 
 	return (
