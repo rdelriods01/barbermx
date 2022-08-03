@@ -19,19 +19,15 @@ function TodayData(props) {
 			? props.transaction.client.initialWeight
 			: ""
 	);
-	const [peso, setPeso] = useState(measurements.peso ? measurements.peso : "");
-	const [grasa, setGrasa] = useState(
-		measurements.grasa ? measurements.grasa : ""
-	);
+	const [peso, setPeso] = useState(measurements ? measurements.peso : "");
+	const [grasa, setGrasa] = useState(measurements ? measurements.grasa : "");
 	const [musculo, setMusculo] = useState(
-		measurements.musculo ? measurements.musculo : ""
+		measurements ? measurements.musculo : ""
 	);
 	const [abdomen, setAbdomen] = useState(
-		measurements.abdomen ? measurements.abdomen : ""
+		measurements ? measurements.abdomen : ""
 	);
-	const [cadera, setCadera] = useState(
-		measurements.cadera ? measurements.cadera : ""
-	);
+	const [cadera, setCadera] = useState(measurements ? measurements.cadera : "");
 	const [disabledBtn, setDisabledBtn] = useState(true);
 
 	useEffect(() => {
