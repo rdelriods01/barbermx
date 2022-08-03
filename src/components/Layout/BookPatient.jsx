@@ -30,6 +30,7 @@ function BookPatient(props) {
 	const [horaCita, setHoraCita] = useState(null);
 	const [service, setService] = useState(0);
 	const [sala, setSala] = useState(1);
+	const [prevEventId, setPrevEventId] = useState("");
 
 	const [disabledBtn, setDisabledBtn] = useState(true);
 
@@ -40,6 +41,20 @@ function BookPatient(props) {
 			setDisabledBtn(false);
 		}
 	}, [client, diaCita, horaCita]);
+
+	const checkForUncompletedEvents = async (myClient) => {
+		console.log(myClient);
+		for (let i = 0; i < myClient.appointments.length; i++) {
+			console.log(myClient.appointments[i]);
+			let status = await axios.get(
+				`http://localhost:4000/api/events/status/${myClient.appointments[i]}`
+			);
+			console.log(status);
+			if (status.data === "") {
+				setPrevEventId(myClient.appointments[i]);
+			}
+		}
+	};
 
 	const searchClients = (value) => {
 		console.log(value);
@@ -68,35 +83,46 @@ function BookPatient(props) {
 		start.setHours(hours);
 		start.setMinutes(mins);
 		let end = addMinutes(start, 30);
-		// Crear objeto Event
-		let newEvent = {
-			title: client.name,
-			start,
-			startTS: getTime(start),
-			end,
-			client,
-			resourceId: sala,
-			cart: {
-				servicesInCart: [
-					{
-						description: services[service].description,
-						price: services[service].price,
-					},
-				],
-				productsInCart: [],
-				total: services[service].price,
-			},
-		};
-		await axios
-			.post("http://localhost:4000/api/events", newEvent)
-			.then(async (response) => {
-				await axios.put(
-					`http://localhost:4000/api/clients/pushAppointments/${client._id}`, //se manda a llamar al push en el back para que en el array de Appointments del Paciente se agregue el nuevo evento
-					{
-						appointments: [response.data.event._id],
-					}
-				);
+		// Si no hay uno incompleto entonces:
+		if (prevEventId === "") {
+			// Crear objeto Event
+			let newEvent = {
+				title: client.name,
+				start,
+				startTS: getTime(start),
+				end,
+				client,
+				resourceId: sala,
+				cart: {
+					servicesInCart: [
+						{
+							description: services[service].description,
+							price: services[service].price,
+						},
+					],
+					productsInCart: [],
+					total: services[service].price,
+				},
+			};
+			await axios
+				.post("http://localhost:4000/api/events", newEvent)
+				.then(async (response) => {
+					await axios.put(
+						`http://localhost:4000/api/clients/pushAppointments/${client._id}`, //se manda a llamar al push en el back para que en el array de Appointments del Paciente se agregue el nuevo evento
+						{
+							appointments: [response.data.event._id],
+						}
+					);
+				});
+		} else {
+			// Si si hay uno incompleto entonces solo actualiza el incompleto con la nueva fecha
+			await axios.put(`http://localhost:4000/api/events/${prevEventId}`, {
+				start,
+				end,
+				startTS: getTime(start),
 			});
+		}
+
 		props.onClose();
 	};
 
@@ -133,6 +159,7 @@ function BookPatient(props) {
 											initialWeight: client.initialWeight,
 											consecutive: client.appointments.length + 1,
 										});
+										checkForUncompletedEvents(client);
 									}}>
 									<span>{client.name}</span>
 									<span className="costo">{client.tel}</span>
