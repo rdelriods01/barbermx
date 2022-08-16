@@ -836,13 +836,12 @@ function AddMenu(props) {
 						</div>
 					</div>
 					<div className="actionBtns">
-						<Button
-							className="cancelBtn"
-							onClick={() => {
-								props.onClose(false);
-							}}>
-							Cancelar
-						</Button>
+						<button
+							className="backBtn"
+							variant="contained"
+							onClick={() => props.onClose(false, true, false)}>
+							<i className="material-icons">arrow_back</i>
+						</button>
 						<Button
 							variant="contained"
 							className={disabled ? "guardarBtn disabled" : "guardarBtn"}
@@ -874,10 +873,6 @@ function AddMenu(props) {
 					<SaveNewMenu onClose={saveNewMenuDone}></SaveNewMenu>
 				</Drawer>
 			</div>
-
-			{/* <Button variant="contained" color="primary" onClick={() => handleSave()}>
-				Guardar
-			</Button> */}
 		</div>
 	);
 }

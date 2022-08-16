@@ -149,10 +149,13 @@ function Home() {
 			setOpenAddMenu(true);
 		}
 	};
-	const addMenuDone = async (transaction) => {
+	const addMenuDone = async (transaction, back) => {
 		console.log("AddMenu Done");
 		console.log(transaction);
-		if (transaction) {
+		if (back) {
+			setOpenAddMenu(false);
+			setOpenReview(true);
+		} else if (transaction) {
 			// Actualizar los datos del paciente (Estatura, peso ideal, peso inicial)
 			await axios.put(
 				`http://localhost:4000/api/clients/${transaction.client._id}`,
