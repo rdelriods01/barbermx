@@ -98,17 +98,16 @@
 									}
 								}
 							}
-							.estudiosLength {
-								color: dimgray;
-								font-size: 1.2em;
-								font-weight: bold;
-							}
 							.done {
 								color: #4caf50;
 								font-size: 3em;
 							}
 							.pending {
 								color: #ff9800;
+								font-size: 3em;
+							}
+							.waiting {
+								color: #4470ff;
 								font-size: 3em;
 							}
 						}

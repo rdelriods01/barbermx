@@ -231,9 +231,11 @@ function Home() {
 											</div>
 											{evnt.pagado ? (
 												<i className="material-icons done">done</i>
+											) : evnt.menu ? (
+												<i className="material-icons pending">rule</i>
 											) : (
-												<i className="material-icons pending">
-													pending_actions
+												<i className="material-icons waiting">
+													history_toggle_off
 												</i>
 											)}
 										</div>
@@ -294,7 +296,7 @@ function Home() {
 														setActualTransaction(evnt);
 														setOpenTodayData(true);
 													}}>
-													<i className="material-icons">dashboard</i>
+													<i className="material-icons">start</i>
 												</Button>
 												<Button
 													variant="contained"
