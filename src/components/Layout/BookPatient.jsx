@@ -159,6 +159,8 @@ function BookPatient(props) {
 											initialWeight: client.initialWeight,
 											height: client.height,
 											consecutive: client.appointments.length + 1,
+											lastAppointment:
+												client.appointments[client.appointments.length - 1],
 										});
 										checkForUncompletedEvents(client);
 									}}>
