@@ -626,209 +626,213 @@ function AddMenu(props) {
 					<div className="menuList">
 						<h3>Desayunos</h3>
 						<div className="menuListItems">
-							{desayunosInMenu.map((desayuno, index) => (
-								<li key={index}>
-									<div>
-										<i
-											className="material-icons deleteBtn"
-											onClick={() => deleteFromMenu(desayuno, "desayuno")}>
-											delete
-										</i>
+							{desayunosInMenu &&
+								desayunosInMenu.map((desayuno, index) => (
+									<li key={index}>
+										<div>
+											<i
+												className="material-icons deleteBtn"
+												onClick={() => deleteFromMenu(desayuno, "desayuno")}>
+												delete
+											</i>
+											{editDesayuno && editIndex === index ? (
+												<i
+													className="material-icons"
+													onClick={() => saveEditFromMenu("desayuno", index)}>
+													save
+												</i>
+											) : (
+												<i
+													className="material-icons"
+													onClick={() =>
+														editFromMenu(desayuno, "desayuno", index)
+													}>
+													edit
+												</i>
+											)}
+										</div>
 										{editDesayuno && editIndex === index ? (
-											<i
-												className="material-icons"
-												onClick={() => saveEditFromMenu("desayuno", index)}>
-												save
-											</i>
+											<>
+												<input
+													type="text"
+													value={titleEdited}
+													onChange={(ev) =>
+														setTitleEdited(ev.target.value.toLowerCase())
+													}
+												/>
+											</>
 										) : (
-											<i
-												className="material-icons"
-												onClick={() =>
-													editFromMenu(desayuno, "desayuno", index)
-												}>
-												edit
-											</i>
+											<b>{desayuno.title}</b>
 										)}
-									</div>
-									{editDesayuno && editIndex === index ? (
-										<>
+										{editDesayuno && editIndex === index ? (
 											<input
 												type="text"
-												value={titleEdited}
+												value={descriptionEdited}
 												onChange={(ev) =>
-													setTitleEdited(ev.target.value.toLowerCase())
+													setDescriptionEdited(ev.target.value.toLowerCase())
 												}
 											/>
-										</>
-									) : (
-										<b>{desayuno.title}</b>
-									)}
-									{editDesayuno && editIndex === index ? (
-										<input
-											type="text"
-											value={descriptionEdited}
-											onChange={(ev) =>
-												setDescriptionEdited(ev.target.value.toLowerCase())
-											}
-										/>
-									) : (
-										<span>{desayuno.description}</span>
-									)}
-								</li>
-							))}
+										) : (
+											<span>{desayuno.description}</span>
+										)}
+									</li>
+								))}
 						</div>
 						<h3>Comidas</h3>
 						<div className="menuListItems">
-							{comidasInMenu.map((comida, index) => (
-								<li key={index}>
-									<div>
-										<i
-											className="material-icons deleteBtn"
-											onClick={() => deleteFromMenu(comida, "comida")}>
-											delete
-										</i>
+							{comidasInMenu &&
+								comidasInMenu.map((comida, index) => (
+									<li key={index}>
+										<div>
+											<i
+												className="material-icons deleteBtn"
+												onClick={() => deleteFromMenu(comida, "comida")}>
+												delete
+											</i>
+											{editComida && editIndex === index ? (
+												<i
+													className="material-icons"
+													onClick={() => saveEditFromMenu("comida", index)}>
+													save
+												</i>
+											) : (
+												<i
+													className="material-icons"
+													onClick={() => editFromMenu(comida, "comida", index)}>
+													edit
+												</i>
+											)}
+										</div>
 										{editComida && editIndex === index ? (
-											<i
-												className="material-icons"
-												onClick={() => saveEditFromMenu("comida", index)}>
-												save
-											</i>
+											<>
+												<input
+													type="text"
+													value={titleEdited}
+													onChange={(ev) =>
+														setTitleEdited(ev.target.value.toLowerCase())
+													}
+												/>
+											</>
 										) : (
-											<i
-												className="material-icons"
-												onClick={() => editFromMenu(comida, "comida", index)}>
-												edit
-											</i>
+											<b>{comida.title}</b>
 										)}
-									</div>
-									{editComida && editIndex === index ? (
-										<>
+										{editComida && editIndex === index ? (
 											<input
 												type="text"
-												value={titleEdited}
+												value={descriptionEdited}
 												onChange={(ev) =>
-													setTitleEdited(ev.target.value.toLowerCase())
+													setDescriptionEdited(ev.target.value.toLowerCase())
 												}
 											/>
-										</>
-									) : (
-										<b>{comida.title}</b>
-									)}
-									{editComida && editIndex === index ? (
-										<input
-											type="text"
-											value={descriptionEdited}
-											onChange={(ev) =>
-												setDescriptionEdited(ev.target.value.toLowerCase())
-											}
-										/>
-									) : (
-										<span>{comida.description}</span>
-									)}
-								</li>
-							))}
+										) : (
+											<span>{comida.description}</span>
+										)}
+									</li>
+								))}
 						</div>
 						<h3>Cenas</h3>
 						<div className="menuListItems">
-							{cenasInMenu.map((cena, index) => (
-								<li key={index}>
-									<div>
-										<i
-											className="material-icons deleteBtn"
-											onClick={() => deleteFromMenu(cena, "cena")}>
-											delete
-										</i>
+							{cenasInMenu &&
+								cenasInMenu.map((cena, index) => (
+									<li key={index}>
+										<div>
+											<i
+												className="material-icons deleteBtn"
+												onClick={() => deleteFromMenu(cena, "cena")}>
+												delete
+											</i>
+											{editCena && editIndex === index ? (
+												<i
+													className="material-icons"
+													onClick={() => saveEditFromMenu("cena", index)}>
+													save
+												</i>
+											) : (
+												<i
+													className="material-icons"
+													onClick={() => editFromMenu(cena, "cena", index)}>
+													edit
+												</i>
+											)}
+										</div>
 										{editCena && editIndex === index ? (
-											<i
-												className="material-icons"
-												onClick={() => saveEditFromMenu("cena", index)}>
-												save
-											</i>
+											<>
+												<input
+													type="text"
+													value={titleEdited}
+													onChange={(ev) =>
+														setTitleEdited(ev.target.value.toLowerCase())
+													}
+												/>
+											</>
 										) : (
-											<i
-												className="material-icons"
-												onClick={() => editFromMenu(cena, "cena", index)}>
-												edit
-											</i>
+											<b>{cena.title}</b>
 										)}
-									</div>
-									{editCena && editIndex === index ? (
-										<>
+										{editCena && editIndex === index ? (
 											<input
 												type="text"
-												value={titleEdited}
+												value={descriptionEdited}
 												onChange={(ev) =>
-													setTitleEdited(ev.target.value.toLowerCase())
+													setDescriptionEdited(ev.target.value.toLowerCase())
 												}
 											/>
-										</>
-									) : (
-										<b>{cena.title}</b>
-									)}
-									{editCena && editIndex === index ? (
-										<input
-											type="text"
-											value={descriptionEdited}
-											onChange={(ev) =>
-												setDescriptionEdited(ev.target.value.toLowerCase())
-											}
-										/>
-									) : (
-										<span>{cena.description}</span>
-									)}
-								</li>
-							))}
+										) : (
+											<span>{cena.description}</span>
+										)}
+									</li>
+								))}
 						</div>
 						<h3>Snacks</h3>
 						<div className="menuListItems">
-							{snacksInMenu.map((snack, index) => (
-								<li key={index}>
-									<div>
-										<i
-											className="material-icons deleteBtn"
-											onClick={() => deleteFromMenu(snack, "snack")}>
-											delete
-										</i>
+							{snacksInMenu &&
+								snacksInMenu.map((snack, index) => (
+									<li key={index}>
+										<div>
+											<i
+												className="material-icons deleteBtn"
+												onClick={() => deleteFromMenu(snack, "snack")}>
+												delete
+											</i>
+											{editSnack && editIndex === index ? (
+												<i
+													className="material-icons"
+													onClick={() => saveEditFromMenu("snack", index)}>
+													save
+												</i>
+											) : (
+												<i
+													className="material-icons"
+													onClick={() => editFromMenu(snack, "snack", index)}>
+													edit
+												</i>
+											)}
+										</div>
 										{editSnack && editIndex === index ? (
-											<i
-												className="material-icons"
-												onClick={() => saveEditFromMenu("snack", index)}>
-												save
-											</i>
+											<>
+												<input
+													type="text"
+													value={titleEdited}
+													onChange={(ev) =>
+														setTitleEdited(ev.target.value.toLowerCase())
+													}
+												/>
+											</>
 										) : (
-											<i
-												className="material-icons"
-												onClick={() => editFromMenu(snack, "snack", index)}>
-												edit
-											</i>
+											<b>{snack.title}</b>
 										)}
-									</div>
-									{editSnack && editIndex === index ? (
-										<>
+										{editSnack && editIndex === index ? (
 											<input
 												type="text"
-												value={titleEdited}
+												value={descriptionEdited}
 												onChange={(ev) =>
-													setTitleEdited(ev.target.value.toLowerCase())
+													setDescriptionEdited(ev.target.value.toLowerCase())
 												}
 											/>
-										</>
-									) : (
-										<b>{snack.title}</b>
-									)}
-									{editSnack && editIndex === index ? (
-										<input
-											type="text"
-											value={descriptionEdited}
-											onChange={(ev) =>
-												setDescriptionEdited(ev.target.value.toLowerCase())
-											}
-										/>
-									) : (
-										<span>{snack.description}</span>
-									)}
-								</li>
-							))}
+										) : (
+											<span>{snack.description}</span>
+										)}
+									</li>
+								))}
 						</div>
 					</div>
 					<div className="actionBtns">
@@ -845,10 +849,10 @@ function AddMenu(props) {
 							disabled={disabled}
 							onClick={() => {
 								handleSave({
-									desayunosInMenu,
-									comidasInMenu,
-									cenasInMenu,
-									snacksInMenu,
+									desayunos: desayunosInMenu,
+									comidas: comidasInMenu,
+									cenas: cenasInMenu,
+									snacks: snacksInMenu,
 								});
 							}}>
 							Guardar
