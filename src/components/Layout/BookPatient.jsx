@@ -157,6 +157,7 @@ function BookPatient(props) {
 											gender: client.gender,
 											goal: client.goal,
 											initialWeight: client.initialWeight,
+											height: client.height,
 											consecutive: client.appointments.length + 1,
 										});
 										checkForUncompletedEvents(client);
