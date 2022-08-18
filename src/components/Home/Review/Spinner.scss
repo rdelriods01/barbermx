@@ -1,0 +1,61 @@
+.spinnerC{
+    .spinner{
+        zoom:350%;
+        position: relative;
+        display: grid;
+        justify-content: center;
+        svg {
+            margin: auto;
+            display: block;
+            path {
+                stroke-linecap: round;
+                stroke-width: 4;
+                fill:none;
+            }
+            .backS {
+                stroke: lightgrey;
+            }
+            .frontS {
+                stroke: purple;
+                stroke-dasharray: calc(40 * 3.142 * 1.85);
+            }
+        }
+        .lostWeight{
+            color: grey;
+            position: absolute;
+            top: 55%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            *{
+                margin: 0;
+                text-align: center;
+            }
+            h5{
+                font-size: 0.5em;
+            }
+        }
+    }
+    .pesos{
+        margin: auto;
+        text-align: center;
+        *{
+        margin: auto;
+        font-size: 1.3em;
+        }
+        .pesosSup{
+            display: flex;
+            border-bottom: 2px solid gainsboro;
+            padding-bottom: 0.5em;
+            color: darkgray
+        }
+        .pesosInf{
+            display: flex;
+            padding-top: 0.5em;
+            // color: dimgray
+        }
+        span{
+            display: flex;
+            font-size: .6em;
+        }
+    }
+}
