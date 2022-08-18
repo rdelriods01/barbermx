@@ -253,7 +253,6 @@ function Home() {
 											{evnt.cart.servicesInCart.map((serv, i) => (
 												<div className="serviceItem" key={i}>
 													<p>{serv.description}</p>
-													{/* <b>{serv.price}</b> */}
 													<b></b>
 												</div>
 											))}
@@ -266,54 +265,41 @@ function Home() {
 												<i className="material-icons">contact_page</i>
 											</Link>
 										</Button>
+										<Button
+											variant="contained"
+											className={
+												evnt.menu ? "actionBtn startBtn" : "actionBtn cobrarBtn"
+											}
+											onClick={() => {
+												setActualTransaction(evnt);
+												setOpenTodayData(true);
+											}}>
+											<i className="material-icons">
+												{evnt.menu ? "preview" : "how_to_reg"}
+											</i>
+										</Button>
 										{evnt.pagado ? (
-											<>
-												<div></div>
-												<Button
-													variant="contained"
-													color="primary"
-													className="actionBtn addToCartBtn"
-													onClick={() => {
-														setActualTransaction(evnt);
-														setOpenTicket(true);
-													}}>
-													<i className="material-icons">receipt</i>
-												</Button>
-											</>
-										) : (
-											<>
-												{/* <Button
-													variant="contained"
-													color="primary"
-													className="actionBtn addToCartBtn"
-													onClick={() => {
-														setActualTransaction(evnt);
-														setOpenCart(true);
-													}}>
-													<i className="material-icons">shopping_cart</i>
-												</Button> */}
-												<Button
-													variant="contained"
-													color="primary"
-													className="actionBtn currentAppointmentBtn"
-													onClick={() => {
-														setActualTransaction(evnt);
-														setOpenTodayData(true);
-													}}>
-													<i className="material-icons">start</i>
-												</Button>
-												<Button
-													variant="contained"
-													color="primary"
-													className="actionBtn cobrarBtn"
-													onClick={() => {
-														setActualTransaction(evnt);
-														setOpenPOS(true);
-													}}>
-													Cobrar
-												</Button>
-											</>
-										)}
+											<Button
+												variant="contained"
+												color="primary"
+												className="actionBtn"
+												onClick={() => {
+													setActualTransaction(evnt);
+													setOpenTicket(true);
+												}}>
+												<i className="material-icons">receipt</i>
+											</Button>
+										) : evnt.menu ? (
+											<Button
+												variant="contained"
+												className="actionBtn cobrarBtn"
+												onClick={() => {
+													setActualTransaction(evnt);
+													setOpenPOS(true);
+												}}>
+												<i className="material-icons">local_atm</i>
+											</Button>
+										) : null}
 									</AccordionDetails>
 								</Accordion>
 							))}
@@ -328,7 +314,7 @@ function Home() {
 				<div className="right">
 					<MiniCalendar onChange={(d) => getEvents(d)} />
 					<div className="notas">
-						<p>cambiar botones y colores en home</p>
+						<p>cambiar botones y colores en home - DONE</p>
 					</div>
 				</div>
 			</div>

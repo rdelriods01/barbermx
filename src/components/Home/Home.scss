@@ -122,7 +122,7 @@
 				}
 				.acordionDetails {
 					display: grid;
-					grid-template-columns: 8fr 1fr 1fr 2fr;
+					grid-template-columns: 8fr auto auto auto;
 					border-left: 8px solid red;
 					border-bottom-left-radius: 1em;
 					.acordionDetailsGrid {
@@ -150,6 +150,12 @@
 						font-weight: bold;
 						margin: auto 4px;
 					}
+					.startBtn{
+						background-color: $primary;
+						&:hover {
+							background-color: $primaryHover;
+						}
+					}
 					.goToProfileBtn {
 						a {
 							display: contents;
@@ -159,6 +165,7 @@
 					}
 					.cobrarBtn {
 						margin: auto 4px;
+						width: 8em;
 						background-color: $pay;
 						&:hover {
 							background-color: $payHover;
