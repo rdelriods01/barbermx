@@ -11,6 +11,7 @@ import EditPatientData from "./EditPatientData";
 import EditMedicalData from "./EditMedicalData";
 import { Drawer } from "@material-ui/core";
 import PatientData from "./PatientData";
+import Spinner from "../Home/Review/Spinner";
 
 function PatientProfile(props) {
 	console.log(props);
@@ -19,6 +20,7 @@ function PatientProfile(props) {
 
 	const patientID = props.match.params.uid;
 	const [patient, setPatient] = useState(null);
+	const [currentWeight, setCurrentWeight] = useState(0);
 	const [openEditPatientData, setOpenEditPatientData] = useState(false);
 	const [openEditMedicalData, setOpenEditMedicalData] = useState(false);
 	const [showActionsMenu, setShowActionsMenu] = useState(false);
@@ -30,13 +32,13 @@ function PatientProfile(props) {
 	const getPatient = async () => {
 		await axios
 			.get(`http://localhost:4000/api/clients/${patientID}`)
-			.then((data) => {
-				console.log(data.data);
-				if (data.data.hasOwnProperty("medicalHistory")) {
-					setPatient(data.data);
+			.then(async (myPatient) => {
+				console.log(myPatient.data);
+				if (myPatient.data.hasOwnProperty("medicalHistory")) {
+					setPatient(myPatient.data);
 				} else {
 					setPatient({
-						...data.data,
+						...myPatient.data,
 						medicalHistory: {
 							reason: "",
 							conditions: "",
@@ -49,6 +51,19 @@ function PatientProfile(props) {
 						},
 					});
 				}
+				// Tengo que traer los datos de la ultima cita para sacar el ultimo peso y pasarselo al Spinner
+				await axios
+					.get(
+						`http://localhost:4000/api/events/${
+							myPatient.data.appointments[
+								myPatient.data.appointments.length - 1
+							]
+						}`
+					)
+					.then((lastCita) => {
+						console.log(lastCita.data);
+						setCurrentWeight(lastCita.data.measurements.peso);
+					});
 			});
 	};
 
@@ -146,6 +161,14 @@ function PatientProfile(props) {
 								<PatientData patient={patient} />
 							</div>
 							<ClinicHistory data={patient.medicalHistory} />
+							{currentWeight > 0 ? (
+								<Spinner
+									initialWeight={patient.initialWeight}
+									goal={patient.goal}
+									current={currentWeight}
+									className="spinnerContainer"
+								/>
+							) : null}
 						</div>
 					</div>
 					<div className="inferior">

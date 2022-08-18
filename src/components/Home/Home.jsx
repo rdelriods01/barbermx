@@ -314,7 +314,10 @@ function Home() {
 				<div className="right">
 					<MiniCalendar onChange={(d) => getEvents(d)} />
 					<div className="notas">
-						<p>cambiar botones y colores en home - DONE</p>
+						<p>
+							En perfil de paciente hacer la tabla y copiar el spinner, tambien
+							poner los menus de cada cita
+						</p>
 					</div>
 				</div>
 			</div>
