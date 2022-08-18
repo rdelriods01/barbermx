@@ -149,12 +149,13 @@ function Home() {
 			setOpenAddMenu(true);
 		}
 	};
-	const addMenuDone = async (transaction, back) => {
+
+	const addMenuDone = async (transaction, back, consec) => {
 		console.log("AddMenu Done");
 		console.log(transaction);
 		if (back) {
 			setOpenAddMenu(false);
-			setOpenReview(true);
+			consec === 1 ? setOpenTodayData(true) : setOpenReview(true);
 		} else if (transaction) {
 			// Actualizar los datos del paciente (Estatura, peso ideal, peso inicial)
 			await axios.put(
@@ -326,6 +327,9 @@ function Home() {
 				</div>
 				<div className="right">
 					<MiniCalendar onChange={(d) => getEvents(d)} />
+					<div className="notas">
+						<p>cambiar botones y colores en home</p>
+					</div>
 				</div>
 			</div>
 			<Drawer

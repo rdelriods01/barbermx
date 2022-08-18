@@ -839,7 +839,9 @@ function AddMenu(props) {
 						<button
 							className="backBtn"
 							variant="contained"
-							onClick={() => props.onClose(false, true, false)}>
+							onClick={() =>
+								props.onClose(tran, true, tran.client.consecutive)
+							}>
 							<i className="material-icons">arrow_back</i>
 						</button>
 						<Button

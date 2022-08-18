@@ -177,5 +177,18 @@
 				}
 			}
 		}
+		.right{
+			.notas{
+				margin-top: 3em;
+				border-radius: 8px;
+				border: 1px solid lightgray;
+				background-color: lightgray;
+				height: 10em;
+				p{
+					color: dimgray;
+					padding: 1em;
+				}
+			}
+		}
 	}
 }
