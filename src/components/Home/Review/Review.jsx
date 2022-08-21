@@ -19,7 +19,7 @@ function Review(props) {
 
 	const bringLastEventData = async () => {
 		let myLastEvnt = await axios.get(
-			`http://localhost:4000/api/events/${props.transaction.client.lastAppointment}`
+			`http://192.168.100.17:4000/api/events/${props.transaction.client.lastAppointment}`
 		);
 		console.log(myLastEvnt);
 		setLastEvent(myLastEvnt.data.measurements);

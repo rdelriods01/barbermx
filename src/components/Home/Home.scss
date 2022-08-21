@@ -3,7 +3,7 @@
 .HomeC {
 	.superior {
 		display: grid;
-		grid-template-columns: 11fr 1fr 1.1fr;
+		grid-template-columns: 11fr 1fr auto;
 		.brand {
 			display: grid;
 			grid-template-columns: 3em auto;
@@ -17,13 +17,13 @@
 				margin-left: 0.2em;
 				display: flex;
 				font-weight: bold;
-				font-size: 2em;
+				font-size: 2em; 
 			}
 		}
 	}
 	.grid {
 		display: grid;
-		grid-template-columns: 3fr 2fr;
+		grid-template-columns: 1fr auto;
 		column-gap: 1em;
 		margin-top: 4em;
 		.left {
@@ -186,12 +186,14 @@
 		}
 		.right{
 			.notas{
-				margin-top: 3em;
+				font-size: 0.8vw;
+				margin: 3em 0 auto auto;
 				border-radius: 8px;
 				border: 1px solid lightgray;
 				background-color: lightgray;
-				height: 10em;
-				p{
+				min-height: 10em;
+				max-width: 30vw;
+				li{
 					color: dimgray;
 					padding: 1em;
 				}

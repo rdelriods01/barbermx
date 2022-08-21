@@ -19,9 +19,12 @@ function Weather() {
 				async (pos) => {
 					let crd = pos.coords;
 
-					let myWeather = await axios.get("http://localhost:4000/api/weather", {
-						params: { lat: crd.latitude, lon: crd.longitude },
-					});
+					let myWeather = await axios.get(
+						"http://192.168.100.17:4000/api/weather",
+						{
+							params: { lat: crd.latitude, lon: crd.longitude },
+						}
+					);
 					console.log(myWeather.data.data);
 					setWeather(myWeather.data.data);
 				},

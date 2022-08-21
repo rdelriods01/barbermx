@@ -12,7 +12,7 @@ function Database() {
 	}, []);
 
 	const getEvents = () => {
-		axios.get("http://localhost:4000/api/events").then((data) => {
+		axios.get("http://192.168.100.17:4000/api/events").then((data) => {
 			console.log(data.data);
 			setEvents(data.data);
 		});
@@ -20,11 +20,11 @@ function Database() {
 	const deleteEvent = async (event) => {
 		console.log(event);
 		await axios
-			.delete(`http://localhost:4000/api/events/${event._id}`)
+			.delete(`http://192.168.100.17:4000/api/events/${event._id}`)
 			.then(async () => {
 				await axios
 					.put(
-						`http://localhost:4000/api/clients/pullAppointments/${event.client._id}`,
+						`http://192.168.100.17:4000/api/clients/pullAppointments/${event.client._id}`,
 
 						{ data: event._id }
 					)

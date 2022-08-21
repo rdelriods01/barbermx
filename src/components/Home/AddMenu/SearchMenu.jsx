@@ -10,7 +10,7 @@ function SearchMenu(props) {
 		console.log(value);
 		if (value.length > 2) {
 			axios
-				.get("http://localhost:4000/api/menus/filtered", {
+				.get("http://192.168.100.17:4000/api/menus/filtered", {
 					params: { pre: value },
 				})
 				.then((data) => {

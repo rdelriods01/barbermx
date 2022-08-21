@@ -18,9 +18,10 @@
 		}
 		.clinicHistoryGrid {
 			display: grid;
-			grid-template-columns: 1fr 1fr;
+			grid-template-columns: 1fr;
 			column-gap: 1em;
 			font-size: 0.8em;
+			max-width: 12vw;
 			p {
 				margin: 0 0 0 1em;
 			}

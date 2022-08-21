@@ -74,7 +74,7 @@ const Calendario = () => {
 				cart: event.cart,
 			};
 			console.log(newEvent);
-			await axios.post("http://localhost:4000/api/events", newEvent);
+			await axios.post("http://192.168.100.17:4000/api/events", newEvent);
 			setEvents([...events, newEvent]);
 			getRangeOfTimeAndEvents(currentDate);
 		}
@@ -157,7 +157,7 @@ const Calendario = () => {
 			if (cart !== undefined) {
 				newEvent = { ...newEvent, cart };
 			}
-			await axios.put(`http://localhost:4000/api/events/${event._id}`, {
+			await axios.put(`http://192.168.100.17:4000/api/events/${event._id}`, {
 				...newEvent,
 			});
 			getRangeOfTimeAndEvents(currentDate);
@@ -166,7 +166,7 @@ const Calendario = () => {
 
 	const deleteEvent = async (event) => {
 		console.log("delete event" + JSON.stringify(event));
-		await axios.delete(`http://localhost:4000/api/events/${event._id}`);
+		await axios.delete(`http://192.168.100.17:4000/api/events/${event._id}`);
 		getRangeOfTimeAndEvents(currentDate);
 	};
 
@@ -195,7 +195,7 @@ const Calendario = () => {
 		console.log("look for events from " + inicio + " to " + final);
 		// Search for events
 		axios
-			.get("http://localhost:4000/api/events/range", {
+			.get("http://192.168.100.17:4000/api/events/range", {
 				params: { startDate: start, endDate: end },
 			})
 			.then((data) => {

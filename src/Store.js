@@ -130,7 +130,7 @@ const Store = ({ children }) => {
 
 	// GET SERVICES
 	function getServices() {
-		axios.get("http://localhost:4000/api/services").then((data) => {
+		axios.get("http://192.168.100.17:4000/api/services").then((data) => {
 			let myServices = [];
 			data.data.forEach((service) => {
 				myServices.push(service);
@@ -141,7 +141,7 @@ const Store = ({ children }) => {
 
 	// GET PRODUCTS
 	function getProducts() {
-		axios.get("http://localhost:4000/api/products").then((data) => {
+		axios.get("http://192.168.100.17:4000/api/products").then((data) => {
 			let myProducts = [];
 			data.data.forEach((product) => {
 				myProducts.push(product);

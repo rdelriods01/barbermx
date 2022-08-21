@@ -31,7 +31,7 @@ function PatientProfile(props) {
 
 	const getPatient = async () => {
 		await axios
-			.get(`http://localhost:4000/api/clients/${patientID}`)
+			.get(`http://192.168.100.17:4000/api/clients/${patientID}`)
 			.then(async (myPatient) => {
 				console.log(myPatient.data);
 				if (myPatient.data.hasOwnProperty("medicalHistory")) {
@@ -54,7 +54,7 @@ function PatientProfile(props) {
 				// Tengo que traer los datos de la ultima cita para sacar el ultimo peso y pasarselo al Spinner
 				await axios
 					.get(
-						`http://localhost:4000/api/events/${
+						`http://192.168.100.17:4000/api/events/${
 							myPatient.data.appointments[
 								myPatient.data.appointments.length - 1
 							]
@@ -87,7 +87,7 @@ function PatientProfile(props) {
 		window.confirm(`Estas seguro que deseas eliminar a ${patient.name}`)
 			? (console.log(patient),
 			  await axios
-					.delete(`http://localhost:4000/api/clients/${patientID}`, {
+					.delete(`http://192.168.100.17:4000/api/clients/${patientID}`, {
 						data: patient,
 					})
 					.then(async (response) => {
@@ -104,7 +104,7 @@ function PatientProfile(props) {
 	return (
 		<div className="patientProfileC">
 			{patient ? (
-				<>
+				<div className="left">
 					<div className="superior">
 						<img
 							className={patient.gender === "M" ? "male" : "female"}
@@ -115,64 +115,57 @@ function PatientProfile(props) {
 							}
 							alt="ClientPicture"
 						/>
-
-						<div className="supRight">
-							<div className="patientData">
-								<div className="nameAndActions">
-									<b className="clientName">{patient.name}</b>
-									<button
-										className="actionsBtn"
-										onClick={() => setShowActionsMenu((prev) => !prev)}>
-										<i className="material-icons">more_vert</i>
-									</button>
-									<div
-										className={showActionsMenu ? "dropDownBackground" : "hide"}
-										onClick={() => {
-											setShowActionsMenu(false);
-										}}>
-										<div className="dropdown">
-											<label
-												className="option"
-												onClick={() => {
-													setOpenEditPatientData(true);
-													setShowActionsMenu(false);
-												}}>
-												Editar Paciente
-											</label>
-											<label
-												className="option"
-												onClick={() => {
-													setOpenEditMedicalData(true);
-													setShowActionsMenu(false);
-												}}>
-												Editar Historia Clínica
-											</label>
-											<label
-												className="option"
-												onClick={() => {
-													setShowActionsMenu(false);
-													deletePatient();
-												}}>
-												Eliminar
-											</label>
-										</div>
+						<div className="patientData">
+							<div className="nameAndActions">
+								<b className="clientName">{patient.name}</b>
+								<button
+									className="actionsBtn"
+									onClick={() => setShowActionsMenu((prev) => !prev)}>
+									<i className="material-icons">more_vert</i>
+								</button>
+								<div
+									className={showActionsMenu ? "dropDownBackground" : "hide"}
+									onClick={() => {
+										setShowActionsMenu(false);
+									}}>
+									<div className="dropdown">
+										<label
+											className="option"
+											onClick={() => {
+												setOpenEditPatientData(true);
+												setShowActionsMenu(false);
+											}}>
+											Editar Paciente
+										</label>
+										<label
+											className="option"
+											onClick={() => {
+												setOpenEditMedicalData(true);
+												setShowActionsMenu(false);
+											}}>
+											Editar Historia Clínica
+										</label>
+										<label
+											className="option"
+											onClick={() => {
+												setShowActionsMenu(false);
+												deletePatient();
+											}}>
+											Eliminar
+										</label>
 									</div>
 								</div>
-								<PatientData patient={patient} />
 							</div>
-							<ClinicHistory data={patient.medicalHistory} />
-							{currentWeight > 0 ? (
-								<Spinner
-									initialWeight={patient.initialWeight}
-									goal={patient.goal}
-									current={currentWeight}
-									className="spinnerContainer"
-								/>
-							) : null}
+							<PatientData patient={patient} />
 						</div>
 					</div>
 					<div className="inferior">
-						<h1>Total de visitas: {patient.appointments.length}</h1>
+						<div className="infLeft">
+							<ClinicHistory data={patient.medicalHistory} />
+						</div>
+						<div className="infRight">
+							<h1>Total de visitas: {patient.appointments.length}</h1>
+						</div>
 					</div>
 					<Drawer
 						className="EditPatientDataDrawer"
@@ -193,10 +186,18 @@ function PatientProfile(props) {
 							patientId={patientID}
 							onClose={editMedicalDataDone}></EditMedicalData>
 					</Drawer>
-				</>
+				</div>
 			) : (
 				<h1>Loading</h1>
 			)}
+			{currentWeight > 0 ? (
+				<Spinner
+					initialWeight={patient.initialWeight}
+					goal={patient.goal}
+					current={currentWeight}
+					className="spinnerContainer"
+				/>
+			) : null}
 		</div>
 	);
 }

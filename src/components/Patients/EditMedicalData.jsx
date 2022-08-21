@@ -34,7 +34,7 @@ function EditMedicalData(props) {
 		};
 		await axios
 			.put(
-				`http://localhost:4000/api/clients/${props.patientId}`,
+				`http://192.168.100.17:4000/api/clients/${props.patientId}`,
 				newPatientData
 			)
 			.then(async (response) => {

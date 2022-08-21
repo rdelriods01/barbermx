@@ -89,7 +89,7 @@ const NewPatient = (props) => {
 	useEffect(() => {
 		const fetchData = async () => {
 			await axios
-				.get("http://localhost:4000/api/clients/length")
+				.get("http://192.168.100.17:4000/api/clients/length")
 				.then((clients) => {
 					if (clients) {
 						console.log(clients);
@@ -179,7 +179,7 @@ const NewPatient = (props) => {
 					console.log(newPatient);
 					let newPatientID = "";
 					await axios
-						.post("http://localhost:4000/api/clients", newPatient)
+						.post("http://192.168.100.17:4000/api/clients", newPatient)
 						.then(async (response) => {
 							console.log(response);
 							newPatientID = response.data.client._id;
@@ -210,11 +210,11 @@ const NewPatient = (props) => {
 							};
 							console.log(newEvent);
 							await axios
-								.post("http://localhost:4000/api/events", newEvent)
+								.post("http://192.168.100.17:4000/api/events", newEvent)
 								.then(async (response) => {
 									console.log(response); //Por eso aqui solo llegan pocas propiedades en event.client
 									await axios.put(
-										`http://localhost:4000/api/clients/${newPatientID}`,
+										`http://192.168.100.17:4000/api/clients/${newPatientID}`,
 										{ appointments: [response.data.event._id] }
 									);
 								});

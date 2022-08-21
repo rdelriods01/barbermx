@@ -56,7 +56,7 @@ function Home() {
 		console.log("look for events from " + date);
 		// Search for events
 		await axios
-			.get("http://localhost:4000/api/events/range", {
+			.get("http://192.168.100.17:4000/api/events/range", {
 				params: { startDate: start, endDate: end },
 			})
 			.then((data) => {
@@ -100,9 +100,12 @@ function Home() {
 		} else {
 			// code to transaction
 			console.log(transaction);
-			await axios.put(`http://localhost:4000/api/events/${transaction._id}`, {
-				...transaction,
-			});
+			await axios.put(
+				`http://192.168.100.17:4000/api/events/${transaction._id}`,
+				{
+					...transaction,
+				}
+			);
 			getEvents(currentDate);
 			setOpenPOS(false);
 		}
@@ -159,16 +162,19 @@ function Home() {
 		} else if (transaction) {
 			// Actualizar los datos del paciente (Estatura, peso ideal, peso inicial)
 			await axios.put(
-				`http://localhost:4000/api/clients/${transaction.client._id}`,
+				`http://192.168.100.17:4000/api/clients/${transaction.client._id}`,
 				{
 					height: transaction.client.height,
 					goal: transaction.client.goal,
 					initialWeight: transaction.client.initialWeight,
 				}
 			);
-			await axios.put(`http://localhost:4000/api/events/${transaction._id}`, {
-				...transaction,
-			});
+			await axios.put(
+				`http://192.168.100.17:4000/api/events/${transaction._id}`,
+				{
+					...transaction,
+				}
+			);
 			getEvents(currentDate);
 			setOpenAddMenu(false);
 		} else {
@@ -314,10 +320,15 @@ function Home() {
 				<div className="right">
 					<MiniCalendar onChange={(d) => getEvents(d)} />
 					<div className="notas">
-						<p>
+						<li>
 							En perfil de paciente hacer la tabla y copiar el spinner, tambien
 							poner los menus de cada cita
-						</p>
+						</li>
+						<li>
+							Hay un bug, cuando le das en editar paciente en el perfil del
+							paciente no te despliega el peso deseado que se supone ya esta
+							dado de alta (ver Hectin)
+						</li>
 					</div>
 				</div>
 			</div>

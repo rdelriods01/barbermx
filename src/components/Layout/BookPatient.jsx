@@ -47,7 +47,7 @@ function BookPatient(props) {
 		for (let i = 0; i < myClient.appointments.length; i++) {
 			console.log(myClient.appointments[i]);
 			let status = await axios.get(
-				`http://localhost:4000/api/events/status/${myClient.appointments[i]}`
+				`http://192.168.100.17:4000/api/events/status/${myClient.appointments[i]}`
 			);
 			console.log(status);
 			if (status.data === "") {
@@ -60,7 +60,7 @@ function BookPatient(props) {
 		console.log(value);
 		if (value.length > 2) {
 			axios
-				.get("http://localhost:4000/api/clients/filtered", {
+				.get("http://192.168.100.17:4000/api/clients/filtered", {
 					params: { pre: value },
 				})
 				.then((data) => {
@@ -105,10 +105,10 @@ function BookPatient(props) {
 				},
 			};
 			await axios
-				.post("http://localhost:4000/api/events", newEvent)
+				.post("http://192.168.100.17:4000/api/events", newEvent)
 				.then(async (response) => {
 					await axios.put(
-						`http://localhost:4000/api/clients/pushAppointments/${client._id}`, //se manda a llamar al push en el back para que en el array de Appointments del Paciente se agregue el nuevo evento
+						`http://192.168.100.17:4000/api/clients/pushAppointments/${client._id}`, //se manda a llamar al push en el back para que en el array de Appointments del Paciente se agregue el nuevo evento
 						{
 							appointments: [response.data.event._id],
 						}
@@ -116,7 +116,7 @@ function BookPatient(props) {
 				});
 		} else {
 			// Si si hay uno incompleto entonces solo actualiza el incompleto con la nueva fecha
-			await axios.put(`http://localhost:4000/api/events/${prevEventId}`, {
+			await axios.put(`http://192.168.100.17:4000/api/events/${prevEventId}`, {
 				start,
 				end,
 				startTS: getTime(start),

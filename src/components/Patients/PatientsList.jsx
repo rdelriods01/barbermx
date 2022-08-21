@@ -12,7 +12,7 @@ function PatientsList() {
 	}, []);
 
 	const getPatients = async () => {
-		await axios.get("http://localhost:4000/api/clients").then((data) => {
+		await axios.get("http://192.168.100.17:4000/api/clients").then((data) => {
 			console.log(data.data);
 			setPatients(data.data);
 		});

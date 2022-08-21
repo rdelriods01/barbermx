@@ -405,7 +405,7 @@ function AddMenu(props) {
 
 		console.log(myNewMenu);
 		await axios
-			.post("http://localhost:4000/api/menus/", myNewMenu)
+			.post("http://192.168.100.17:4000/api/menus/", myNewMenu)
 			.catch((error) => {
 				console.log(error);
 			});

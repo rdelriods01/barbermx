@@ -34,7 +34,7 @@ function Catalogo() {
 				console.log("off");
 			}, 10000);
 		} else {
-			await axios.post("http://localhost:4000/api/services", {
+			await axios.post("http://192.168.100.17:4000/api/services", {
 				description: sDesc,
 				price: sPrice,
 			});
@@ -44,12 +44,12 @@ function Catalogo() {
 	};
 
 	const deleteService = async (serv) => {
-		await axios.delete(`http://localhost:4000/api/services/${serv._id}`);
+		await axios.delete(`http://192.168.100.17:4000/api/services/${serv._id}`);
 		getServices();
 	};
 
 	const getServices = () => {
-		axios.get("http://localhost:4000/api/services").then((data) => {
+		axios.get("http://192.168.100.17:4000/api/services").then((data) => {
 			let myServices = [];
 			data.data.forEach((service) => {
 				myServices.push(service);
@@ -71,7 +71,7 @@ function Catalogo() {
 			description: sDesc,
 			price: sPrice,
 		};
-		await axios.put(`http://localhost:4000/api/services/${sID}`, {
+		await axios.put(`http://192.168.100.17:4000/api/services/${sID}`, {
 			...newServiceData,
 		});
 		resetServData();
@@ -100,7 +100,7 @@ function Catalogo() {
 				console.log("off");
 			}, 10000);
 		} else {
-			await axios.post("http://localhost:4000/api/products", {
+			await axios.post("http://192.168.100.17:4000/api/products", {
 				sku: pSKU,
 				name: pName,
 				description: pDesc,
@@ -133,7 +133,7 @@ function Catalogo() {
 			inv: pInv,
 			photo: pPhoto,
 		};
-		await axios.put(`http://localhost:4000/api/products/${pID}`, {
+		await axios.put(`http://192.168.100.17:4000/api/products/${pID}`, {
 			...newProductData,
 		});
 		resetProdData();
@@ -153,12 +153,12 @@ function Catalogo() {
 	};
 
 	const deleteProduct = async (prod) => {
-		await axios.delete(`http://localhost:4000/api/products/${prod._id}`);
+		await axios.delete(`http://192.168.100.17:4000/api/products/${prod._id}`);
 		getProducts();
 	};
 
 	const getProducts = () => {
-		axios.get("http://localhost:4000/api/products").then((data) => {
+		axios.get("http://192.168.100.17:4000/api/products").then((data) => {
 			let myProducts = [];
 			data.data.forEach((product) => {
 				myProducts.push(product);
