@@ -14,7 +14,7 @@ import {
 
 import nothingYet from "../../assets/nothingyet.png";
 import defaultPP from "../../assets/pp_default.svg";
-import LZlogo from "../../assets/LZlogo.png";
+import LZlogo from "../../assets/LZapple.png";
 
 import "./Home.scss";
 import Weather from "./Weather";
@@ -321,14 +321,11 @@ function Home() {
 					<MiniCalendar onChange={(d) => getEvents(d)} />
 					<div className="notas">
 						<li>
-							En perfil de paciente hacer la tabla y copiar el spinner, tambien
-							poner los menus de cada cita
-						</li>
-						<li>
 							Hay un bug, cuando le das en editar paciente en el perfil del
 							paciente no te despliega el peso deseado que se supone ya esta
 							dado de alta (ver Hectin)
 						</li>
+						<li>Agregar comments en cita</li>
 					</div>
 				</div>
 			</div>
