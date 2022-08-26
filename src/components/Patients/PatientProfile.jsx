@@ -12,6 +12,7 @@ import EditMedicalData from "./EditMedicalData";
 import { Drawer } from "@material-ui/core";
 import PatientData from "./PatientData";
 import Spinner from "../Home/Review/Spinner";
+import DataHistory from "./DataHistory";
 
 function PatientProfile(props) {
 	console.log(props);
@@ -165,6 +166,7 @@ function PatientProfile(props) {
 						</div>
 						<div className="infRight">
 							<h1>Total de visitas: {patient.appointments.length}</h1>
+							<DataHistory patientId={patientID} />
 						</div>
 					</div>
 					<Drawer

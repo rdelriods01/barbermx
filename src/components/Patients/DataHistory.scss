@@ -1,0 +1,56 @@
+@import "../../variables.module.scss";
+
+.dataHistoryC{
+    table{
+        display: grid;
+        text-align: center;
+            tr{
+                display: grid;
+                grid-template-columns: 2fr 2fr 2fr 2fr 2fr 2fr 4fr 1fr;
+            }
+            thead{
+                display: grid;
+                padding-bottom: 1em;
+                border-bottom: 2px solid lightgray;
+            }
+            tbody{
+                display: grid;
+                tr{
+                    padding: 1em 0 ;
+                    border-bottom: 1px solid lightgray;
+                    td{
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                    }
+                    .btn{
+                        color: #989898;
+                        padding: 8px;
+                        border: 1px solid lightgray;
+                        border-radius: 50%;
+                        margin: auto;
+                        width: fit-content;
+                        &:hover {
+                            background-color: $primaryLightHover;
+                            color: $primary;
+                            i {
+                                color: $primary;
+                                border-color: $primary;
+                            }
+                        }
+                    }
+                }
+            }
+            .comments{
+                font-size: 0.8em;
+            }
+        
+    }
+    .green{
+        color: green;
+    }
+    .red{
+        color: red;
+    }
+    
+}
